@@ -1,0 +1,13 @@
+.main-banner {
+	width: 80%;
+	height: 300px;
+	background-color: #ddd;
+	margin: 0 auto;
+}
+.circle {
+	width: 100px;
+	height: 100px;
+	background-color: #ddd;
+	border-radius: 50%;
+	margin: 0 10px;
+}
