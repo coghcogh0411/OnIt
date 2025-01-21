@@ -1,69 +1,69 @@
-@font-face{
-	font-family: "a";	src: url("../365cool.ttf");
-}
 body {
-	font-family: "a";
-	margin: 0;
-	padding: 0;
-	line-height: 1.5;
+    font-family: "a";
+    margin: 0;
+    padding: 0;
+    line-height: 1.5;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 header {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 10px 20px;
-	border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
 }
 
 .logo {
-	font-size: 24px;
-	font-weight: bold;
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .search-bar {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .search-bar select, .search-bar input {
-	padding: 5px;
-	margin-right: 5px;
+    padding: 5px;
+    margin-right: 5px;
 }
 
 .menu {
-	display: flex;
-	justify-content: center;
-	margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
 .menu-item {
-	margin: 0 15px;
+    margin: 0 15px;
 }
-
-
 
 .item-circles {
-	display: flex;
-	justify-content: center;
-	margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
 }
 
-
-
 footer {
-	padding: 20px;
-	background-color: #f9f9f9;
-	font-size: 14px;
+    margin-top: auto; /* flexbox에 의해 페이지 내용 아래에 위치 */
+    width: 100%;
+    background-color: #f9f9f9;
+    font-size: 14px;
 }
 
 footer .footer-info {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
+    margin-left: 20px;
 }
+
 footer .footer-links {
-	color: #888;
+    color: #888;
 }
+
 a {
-	text-decoration: none;
-	color: black;	
+    text-decoration: none;
+    color: black;
 }

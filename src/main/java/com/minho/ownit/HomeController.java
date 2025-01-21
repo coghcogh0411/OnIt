@@ -16,8 +16,13 @@ public class HomeController {
 		return "index";
 	}
 	@GetMapping("/join")
-	public String getMethodName(HttpServletRequest req) {
+	public String join(HttpServletRequest req) {
 		req.setAttribute("contentPage", "member/join");
+		return "index";
+	}
+	@GetMapping("/login")
+	public String login(HttpServletRequest req) {
+		req.setAttribute("contentPage", "member/login");
 		return "index";
 	}
 	
