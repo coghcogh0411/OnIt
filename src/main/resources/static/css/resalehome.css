@@ -1,0 +1,149 @@
+.main-content {
+	display: flex;
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.sidebar-container {
+	width: 200px;
+	margin-right: 20px;
+}
+
+.location-button {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px 16px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+	background: white;
+	cursor: pointer;
+}
+
+.sidebar {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.category-item {
+	padding: 8px;
+	cursor: pointer;
+}
+
+#infoDiv {
+	flex: 1;
+}
+
+.category-header {
+	background-color: #9AA2EC;
+	color: white;
+	padding: 10px;
+	margin-bottom: 20px;
+	border-radius: 4px;
+}
+
+.product-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 20px;
+}
+
+.product-card {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.product-image {
+	width: 100%;
+	aspect-ratio: 1;
+	background-color: #f5f5f5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: 10px;
+}
+
+.product-info {
+	font-size: 14px;
+	color: #666;
+}
+
+.product-price {
+	font-weight: bold;
+	margin-top: 5px;
+}
+/* 여기부터 등록버튼관련css */
+.floating-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	background-color: white;
+	color: #9AA2EC;
+	border: 8px solid #9AA2EC;
+	border-radius: 50%;
+	font-size: 60px;
+	font-weight: bold; cursor : pointer;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: transform 0.3s ease;
+	cursor: pointer;
+}
+
+.floating-button:hover {
+	transform: translateY(-2px);
+}
+
+.floating-button .icon {
+	transition: transform 0.3s ease;
+}
+
+.sub-buttons {
+	position: absolute;
+	bottom: 80px;
+	right: 0;
+	display: flex;
+	flex-direction: column;
+	opacity: 0;
+	transform: translateY(20px);
+	transition: all 0.3s ease;
+	pointer-events: none;
+	width: 200px;
+	height: 100px;
+	border-radius: 15px;
+	background-color: #9AA2EC;
+	padding: 0;
+	overflow: hidden;
+}
+
+.sub-buttons.show {
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
+}
+
+.sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+}
+
+.sub-button:first-child {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sub-button:hover {
+	transform: translateX(-5px);
+}

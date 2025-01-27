@@ -1,3 +1,6 @@
+@font-face{
+	font-family: "a";	src: url("../365cool.ttf");
+}
 body {
     font-family: "a";
     margin: 0;

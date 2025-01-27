@@ -1,0 +1,172 @@
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.top-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	gap: 20px;
+}
+
+.location-button {
+	display: flex;
+	align-items: center;
+	padding: 10px 20px;
+	border: 2px solid #7986CB;
+	border-radius: 25px;
+	background-color: white;
+	color: #333;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.location-icon {
+	margin-right: 8px;
+	color: #7986CB;
+}
+
+.title-banner {
+	background-color: #7986CB;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 8px;
+	font-size: 18px;
+	text-align: center;
+	flex-grow: 1;
+}
+
+.main-content {
+	display: flex;
+	gap: 20px;
+}
+
+.form-container {
+	display: flex;
+	flex-grow: 1;
+	gap: 20px;
+}
+
+.form-fields {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.dropdown, .price-input {
+	width: 95%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 16px;
+}
+.input-field{
+	width: 80%;
+	height: 67px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 8px;
+	font-size: 30px;
+	box-shadow: 3px 3px #ddd;
+}
+.textarea-field{
+	width: 90%;
+	height: 350px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 8px;
+	font-size: 16px;
+	box-shadow: 3px 3px #ddd;
+}
+
+.textarea-field {
+	min-height: 150px;
+	resize: none;
+}
+
+.dropdowns-container {
+	display: flex;
+	gap: 10px;
+}
+
+.dropdown {
+	flex: 1;
+}
+
+.image-section {
+	width: 450px;
+}
+
+.upload-area {
+	width: 60%;
+	height: 200px;
+	border: 2px dashed #ddd;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9f9f9;
+	position: relative;
+	overflow: hidden;
+	margin: auto;
+	margin-bottom: 50px;
+}
+
+.upload-area input[type="file"] {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.preview-carousel {
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 80px;
+	overflow-x: auto;
+	height: 150px;
+	gap:10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	scroll-snap-type: x mandatory;
+	align-items: center;
+}
+
+.preview-image {
+	flex-shrink: 0;
+	width: 100px;
+	height: 130px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	object-fit: cover;
+	scroll-snap-align: start;
+}
+
+.price-section {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.submit-button {
+	padding: 10px 20px;
+	background-color: #7986CB;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.submit-button:hover {
+	background-color: #5c6bc0;
+}
