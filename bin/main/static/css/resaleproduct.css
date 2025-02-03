@@ -1,0 +1,235 @@
+.main-content {
+	display: flex;
+	max-width: 1200px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	padding: 50px;
+}
+
+.sidebar-container {
+	width: 200px;
+	margin-right: 20px;
+}
+
+.location-button {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px 16px;
+	border: 2px solid #9aa2ec;
+	border-radius: 20px;
+	background: white;
+	cursor: pointer;
+}
+
+.sidebar {
+	border: 1px solid #ddd;
+	padding: 10px;
+	width: 20%;
+	min-width: 200px;
+	margin-right: 20px;
+	flex-shrink: 0;
+}
+
+.category-item {
+	padding: 8px;
+	cursor: pointer;
+}
+
+.content-area {
+	padding: 20px;
+	flex-grow: 1;
+}
+
+.product-detail {
+	display: grid;
+	grid-template-areas: "image info" "seller info";
+	gap: 20px;
+	grid-template-columns: 400px 1fr;
+}
+
+.image-gallery {
+	position: relative;
+	width: 400px;
+	height: 400px;
+	flex-shrink: 0;
+	grid-area: image;
+}
+
+.image-placeholder {
+	width: 100%;
+	height: 100%;
+	background-color: #f5f5f5;
+	border-radius: 8px;
+	border: 1px solid #ddd;
+}
+
+.gallery-nav {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background: rgba(255, 255, 255, 0.8);
+	border: none;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 18px;
+	color: #666;
+	z-index: 1;
+}
+
+.gallery-nav.prev {
+	left: 10px;
+}
+
+.gallery-nav.next {
+	right: 10px;
+}
+
+.product-info {
+	flex: 1;
+	grid-area: info;
+}
+
+.product-title {
+	font-size: 24px;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.meta-info {
+	color: #666;
+	margin-bottom: 15px;
+}
+
+.date-divider {
+	margin: 0 8px;
+}
+
+.price {
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.description-box {
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+.description-textarea {
+	width: 100%;
+	min-height: 300px;
+	border: none;
+	resize: none;
+	background: transparent;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #333;
+	outline: none;
+	cursor: default;
+}
+
+.seller-info {
+	grid-area: seller;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 20px;
+	cursor: pointer;
+	position: relative;
+}
+
+.seller-profile {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.profile-image {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.seller-name {
+	font-weight: bold;
+}
+
+.like-button {
+	background: none;
+	margin-left: auto;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: #666;
+}
+
+.action-buttons {
+	position: absolute;
+	gap: 10px;
+}
+
+.action-button {
+	flex: 1;
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: white;
+	color: #666;
+	cursor: pointer;
+}
+
+.action-button:hover {
+	background: #f5f5f5;
+}
+
+.sub-buttons {
+	display: none;
+	flex-direction: column;
+	width: 100%;
+	border-radius: 15px;
+	background-color: #9aa2ec;
+	padding: 0;
+	overflow: hidden;
+	position: absolute; /* 변경: 절대 위치로 설정 */
+	top: 100%; /* 추가: seller-info 바로 아래에 위치 */
+	left: 0; /* 추가: 왼쪽 정렬 */
+	z-index: 10; /* 추가: 다른 요소 위에 표시 */
+}
+
+.sub-buttons.show {
+	display: flex;
+}
+
+.sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sub-button:last-child {
+	border-bottom: none;
+}
+
+.sub-button:hover {
+	transform: translateX(-5px);
+}

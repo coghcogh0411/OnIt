@@ -15,21 +15,7 @@ public class HomeController {
 		req.setAttribute("contentPage", "home");
 		return "index";
 	}
-	@GetMapping("/join")
-	public String join(HttpServletRequest req) {
-		req.setAttribute("contentPage", "member/join");
-		return "index";
-	}
-	@GetMapping("/selectjoin")
-	public String selectlogin(HttpServletRequest req) {
-		req.setAttribute("contentPage", "member/selectjoin");
-		return "index";
-	}
-	@GetMapping("/login")
-	public String login(HttpServletRequest req) {
-		req.setAttribute("contentPage", "member/login");
-		return "index";
-	}
+	
 	
 	
 }

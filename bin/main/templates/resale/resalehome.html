@@ -8,14 +8,12 @@
 <script type="text/javascript">
 	$(function(){
 		var isRotate = false;
-		$(".floating-button").mouseup(function(e){
+		$(".seller-info").mouseup(function(e){
 			isRotate = !isRotate;
 			if(isRotate){			
-				$(".icon").css({"transform":"rotate(-45deg)"});
 				$(".sub-buttons").addClass("show");
 			}
 			else{			
-				$(".icon").css({"transform":"rotate(0deg)"});
 				$(".sub-buttons").removeClass("show");
 			}
 		})
@@ -42,11 +40,13 @@
 		<div id="infoDiv">
 			<div class="category-header">@@@ 카테고리</div>
 			<div class="product-grid">
+			<a href="/resale-product">
 				<div class="product-card">
 					<div class="product-image">이미지</div>
 					<div class="product-info">제품 : 제품123456</div>
 					<div class="product-price">250,000 원</div>
 				</div>
+			</a>
 				<div class="product-card">
 					<div class="product-image">이미지</div>
 					<div class="product-info">제품 : 제품123456</div>

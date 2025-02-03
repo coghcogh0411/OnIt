@@ -19,5 +19,11 @@ public class ResaleController {
 		req.setAttribute("contentPage", "resale/resalereg");
 		return "index";
 	}
+
+	@GetMapping("/resale-product")
+	public String ResaleProduct(HttpServletRequest req) {		
+		req.setAttribute("contentPage", "resale/resaleproduct");
+		return "index";
+	}
 	
 }

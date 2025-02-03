@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>상품 상세 페이지</title>
+<link rel="stylesheet" href="/css/resaleproduct.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(function() {
+		$(".seller-info").click(function() {
+			$(".sub-buttons").toggleClass("show");
+		});
+	});
+</script>
+</head>
+<body>
+	<div class="main-content">
+		<div class="sidebar-container">
+			<button class="location-button">📍 동호구</button>
+			<div class="sidebar">
+				<div class="category-item">카테고리1</div>
+				<div class="category-item">카테고리2</div>
+				<div class="category-item">카테고리3</div>
+				<div class="category-item">카테고리4</div>
+				<div class="category-item">카테고리5</div>
+				<div class="category-item">카테고리6</div>
+				<div class="category-item">카테고리7</div>
+				<div class="category-item">카테고리8</div>
+				<div class="category-item">카테고리9</div>
+			</div>
+		</div>
+
+		<div class="content-area">
+			<div class="product-detail">
+				<div class="image-gallery">
+					<button class="gallery-nav prev">◀</button>
+					<div class="image-placeholder"></div>
+					<button class="gallery-nav next">▶</button>
+				</div>
+
+				<div class="seller-info">
+					<div class="seller-profile">
+						<img src="/placeholder.svg?height=40&width=40" alt="프로필"
+							class="profile-image">
+						<div class="seller-name">임채호</div>
+						<div class="rating">⭐⭐⭐⭐⭐</div>
+						<button class="like-button">♡</button>
+					</div>
+					<div class="sub-buttons">
+						<a href="/member-home" class="sub-button">정보보기</a>
+						<a href="#"class="sub-button">1:1쪽지 보내기</a>
+						<a href="#" class="sub-button">팔로우</a>
+					</div>
+				</div>
+
+				<div class="product-info">
+					<h1 class="product-title">제목</h1>
+
+					<div class="meta-info">
+						<span class="category">카테고리</span> <span class="date-divider">•</span>
+						<span class="date">2025-01-23</span>
+					</div>
+
+					<div class="price">650,000 원</div>
+
+					<div class="description-box">
+						<textarea class="description-textarea" readonly>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</textarea>
+					</div>
+
+					<div class="action-buttons">
+						<button class="action-button">댓글 가능</button>
+						<button class="action-button">직거래 가능</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
