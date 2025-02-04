@@ -8,12 +8,14 @@
 <script type="text/javascript">
 	$(function(){
 		var isRotate = false;
-		$(".seller-info").mouseup(function(e){
+		$(".floating-button").mouseup(function(e){
 			isRotate = !isRotate;
-			if(isRotate){			
+			if(isRotate){
+				$(".icon").css({"transform":"rotate(-45deg)"});
 				$(".sub-buttons").addClass("show");
 			}
 			else{			
+				$(".icon").css({"transform":"rotate(0deg)"});
 				$(".sub-buttons").removeClass("show");
 			}
 		})
