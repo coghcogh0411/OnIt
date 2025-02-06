@@ -1,5 +1,5 @@
 .container {
-	max-width: 500px;
+	max-width: 700px;
 	margin: 20px auto;
 	padding: 20px;
 	background-color: #fff;
@@ -58,6 +58,11 @@
 	width: 30%;
 }
 
+#updateBtnDiv{
+	margin: 0px auto;
+	width: 90%;
+}
+
 .row {
 	display: flex;
 	justify-content: space-between;
@@ -66,6 +71,7 @@
 
 .row input {
 	width: calc(33.333% - 6.66px);
+	text-align: center;
 }
 
 .address-search {

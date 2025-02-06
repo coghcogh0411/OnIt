@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/communityreg.css">
+</head>
+<body>
+	<form>
+		<div class="container">
+			<div class="main-content">
+				<div class="form-group">
+					<label class="form-label">제목</label> <input type="text"
+						class="form-control" required>
+				</div>
+				<div class="form-group">
+					<label class="form-label">내용</label>
+					<textarea class="form-control" required></textarea>
+				</div>
+			</div>
+
+			<div class="sidebar">
+				<div class="radio-group">
+					<label class="radio-label"> <input type="radio"
+						name="board" value="free" checked> <span>자유게시판</span>
+					</label> <label class="radio-label"> <input type="radio"
+						name="board" value="trade"> <span>중고거래 게시판</span>
+					</label> <label class="radio-label"> <input type="radio"
+						name="board" value="auction"> <span>경매 게시판</span>
+					</label> <label class="radio-label"> <input type="radio"
+						name="board" value="tips"> <span>팁게시판</span>
+					</label>
+				</div>
+			</div>
+		</div>
+
+		<div class="button-group">
+			<button type="submit" class="btn btn-primary">글 등록</button>
+			<button type="button" class="btn btn-secondary">뒤로 가기</button>
+		</div>
+	</form>
+</body>
+</html>

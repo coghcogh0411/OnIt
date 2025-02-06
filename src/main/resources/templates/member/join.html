@@ -7,7 +7,7 @@
 </head>
 <body>
 	<h1 align="center">이메일 회원가입</h1>
-	<form name="joinForm">
+	<form action="sign-up" name="joinForm" method="post" enctype="multipart/form-data">
 		<div class="container">
 			<div class="form-group">
 				<label for="email">이메일</label> <input type="email" id="email"
@@ -15,17 +15,17 @@
 				<div class="error">*올바르지 않은 이메일 형식입니다.</div>
 			</div>
 			<div class="form-group">
-				<label for="username">아이디</label> <input type="text" id="username"
-					name="username" placeholder="아이디 입력">
+				<label for="id">아이디</label> <input type="text" id="username"
+					name="id" placeholder="아이디 입력">
 				<div class="error">*이미 존재하는 ID입니다.</div>
 			</div>
 			<div class="form-group">
-				<label for="password">비밀번호</label> <input type="password"
-					id="password" name="password" placeholder="비밀번호 입력">
+				<label for="pw">비밀번호</label> <input type="password"
+					id="password" name="pw" placeholder="비밀번호 입력">
 			</div>
 			<div class="form-group">
 				<label for="password-confirm">비밀번호 확인</label> <input type="password"
-					id="password-confirm" name="password-confirm" placeholder="비밀번호 확인">
+					id="password-confirm" placeholder="비밀번호 확인">
 				<div class="error">*비밀번호가 일치하지 않습니다.</div>
 			</div>
 			<div class="form-group">
@@ -40,32 +40,36 @@
 			<div class="form-group">
 				<label>생년월일</label>
 				<div class="row">
-					<input type="text" name="year" placeholder="YYYY"> <input
-						type="text" name="month" placeholder="MM"> <input
-						type="text" name="day" placeholder="DD">
+					<input type="text" name="year" placeholder="YYYY">
+					<input type="text" name="month" placeholder="MM">
+					<input type="text" name="day" placeholder="DD">
 				</div>
 				<div class="error">*올바르지 않은 생년월일입니다.</div>
 			</div>
 			<div class="form-group">
-				<label for="phone">휴대전화</label> <input type="text" id="phone"
-					name="phone" placeholder="010-1234-5678">
+				<label for="phone">휴대전화</label>
+				<div class="row" align="center">
+					<input type="text" id="phone" name="phone1" placeholder="010" maxlength="3">-
+					<input type="text" id="phone" name="phone2" placeholder="1234" maxlength="4">-
+					<input type="text" id="phone" name="phone3" placeholder="5678" maxlength="4">
+				</div>
 			</div>
 			<div class="form-group">
 				<label>주소</label>
 				<div class="address-search">
-					<input type="text" id="addr1" readonly="readonly">
+					<input type="text" id="addr1" name="addr1" readonly="readonly">
 					<button type="button" id="addr2">우편번호 검색</button>
 				</div>
-				<input type="text" id="addr3" placeholder="상세주소">
+				<input type="text" id="addr3" name="addr2" placeholder="상세주소">
 			</div>
 			<div class="form-group">
 				<label>프로필 사진</label>
 				<div class="profile-picture-container">
 					<div class="profile-picture">
-						<label for="profile-image" class="upload-label">
+						<label for="photo" class="upload-label">
 							여기를 눌러 이미지를 선택하거나<br>
 							드래그해서 이미지를 추가하세요
-						</label> <input type="file" id="profile-image" name="profile-image"
+						</label> <input type="file" id="profile-image" name="photoTemp"
 							accept="image/*">
 					</div>
 					<div class="preview-area">

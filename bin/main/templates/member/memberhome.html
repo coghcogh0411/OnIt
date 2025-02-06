@@ -9,41 +9,41 @@
 	<div class="main-content">
 		<div class="sidebar-container">
 			<div class="sidebar">
-				<div class="category-item">카테고리1</div>
-				<div class="category-item">카테고리2</div>
-				<div class="category-item">카테고리3</div>
-				<div class="category-item">카테고리4</div>
-				<div class="category-item">카테고리5</div>
-				<div class="category-item">카테고리6</div>
-				<div class="category-item">카테고리7</div>
-				<div class="category-item">카테고리8</div>
-				<div class="category-item">카테고리9</div>
+				<div class="category-item">개인정보</div>
+				<a href="/member-home" class="category-item-child">-개인정보 수정</a>
+				<a href="/member-home" class="category-item-child">-회원탈퇴</a>
+				<div class="category-item">내 상품</div>
+				<a href="/member-home" class="category-item-child">-내가 올린 상품</a>
+				<a href="/member-home" class="category-item-child">-종아요 표시한 상품</a>
+				<a href="/member-home" class="category-item">팔로우</a>
 			</div>
 		</div>
 
 		<div class="profile-card">
-			<div>
-				<div class="profile-header">
+			<div class="profile-header">
+				<div class="profile-name">
 					<div class="username">구파</div>
 				</div>
 
-				<div>
-					<div class="profile-content">
-						<textarea class="description"></textarea>
-					</div>
+				<div class="profile-content">
+					<textarea class="description"></textarea>
 				</div>
-
-				<div class="action-buttons">
+				<div class="badge">
+					<div>asd</div>
+					<div>asd</div>
+					<div>asd</div>
+				</div>
+				<button class="action-buttons" type="submit">
 					<div class="edit-button">프로필 수정 ✏️</div>
-				</div>
+				</button>
 			</div>
+			
 			<div class="profile-image">
 				<img src="" alt="프로필 이미지">
 			</div>
-
-
 		</div>
-
 	</div>
+	
+	<div class="content" th:insert="~{${myPageContent}}"></div>
 </body>
 </html>
