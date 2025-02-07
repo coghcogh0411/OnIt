@@ -68,4 +68,8 @@ public class MemberDAO {
 			e.printStackTrace();
 		}
 	}
+	
+	public void memberLogin() {
+		
+	}
 }
