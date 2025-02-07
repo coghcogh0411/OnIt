@@ -1,7 +1,11 @@
 package com.minho.ownit.member;
 
 import java.util.Date;
+import java.util.List;
 
+import com.minho.ownit.community.Community;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -43,4 +47,6 @@ public class Member {
 	@Column(name = "user_address")
 	private String addr;
 	
+	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+	private List<Community> communityList;
 }
