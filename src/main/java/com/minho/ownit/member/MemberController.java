@@ -33,6 +33,14 @@ public class MemberController {
 		req.setAttribute("contentPage", "member/login");
 		return "index";
 	}
+	
+	@PostMapping("/login-do")
+	public String loginDo(Member m, HttpServletRequest req) {
+		mDAO.memberLogin(m, req);
+		req.setAttribute("contentPage", "home");
+		return "index";
+	}
+	
 	@GetMapping("/member-home")
 	public String memberhome(HttpServletRequest req) {
 		req.setAttribute("contentPage", "member/memberhome");

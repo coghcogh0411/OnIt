@@ -8,11 +8,11 @@
 <body>
 	 <div class="login-container">
         <h1>OnIt 로그인</h1>
-        <form>
+        <form method="post" action="login-do">
         	<div align="left">아이디</div>
-            <input type="text" placeholder="아이디">
+            <input name="id" type="text" placeholder="아이디">
         	<div align="left">비밀번호</div>
-            <input type="password" placeholder="********">
+            <input name="pw" type="password" placeholder="********">
             <button type="submit" class="login-btn">로그인</button>
         </form>
         <div class="links">

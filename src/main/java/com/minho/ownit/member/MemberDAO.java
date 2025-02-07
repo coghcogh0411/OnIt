@@ -3,6 +3,7 @@ package com.minho.ownit.member;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kwon.gbraucp.member.Member;
 import com.minho.ownit.FileNameGenerator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -69,7 +71,23 @@ public class MemberDAO {
 		}
 	}
 	
-	public void memberLogin() {
+	public void memberLogin(Member m, HttpServletRequest req) {
+		try {
+			Optional<Member> memberTemp = Mrepo.findById(m.getId());
+			if (memberTemp.isPresent()) {
+				Member dbMember = memberTemp.get();
+				if (bcpe.matches(m.getPw(), dbMember.getPw())) {
+					req.getSession().setAttribute("loginMember", dbMember);
+					req.getSession().setMaxInactiveInterval(10 * 60);
+				} else {
+					req.setAttribute("result", "로그인 실패(pw오류)");
+				}
+			} else {
+				req.setAttribute("result", "로그인 실패(미가입id)");
+			}
+		} catch (Exception e) {
+			req.setAttribute("result", "로그인 실패(DB)");
+		}
 		
 	}
 }
