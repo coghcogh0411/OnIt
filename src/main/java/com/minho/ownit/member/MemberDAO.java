@@ -11,7 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kwon.gbraucp.member.Member;
 import com.minho.ownit.FileNameGenerator;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -89,5 +88,15 @@ public class MemberDAO {
 			req.setAttribute("result", "로그인 실패(DB)");
 		}
 		
+	}
+	
+	public boolean isLogined(HttpServletRequest req) {
+		Member m = (Member) req.getSession().getAttribute("loginMember");
+		if (m != null) {
+			req.setAttribute("loginPage", "member/logined");
+			return true;
+		}
+		req.setAttribute("loginPage", "member/loginreg");
+		return false;
 	}
 }

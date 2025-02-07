@@ -4,51 +4,44 @@
 <meta charset="UTF-8">
 <title>OwnIt - 중고거래 플랫폼</title>
 <link rel="stylesheet" href="/css/index.css">
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/kwonValidChecker_v1.0.js"></script>
 <script type="text/javascript" src="/js/check.js"></script>
 <script type="text/javascript" src="/js/mainJS.js"></script>
 </head>
 <body>
-	 <header>
-        <a class="logo" href="/">OwnIt</a>
-        <div class="search-bar">
-            <select>
-                <option>중고거래</option>
-            </select>
-            <input type="text" placeholder="검색어를 입력해주세요">
-            <button>검색</button>
-        </div>
-        <div>
-            <a href="/login">로그인</a> | <a href="/selectjoin">회원가입</a>
-        </div>
-    </header>
+	<header>
+		<a class="logo" href="/">OwnIt</a>
+		<div class="search-bar">
+			<select>
+				<option>중고거래</option>
+			</select> <input type="text" placeholder="검색어를 입력해주세요">
+			<button>검색</button>
+		</div>
+		<div th:insert="~{${loginPage}}"></div>
 
-    <nav class="menu">
-        <a href="/resale" class="menu-item">중고거래</a>
-        <a href="#" class="menu-item">경매</a>
-        <a href="#" class="menu-item">랭킹</a>
-        <a href="/community" class="menu-item">커뮤니티</a>
-        <a href="#" class="menu-item">마이페이지</a>
-        
-    </nav>
+	</header>
 
-    <div class="content" th:insert="~{${contentPage}}"></div>
-    
+	<nav class="menu">
+		<a href="/resale" class="menu-item">중고거래</a> <a href="#"
+			class="menu-item">경매</a> <a href="#" class="menu-item">랭킹</a> <a
+			href="/community" class="menu-item">커뮤니티</a> <a href="#"
+			class="menu-item">마이페이지</a>
 
-    <footer>
-        <div class="footer-info">
-            (주) 온잇<br>
-            대표자: 임채호, 마뇽채찍<br>
-            사업자등록번호: 000-00-00000<br>
-            주소: 서울특별시 종로구 종로12길 15, 10층 (솔데스크)<br>
-            전화: 010-9204-3774<br>
-            고객문의: coghcogh04111@gmail.com
-        </div>
-        <div class="footer-links">
-            이용약관 | 개인정보처리방침 | 청소년보호정책
-        </div>
-    </footer>	
+	</nav>
+
+	<div class="content" th:insert="~{${contentPage}}"></div>
+
+
+	<footer>
+		<div class="footer-info">
+			(주) 온잇<br> 대표자: 임채호, 마뇽채찍<br> 사업자등록번호: 000-00-00000<br>
+			주소: 서울특별시 종로구 종로12길 15, 10층 (솔데스크)<br> 전화: 010-9204-3774<br>
+			고객문의: coghcogh04111@gmail.com
+		</div>
+		<div class="footer-links">이용약관 | 개인정보처리방침 | 청소년보호정책</div>
+	</footer>
 </body>
 </html>
