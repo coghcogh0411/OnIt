@@ -76,7 +76,7 @@
 
 textarea.form-control {
 	min-height: 300px;
-	resize: vertical;
+	resize: none;
 }
 
 .button-group {

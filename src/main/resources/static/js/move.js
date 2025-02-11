@@ -6,3 +6,6 @@ function replyreg(no){
 	location.href="reply-reg?no="+no+"&reply="+reply;
 	
 }
+function categorychange(no){
+	location.href="community?categoryNo="+no;
+}

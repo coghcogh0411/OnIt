@@ -26,7 +26,7 @@ public class CommunityController {
 		return "index";
 	}
 	@GetMapping("/community-page")
-	public String CommunityPage(HttpServletRequest req, @RequestParam("page") int page) {
+	public String CommunityPage(HttpServletRequest req, @RequestParam int page) {
 		mDAO.isLogined(req);
 		cDAO.get(req, page);
 		req.setAttribute("contentPage", "community/communityhome");
@@ -35,6 +35,7 @@ public class CommunityController {
 	@GetMapping("/community-reg")
 	public String CommunityReg(HttpServletRequest req) {
 		mDAO.isLogined(req);
+		cDAO.categoryselect(req);
 		req.setAttribute("contentPage", "community/communityreg");
 		return "index";
 	}
@@ -42,6 +43,7 @@ public class CommunityController {
 	public String CommunityPostReg(Community c, HttpServletRequest req) {
 		mDAO.isLogined(req);
 		cDAO.writePost(c, req);
+		cDAO.get(req, 1);
 		req.setAttribute("contentPage", "community/communityhome");
 		return "index";
 	}

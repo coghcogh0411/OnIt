@@ -30,24 +30,18 @@
 	<div class="main-content">
 		<div class="sidebar-container">
 			<div class="sidebar">
-				<div class="category-item">자유게시판</div>
+			<div th:each="c:${category}" th:onclick="categorychange([[${c.categoryNo}]])">
+				<div class="category-item" th:text="${c.name}"></div>
 				<div class="category-item-child">-30좋아요 글</div>
 				<div class="category-item-child">-10좋아요 글</div>
-				<div class="category-item">중고거래 게시판</div>
-				<div class="category-item-child">-30좋아요 글</div>
-				<div class="category-item-child">-10좋아요 글</div>
-				<div class="category-item">경매 게시판</div>
-				<div class="category-item-child">-30좋아요 글</div>
-				<div class="category-item-child">-10좋아요 글</div>
-				<div class="category-item">팁 게시판</div>
-				<div class="category-item-child">-30좋아요 글</div>
-				<div class="category-item-child">-10좋아요 글</div>
+			</div>
+				
 			</div>
 		</div>
 
 		<div id="infoDiv">
 			<div class="category-header">
-				<div id="title">자유게시판</div>
+				<div id="title" th:text="${categoryname.name}"></div>
 			</div>
 			<div class="filters">
                 <button class="filter-btn active">최신글</button>
