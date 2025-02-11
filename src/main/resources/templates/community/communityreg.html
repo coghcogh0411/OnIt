@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -21,15 +21,9 @@
 
 			<div class="sidebar">
 				<div class="radio-group">
-					<label class="radio-label"> <input type="radio"
-						name="category" value="1" checked> <span>자유게시판</span>
-					</label> <label class="radio-label"> <input type="radio"
-						name="category" value="2"> <span>중고거래 게시판</span>
-					</label> <label class="radio-label"> <input type="radio"
-						name="category" value="3"> <span>경매 게시판</span>
-					</label> <label class="radio-label"> <input type="radio"
-						name="category" value="4"> <span>팁게시판</span>
-					</label>
+					<label class="radio-label" th:each="c:${category}"> <input type="radio"
+						name="category" th:value="${c.no}" checked> <span th:text="${c.name}"></span>
+					</label> 
 				</div>
 			</div>
 		</div>

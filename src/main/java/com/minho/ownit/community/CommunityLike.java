@@ -14,9 +14,9 @@ import lombok.NoArgsConstructor;
 public class CommunityLike {
 	@Id
 	@Column(name = "post_like_no")
-	private Integer post_like_no;
+	private Integer no;
 	@Column(name = "user_id")
-	private Integer user_id;
+	private Integer id;
 	@Column(name = "post_no")
-	private Integer post_no;
+	private Integer pno;
 }

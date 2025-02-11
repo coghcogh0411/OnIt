@@ -28,11 +28,12 @@ import lombok.NoArgsConstructor;
 public class Community {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq")
-    @SequenceGenerator(name = "post_seq", sequenceName = "seq_post_no", allocationSize = 1)
+	@SequenceGenerator(name = "post_seq", sequenceName = "seq_post_no", allocationSize = 1)
 	@Column(name = "post_no")
 	private Integer no;
-	@Column(name = "category_no")
-	private Integer category;
+	@ManyToOne
+	@JoinColumn(name = "category_no")
+	private CommunityCategory category;
 	@Column(name = "post_title")
 	private String title;
 	@Column(name = "post_content")
@@ -42,15 +43,13 @@ public class Community {
 	private Date date;
 	@Column(name = "post_view")
 	private Integer view;
-	@Column(name = "post_like")
-	private Integer like;
 	@Column(name = "post_comment")
 	private Integer comment;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Member writer;
-	
+
 	@OneToMany(mappedBy = "pno", cascade = CascadeType.ALL)
 	private List<CommunityReply> replies;
 }

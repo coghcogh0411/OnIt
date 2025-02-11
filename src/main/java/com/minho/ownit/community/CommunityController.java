@@ -26,7 +26,7 @@ public class CommunityController {
 		return "index";
 	}
 	@GetMapping("/community-page")
-	public String CommunityPage(HttpServletRequest req, @RequestParam int page) {
+	public String CommunityPage(HttpServletRequest req, @RequestParam("page") int page) {
 		mDAO.isLogined(req);
 		cDAO.get(req, page);
 		req.setAttribute("contentPage", "community/communityhome");

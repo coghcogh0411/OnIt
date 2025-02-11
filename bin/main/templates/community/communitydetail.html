@@ -14,7 +14,7 @@
 				조회수: <span th:text="${postdetail.view}"></span>
 			</div>
 			<div>
-				좋아요: <span th:text="${postdetail.like}"></span>
+				좋아요: <span >0</span>
 			</div>
 			<div>
 				<span
@@ -32,13 +32,13 @@
 		<div class="like">
 			<button class="like-button" id="likeButton">
 				좋아요 <span class="icon">♡</span> <span id="likeCount"
-					th:text="${postdetail.like}"></span>
+					>0</span>
 			</button>
 		</div>
 		<hr>
 		<div class="comment-section">
 			<!-- 댓글 목록 반복 -->
-			<div th:each="r : ${reply}" class="comment">
+			<div th:each="r : ${postdetail.replies}" class="comment">
 				<!-- 댓글 작성자 정보 표시 -->
 				<div class="comment-author">
 					<img  alt="프로필 사진"
