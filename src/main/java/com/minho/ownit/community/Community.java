@@ -1,16 +1,22 @@
 package com.minho.ownit.community;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.minho.ownit.member.Member;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +27,8 @@ import lombok.NoArgsConstructor;
 @Entity(name = "post")
 public class Community {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "post_seq")
+    @SequenceGenerator(name = "post_seq", sequenceName = "seq_post_no", allocationSize = 1)
 	@Column(name = "post_no")
 	private Integer no;
 	@Column(name = "category_no")
@@ -41,6 +49,8 @@ public class Community {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private Member id;
+	private Member writer;
 	
+	@OneToMany(mappedBy = "pno", cascade = CascadeType.ALL)
+	private List<CommunityReply> replies;
 }

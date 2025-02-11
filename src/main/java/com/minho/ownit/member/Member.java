@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.minho.ownit.community.Community;
+import com.minho.ownit.community.CommunityReply;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -47,6 +48,8 @@ public class Member {
 	@Column(name = "user_address")
 	private String addr;
 	
-	@OneToMany(mappedBy = "id", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
 	private List<Community> communityList;
+	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
+	private List<CommunityReply> replies;
 }

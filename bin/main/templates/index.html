@@ -14,12 +14,16 @@
 <body>
 	<header>
 		<a class="logo" href="/">OwnIt</a>
-		<div class="search-bar">
-			<select>
-				<option>중고거래</option>
-			</select> <input type="text" placeholder="검색어를 입력해주세요">
-			<button>검색</button>
-		</div>
+		<form action="/search">
+			<div class="search-bar">
+				<select name="searchType">
+					<option value="resale">중고거래</option>
+					<option value="auction">경매거래</option>
+					<option value="community">커뮤니티</option>
+				</select> <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
+				<button>검색</button>
+			</div>
+		</form>
 		<div th:insert="~{${loginPage}}"></div>
 
 	</header>
@@ -29,7 +33,7 @@
 			class="menu-item">경매</a> <a href="#" class="menu-item">랭킹</a> <a
 			href="/community" class="menu-item">커뮤니티</a> <a href="#"
 			class="menu-item">마이페이지</a>
-
+		<div th:text="${result}"></div>
 	</nav>
 
 	<div class="content" th:insert="~{${contentPage}}"></div>

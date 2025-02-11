@@ -124,6 +124,15 @@
 		display: none;
 	}
 }
+
+#page {
+	display: flex;
+	justify-content: center;
+	margin-top: 20px;
+	margin-bottom: 100px;
+}
+
+
 .floating-button {
 	position: fixed;
 	bottom: 20px;
@@ -135,7 +144,8 @@
 	border: 8px solid #9AA2EC;
 	border-radius: 50%;
 	font-size: 60px;
-	font-weight: bold; cursor : pointer;
+	font-weight: bold;
+	cursor: pointer;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: center;

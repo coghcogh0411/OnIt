@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>자유게시판 5번째 글</title>
+<script type="text/javascript" src="/js/move.js"></script>
+<link rel="stylesheet" href="/css/communitydetail.css">
+</head>
+<body>
+	<div class="main-container">
+		<div class="post-info">
+			<input name="pno" th:value="${postdetail.no}">
+			<div>
+				조회수: <span th:text="${postdetail.view}"></span>
+			</div>
+			<div>
+				좋아요: <span th:text="${postdetail.like}"></span>
+			</div>
+			<div>
+				<span
+					th:text="${#dates.format(postdetail.date, 'yyyy-MM-dd HH:mm')}"></span>
+			</div>
+			<div>
+				댓글: <span th:text="${postdetail.comment}"></span>
+			</div>
+		</div>
+		<hr>
+		<h1 th:text="${postdetail.title}"></h1>
+		<hr>
+		<div class="content" th:text="${postdetail.content}"></div>
+
+		<div class="like">
+			<button class="like-button" id="likeButton">
+				좋아요 <span class="icon">♡</span> <span id="likeCount"
+					th:text="${postdetail.like}"></span>
+			</button>
+		</div>
+		<hr>
+		<div class="comment-section">
+			<!-- 댓글 목록 반복 -->
+			<div th:each="r : ${reply}" class="comment">
+				<!-- 댓글 작성자 정보 표시 -->
+				<div class="comment-author">
+					<img  alt="프로필 사진"
+						class="author-profile-pic"> <span class="author-name"
+						th:text="${r.writer.id}">작성자 이름</span>
+				</div>
+				<!-- 댓글 내용 표시 -->
+				<div class="comment-content" th:text="${r.reply}">댓글 내용</div>
+			</div>
+
+			<!-- 댓글 작성란 -->
+			<div class="comment-box">
+				<input name="reply" id="reply" type="text" class="comment-input"
+					placeholder="항상 잘 보고있습니다.">
+			</div>
+			<div>
+				<button class="submit-comment"
+					th:onclick="replyreg([[${postdetail.no}]])">댓글 작성</button>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.minho.ownit.community.CommunityDAO;
 import com.minho.ownit.member.MemberDAO;
 
 
@@ -15,6 +16,8 @@ import com.minho.ownit.member.MemberDAO;
 public class HomeController {
 	@Autowired
 	private MemberDAO mDAO;
+	@Autowired
+	private CommunityDAO cDAO;
 	
 	@GetMapping("/")
 	public String home(HttpServletRequest req) {
@@ -22,4 +25,21 @@ public class HomeController {
 		req.setAttribute("contentPage", "home");
 		return "index";
 	}
+	@GetMapping("/search")
+	public String Search(@RequestParam String searchType, @RequestParam String keyword, HttpServletRequest req) {
+
+		switch (searchType) {
+		case "community":
+			mDAO.isLogined(req);
+			cDAO.search(req);
+			cDAO.get(req, 1);
+			req.setAttribute("contentPage", "community/communityhome");
+			break;
+
+		default:
+			break;
+		}
+		return "index";
+	}
+	
 }

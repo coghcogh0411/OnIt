@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/communityhome.css">
 <script type="text/javascript" src="/js/jQuery.js"></script>
+<script type="text/javascript" src="/js/move.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var isRotate = false;
@@ -65,35 +66,24 @@
 				</thead>
 				<tbody>
 				<!-- 여기에 내용추가 -->
-					<tr>
-						<td>1</td>
-						<td>ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</td>
-						<td>마뇽채찍</td>
-						<td>2025-02-06</td>
-						<td>10000</td>
-						<td>3400</td>
-						<td>500</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td>ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</td>
-						<td>마뇽채찍</td>
-						<td>2025-02-06</td>
-						<td>10000</td>
-						<td>3400</td>
-						<td>500</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td>ㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇㅁㄴㅇ</td>
-						<td>마뇽채찍</td>
-						<td>2025-02-06</td>
-						<td>10000</td>
-						<td>3400</td>
-						<td>500</td>
+					<tr th:each="p:${post}" th:onclick="communityDetail([[${p.no}]])">
+						<td th:text="${p.no}"></td>
+						<td th:text="${p.title}"></td>
+						<td th:text="${p.writer.id}"></td>
+						<td th:text="${p.date}"></td>
+						<td th:text="${p.view}"></td>
+						<td th:text="${p.like}"></td>
+						<td th:text="${p.comment}"></td>
 					</tr>
 				</tbody>
 			</table>
+			<th:block th:each="page : ${#numbers.sequence(1, pageCount)}">
+            <a class="page-btn" 
+               th:classappend="${page == currentPage ? 'active' : ''}"
+               th:href="@{community-page(page=${page})}"
+               th:text="${page}">
+            </a>
+        </th:block>
 		</div>
 	</div>
 	<!-- 여기부터 등록관련 버튼 -->
