@@ -18,21 +18,21 @@
         <div class="main-content">
             <form class="form-container">
                 <div class="form-fields">
-                    <input type="text" class="input-field" placeholder="제목을 입력하세요">
-                    <textarea class="textarea-field" placeholder="설명을 입력하세요"></textarea>
+                    <input type="text" name="title" class="input-field" placeholder="제목을 입력하세요">
+                    <textarea class="textarea-field" name="description" placeholder="설명을 입력하세요"></textarea>
                     <div class="dropdowns-container">
-                        <select class="dropdown">
+                        <select class="dropdown" name="category">
                             <option>카테고리</option>
                         </select>
-                        <select class="dropdown">
+                        <select class="dropdown" name="delivery">
                             <option>택배 여부</option>
-                            <option>가능</option>
-                            <option>불가능</option>
+                            <option value="Y">가능</option>
+                            <option value="N">불가능</option>
                         </select>
-                        <select class="dropdown">
+                        <select class="dropdown" name="deal">
                             <option>직거래 여부</option>
-                            <option>가능</option>
-                            <option>불가능</option>
+                            <option value="Y">가능</option>
+                            <option value="N">불가능</option>
                         </select>
                     </div>
                 </div>
@@ -40,17 +40,9 @@
                 <div class="image-section">
                     <div class="upload-area">
                         <span>이미지를 올려주세요</span>
-                        <input type="file" accept="image/*" multiple>
+                        <input type="file" name="photos" accept="image/*" multiple>
                     </div>
                     <div class="preview-carousel">
-                    	<img src="/placeholder.svg" class="preview-image" alt="Preview 1">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 2">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 3">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 4">
-                    	<img src="/placeholder.svg" class="preview-image" alt="Preview 1">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 2">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 3">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 4">
                     	<img src="/placeholder.svg" class="preview-image" alt="Preview 1">
                 		<img src="/placeholder.svg" class="preview-image" alt="Preview 2">
                 		<img src="/placeholder.svg" class="preview-image" alt="Preview 3">
@@ -58,7 +50,7 @@
                     </div>
                     
                     <div class="price-section">
-                        <input type="text" class="price-input" placeholder="가격 입력">
+                        <input type="text" class="price-input" name="price" placeholder="가격 입력">
                         <button type="submit" class="submit-button">등록</button>
                     </div>
                 </div>
