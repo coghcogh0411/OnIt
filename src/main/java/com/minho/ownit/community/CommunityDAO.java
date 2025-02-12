@@ -1,6 +1,8 @@
 package com.minho.ownit.community;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -21,7 +23,7 @@ public class CommunityDAO {
 	@Autowired
 	private CommunityCategoryRepo ccRepo;
 	@Autowired
-	private CommunityLikeRepo clrRepo;
+	private CommunityLikeRepo clRepo;
 
 	private int postPerPage;
 
@@ -128,6 +130,13 @@ public class CommunityDAO {
 	                    categoryNo, searchTitle, searchTitle, pg);
 	        }
 	        
+	        Map<Integer, Long> likeCountMap = new HashMap<>();
+	        for (Community post : posts) {
+	            long likeCount = clRepo.countByPost(post);
+	            likeCountMap.put(post.getNo(), likeCount);
+	        }
+	        
+			req.setAttribute("likecount", likeCountMap);
 	        req.setAttribute("categorytitle", ccRepo.findById(categoryNo).get());
 	        req.setAttribute("post", posts);
 	        req.setAttribute("category", ccRepo.findAll()); // 카테고리 목록 설정
@@ -140,6 +149,12 @@ public class CommunityDAO {
 	public void getDetail(Community c, HttpServletRequest req) {
 		Integer postNo = Integer.parseInt(req.getParameter("pno"));
 		Community com = cRepo.findById(postNo).get();
+		Member m = (Member)req.getSession().getAttribute("loginMember");
+		
+		boolean isLike = clRepo.existsByPostAndUser(com, m);
+		
+		req.setAttribute("isLike", isLike);
+		req.setAttribute("likecount", clRepo.countByPost(com));
 		req.setAttribute("postdetail", com);
 		req.setAttribute("reply", ccRepo.findAll());
 
@@ -161,12 +176,22 @@ public class CommunityDAO {
 			int pno = Integer.parseInt(req.getParameter("pno"));
 			Community c = cRepo.findByNo(pno);
 			cl.setPost(c);
-			clrRepo.save(cl);
+			clRepo.save(cl);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
 	
+	public void liked(CommunityLike cl, HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			int pno = Integer.parseInt(req.getParameter("pno"));
+			Community c = cRepo.findByNo(pno);
+			CommunityLike existingLike = clRepo.findByPostAndUser(c, m);
+			clRepo.delete(existingLike);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }

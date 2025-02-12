@@ -72,5 +72,14 @@ public class CommunityController {
 		return "index";
 	}
 	
+	@GetMapping("/community-liked")
+	public String liked(HttpServletRequest req, Community c, CommunityLike cl) {
+		mDAO.isLogined(req);
+		cDAO.liked(cl, req);
+		cDAO.getDetail(c, req);
+		req.setAttribute("contentPage", "community/communitydetail");
+		return "index";
+	}
+	
 	
 }

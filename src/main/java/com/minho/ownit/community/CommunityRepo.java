@@ -21,5 +21,6 @@ public interface CommunityRepo extends CrudRepository<Community, Integer> {
 	// 제목 또는 작성자 ID를 포함하여 카테고리로 필터링된 게시글 수를 조회
 	public abstract Long countByCategory_CategoryNoAndTitleContainingOrWriterIdContaining(Integer categoryNo,
 			String title, String id);
+	
 	public abstract Community findByNo(int pno);
 }

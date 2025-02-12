@@ -27,7 +27,6 @@ public class CommunityLike {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private Member user;
-
 	@ManyToOne
 	@JoinColumn(name = "post_no")
 	private Community post; 

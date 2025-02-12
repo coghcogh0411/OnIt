@@ -30,6 +30,10 @@ h1 {
 	align-items: center;
 	justify-content: center;
 }
+.like img{
+	max-height: 20px;
+	max-width: 20px;
+}
 
 .like-button {
 	display: flex;

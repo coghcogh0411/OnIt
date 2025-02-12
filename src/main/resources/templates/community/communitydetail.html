@@ -15,7 +15,7 @@
 				조회수: <span th:text="${postdetail.view}"></span>
 			</div>
 			<div>
-				좋아요: <span >0</span>
+				좋아요: <span th:text="${likecount}"></span>
 			</div>
 			<div>
 				<span
@@ -31,9 +31,13 @@
 		<div class="content" th:text="${postdetail.content}"></div>
 
 		<div class="like">
-			<button class="like-button" id="likeButton" type="button" th:onclick="communityLike([[${postdetail.no}]])">
-				좋아요 <span class="icon">♡</span> <span id="likeCount"
-					>0</span>
+			<button class="like-button" id="likeButton" type="button" th:if="${isLike==false}" th:onclick="communityLike([[${postdetail.no}]])">
+				좋아요 <span class="icon"><img alt="" src="img/like.png"></span> <span id="likeCount" th:text="${likecount}"
+					></span>
+			</button>
+			<button class="like-button" id="likeButton" type="button" th:if="${isLike==true}" th:onclick="communityLiked([[${postdetail.no}]])">
+				좋아요 <span class="icon"><img alt="" src="img/liked.png"></span> <span id="likeCount" th:text="${likecount}"
+					></span>
 			</button>
 		</div>
 		<hr>

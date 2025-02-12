@@ -11,3 +11,6 @@ function categorychange(no){
 function communityLike(no){
 	location.href="community-like?pno="+no
 }
+function communityLiked(no){
+	location.href="community-liked?pno="+no
+}
