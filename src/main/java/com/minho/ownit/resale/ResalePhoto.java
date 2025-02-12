@@ -1,5 +1,6 @@
 package com.minho.ownit.resale;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,16 +20,16 @@ import lombok.NoArgsConstructor;
 public class ResalePhoto {
 
     @Id
-    @SequenceGenerator(name = "resale_photo_seq", sequenceName = "seq_resale_photo_no", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "resale_photo_seq")
-    @Column(name = "photo_id")
+    @SequenceGenerator(name = "resale_photo_seq", sequenceName = "seq_resale_photo_no", allocationSize = 1)
+    @Column(name = "resale_photo_no")
     private Integer photoId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "resale_no")
     private Resale resale;
 
-    @Column(name = "photo_url")
+    @Column(name = "resale_photo_url")
     private String url;
 
 }

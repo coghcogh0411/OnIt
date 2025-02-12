@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 등록</title>
 <link rel="stylesheet" href="/css/resalereg.css">
 </head>
 <body>
 
-	<div class="container">
+    <div class="container">
         <div class="top-content">
             <button class="location-button">
                 <span class="location-icon">📍</span> 종로구
@@ -16,13 +16,16 @@
         </div>
 
         <div class="main-content">
-            <form class="form-container">
+            <form class="form-container" action="/resale-reg" method="post" enctype="multipart/form-data">
                 <div class="form-fields">
                     <input type="text" name="title" class="input-field" placeholder="제목을 입력하세요">
                     <textarea class="textarea-field" name="description" placeholder="설명을 입력하세요"></textarea>
                     <div class="dropdowns-container">
                         <select class="dropdown" name="category">
-                            <option>카테고리</option>
+                            <option value="">카테고리 선택</option>
+                            <th:block th:each="category : ${categories}">
+                                <option th:value="${category.no}" th:text="${category.name}"></option>
+                            </th:block>
                         </select>
                         <select class="dropdown" name="delivery">
                             <option>택배 여부</option>
@@ -40,13 +43,13 @@
                 <div class="image-section">
                     <div class="upload-area">
                         <span>이미지를 올려주세요</span>
-                        <input type="file" name="photos" accept="image/*" multiple>
+                        <input type="file" name="files" accept="image/*" multiple>
                     </div>
                     <div class="preview-carousel">
-                    	<img src="/placeholder.svg" class="preview-image" alt="Preview 1">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 2">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 3">
-                		<img src="/placeholder.svg" class="preview-image" alt="Preview 4">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 1">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 2">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 3">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 4">
                     </div>
                     
                     <div class="price-section">
