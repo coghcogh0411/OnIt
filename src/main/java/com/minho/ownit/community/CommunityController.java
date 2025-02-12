@@ -58,7 +58,15 @@ public class CommunityController {
 	@GetMapping("/reply-reg")
 	public String replyReg(HttpServletRequest req, CommunityReply cr, Community c) {
 		mDAO.isLogined(req);
-		cDAO.writeReply(cr, c, req);
+		cDAO.writeReply(cr, req);
+		cDAO.getDetail(c, req);
+		req.setAttribute("contentPage", "community/communitydetail");
+		return "index";
+	}
+	@GetMapping("/community-like")
+	public String like(HttpServletRequest req, Community c, CommunityLike cl) {
+		mDAO.isLogined(req);
+		cDAO.like(cl, req);
 		cDAO.getDetail(c, req);
 		req.setAttribute("contentPage", "community/communitydetail");
 		return "index";

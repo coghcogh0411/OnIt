@@ -3,7 +3,6 @@ package com.minho.ownit.community;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,12 +20,14 @@ public class CommunityDAO {
 	private CommunityReplyRepo crRepo;
 	@Autowired
 	private CommunityCategoryRepo ccRepo;
+	@Autowired
+	private CommunityLikeRepo clrRepo;
 
 	private int postPerPage;
 
 	public CommunityDAO() {
 		// TODO Auto-generated constructor stub
-		postPerPage = 5;
+		postPerPage = 8;
 		
 	}
 	
@@ -60,7 +61,7 @@ public class CommunityDAO {
 		}
 	}
 
-	public void writeReply(CommunityReply cr, Community c, HttpServletRequest req) {
+	public void writeReply(CommunityReply cr, HttpServletRequest req) {
 		try {
 			String token = req.getParameter("token");
 			String oldToken = (String) req.getSession().getAttribute("successToken");
@@ -70,7 +71,8 @@ public class CommunityDAO {
 			}
 			Member m = (Member) req.getSession().getAttribute("loginMember");
 			cr.setWriter(m);
-			cr.setPno(cRepo.findById(c.getNo()).get());
+			Community c = cRepo.findByNo(Integer.parseInt(req.getParameter("pno")));
+			cr.setPno(c);
 			crRepo.save(cr);
 
 			req.setAttribute("result", "글쓰기 성공");
@@ -97,8 +99,6 @@ public class CommunityDAO {
 	            categoryNo = 1;
 	            req.getSession().setAttribute("category", categoryNo);
 	        }
-
-	        System.out.println("현재 카테고리: " + categoryNo); // 디버깅 로그
 
 	        long postCount = 0;
 
@@ -127,7 +127,8 @@ public class CommunityDAO {
 	            posts = cRepo.findByCategory_CategoryNoAndTitleContainingOrWriterIdContaining(
 	                    categoryNo, searchTitle, searchTitle, pg);
 	        }
-	        req.setAttribute("categoryname", ccRepo.findById(categoryNo));
+	        
+	        req.setAttribute("categorytitle", ccRepo.findById(categoryNo).get());
 	        req.setAttribute("post", posts);
 	        req.setAttribute("category", ccRepo.findAll()); // 카테고리 목록 설정
 
@@ -137,7 +138,7 @@ public class CommunityDAO {
 	}
 
 	public void getDetail(Community c, HttpServletRequest req) {
-		Integer postNo = Integer.parseInt(req.getParameter("no"));
+		Integer postNo = Integer.parseInt(req.getParameter("pno"));
 		Community com = cRepo.findById(postNo).get();
 		req.setAttribute("postdetail", com);
 		req.setAttribute("reply", ccRepo.findAll());
@@ -152,5 +153,20 @@ public class CommunityDAO {
 	public void searchClear(HttpServletRequest req) {
 		req.getSession().setAttribute("search", null);
 	}
+	
+	public void like(CommunityLike cl, HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			cl.setUser(m);
+			int pno = Integer.parseInt(req.getParameter("pno"));
+			Community c = cRepo.findByNo(pno);
+			cl.setPost(c);
+			clrRepo.save(cl);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	
 
 }

@@ -8,6 +8,7 @@
 </head>
 <body>
 	<div class="main-container">
+		<form action="/reply-reg">
 		<div class="post-info">
 			<input name="pno" th:value="${postdetail.no}">
 			<div>
@@ -30,7 +31,7 @@
 		<div class="content" th:text="${postdetail.content}"></div>
 
 		<div class="like">
-			<button class="like-button" id="likeButton">
+			<button class="like-button" id="likeButton" type="button" th:onclick="communityLike([[${postdetail.no}]])">
 				좋아요 <span class="icon">♡</span> <span id="likeCount"
 					>0</span>
 			</button>
@@ -55,10 +56,10 @@
 					placeholder="항상 잘 보고있습니다.">
 			</div>
 			<div>
-				<button class="submit-comment"
-					th:onclick="replyreg([[${postdetail.no}]])">댓글 작성</button>
+				<button class="submit-comment" type="submit">댓글 작성</button>
 			</div>
 		</div>
+		</form>
 	</div>
 
 </body>

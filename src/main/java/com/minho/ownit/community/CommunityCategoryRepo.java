@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CommunityCategoryRepo extends CrudRepository<CommunityCategory, Integer>{
 	public abstract List<CommunityCategory> findAll();
+	public abstract CommunityCategory findById(int category);
 }

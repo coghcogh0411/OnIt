@@ -52,4 +52,7 @@ public class Community {
 
 	@OneToMany(mappedBy = "pno", cascade = CascadeType.ALL)
 	private List<CommunityReply> replies;
+	@OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<CommunityLike> likes;
+	
 }

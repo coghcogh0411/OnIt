@@ -1,8 +1,15 @@
 package com.minho.ownit.community;
 
+import com.minho.ownit.member.Member;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,10 +20,15 @@ import lombok.NoArgsConstructor;
 @Entity(name = "post_like")
 public class CommunityLike {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_post_like_no")
+	@SequenceGenerator(name = "seq_post_like_no", sequenceName = "seq_post_like_no", allocationSize = 1)
 	@Column(name = "post_like_no")
 	private Integer no;
-	@Column(name = "user_id")
-	private Integer id;
-	@Column(name = "post_no")
-	private Integer pno;
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private Member user;
+
+	@ManyToOne
+	@JoinColumn(name = "post_no")
+	private Community post; 
 }
