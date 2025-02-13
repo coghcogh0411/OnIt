@@ -17,13 +17,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @Service
 public class ResaleDAO {
 	@Autowired
-	private ResaleRepo Rrepo;
+	private ResaleRepo rRepo;
 
 	@Autowired
-	private ResalePhotoRepo RPrepo;
+	private ResalePhotoRepo rpRepo;
 
 	@Autowired
-	private ResaleCategoryRepo RCrepo;
+	private ResaleCategoryRepo rcRepo;
 
 	@Value("${ho.img.folder}")
 	private String imgFolder;
@@ -43,7 +43,7 @@ public class ResaleDAO {
 				ResalePhoto thumbnailPhoto = new ResalePhoto();
 				thumbnailPhoto.setResale(r);
 				thumbnailPhoto.setUrl(thumbnailFileName);
-				RPrepo.save(thumbnailPhoto);
+				rpRepo.save(thumbnailPhoto);
 				
 				r.setThumbnail(thumbnailFileName);
 			}
@@ -59,11 +59,11 @@ public class ResaleDAO {
 					resalePhoto.setResale(r);
 					resalePhoto.setUrl(fileName);
 					
-					RPrepo.save(resalePhoto);
+					rpRepo.save(resalePhoto);
 				}
 			}
 
-			Rrepo.save(r);
+			rRepo.save(r);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,7 +74,37 @@ public class ResaleDAO {
 		}
 	}
 
-	public List<ResaleCategory> getAllCategories() {
-		return RCrepo.findAll();
+	public void getAllCategories(HttpServletRequest req) {
+		req.setAttribute("category", rcRepo.findAll());
 	}
+	
+	public void getResaleByCategory(HttpServletRequest req, int no) {
+	    try {
+	        req.getSession().setAttribute("category", no);
+	        ResaleCategory category = rcRepo.findById(no).orElse(null);
+	        req.setAttribute("categorytitle", category);
+	        List<Resale> resaleList = rRepo.findByCategory_No(no);
+	        req.setAttribute("resaleList", resaleList);
+	        req.setAttribute("category", rcRepo.findAll());
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+	
+	public void getResaleDetail(HttpServletRequest req, int no) {
+        try {
+  
+            Resale r = rRepo.findById(no).orElse(null);
+            req.setAttribute("product", r);
+            
+            List<ResalePhoto> photos = rpRepo.findByResale_no(no);
+            req.setAttribute("photos", photos);
+            req.setAttribute("category", rcRepo.findAll());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
