@@ -39,13 +39,17 @@
 		</div>
 
 		<div id="infoDiv">
-			<div class="category-header" th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '카테고리'}"></div>
+			<div class="category-header"
+				th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 상품'}">
+			</div>
 			<div class="product-grid">
 				<a th:each="product : ${resaleList}"
 					th:href="@{/resale-product(no=${product.no})}">
 					<div class="product-card">
 						<div class="product-image">
-							<img th:src="${product.thumbnail != null ? '/HoMini/Img/' + product.thumbnail : '/img/no-image.png'}" alt="이미지" />
+							<img
+								th:src="${product.thumbnail != null ? '/HoMini/Img/' + product.thumbnail : '/img/no-image.png'}"
+								alt="이미지" />
 						</div>
 						<div class="product-info" th:text="${product.title}">제품 이름</div>
 						<div class="product-price" th:text="${product.price + ' 원'}">가격</div>

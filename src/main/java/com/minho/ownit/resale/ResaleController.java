@@ -29,6 +29,7 @@ public class ResaleController {
 	public String resaleHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
 		rDAO.getAllCategories(req);
+		rDAO.getAllResaleItems(req);
 		req.setAttribute("contentPage", "resale/resalehome");
 		return "index";
 	}

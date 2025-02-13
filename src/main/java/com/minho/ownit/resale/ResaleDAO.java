@@ -77,6 +77,12 @@ public class ResaleDAO {
 	public void getAllCategories(HttpServletRequest req) {
 		req.setAttribute("category", rcRepo.findAll());
 	}
+	public void getAllResaleItems(HttpServletRequest req) {
+	    List<Resale> allItems = (List<Resale>) rRepo.findAll();
+	    req.setAttribute("resaleList", allItems);
+	    req.setAttribute("categorytitle", null);
+	}
+
 	
 	public void getResaleByCategory(HttpServletRequest req, int no) {
 	    try {
