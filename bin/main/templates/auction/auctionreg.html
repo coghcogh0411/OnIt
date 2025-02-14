@@ -21,12 +21,6 @@
                     <input type="text" name="title" class="input-field" placeholder="제목을 입력하세요">
                     <textarea class="textarea-field" name="description" placeholder="설명을 입력하세요"></textarea>
                     <div class="dropdowns-container">
-                        <select class="dropdown" name="category">
-                            <option value="">카테고리 선택</option>
-                            <th:block th:each="category : ${category}">
-                                <option th:value="${category.no}" th:text="${category.name}"></option>
-                            </th:block>
-                        </select>
                         <select class="dropdown" name="delivery">
                             <option>택배 여부</option>
                             <option value="Y">가능</option>
