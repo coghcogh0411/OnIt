@@ -90,9 +90,12 @@ public class CommunityDAO {
 			Member m = (Member) req.getSession().getAttribute("loginMember");
 			cr.setWriter(m);
 			Community c = cRepo.findByNo(Integer.parseInt(req.getParameter("pno")));
+			c.setComment(c.getComment() +1);
+			cRepo.save(c);
+			
 			cr.setPno(c);
 			crRepo.save(cr);
-
+			
 			req.setAttribute("result", "글쓰기 성공");
 			req.getSession().setAttribute("successToken", token);
 		} catch (Exception e) {
@@ -165,6 +168,10 @@ public class CommunityDAO {
 	public void getDetail(Community c, HttpServletRequest req) {
 		Integer postNo = Integer.parseInt(req.getParameter("pno"));
 		Community com = cRepo.findById(postNo).get();
+		
+		com.setView(com.getView()+1);
+		cRepo.save(com);
+		
 		Member m = (Member)req.getSession().getAttribute("loginMember");
 		
 		boolean isLike = clRepo.existsByPostAndUser(com, m);
