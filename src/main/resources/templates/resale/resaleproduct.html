@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>상품 상세 페이지</title>
 <link rel="stylesheet" href="/css/resaleproduct.css">
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+<script
+	src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="/js/move.js"></script>
 <script>
 	$(function() {
 		$(".seller-info").click(function() {
 			$(".sub-buttons").toggleClass("show");
+		});
+		$('.slider').bxSlider({
+			captions : true
 		});
 	});
 </script>
@@ -18,58 +26,54 @@
 		<div class="sidebar-container">
 			<button class="location-button">📍 동호구</button>
 			<div class="sidebar">
-				<div class="category-item">카테고리1</div>
-				<div class="category-item">카테고리2</div>
-				<div class="category-item">카테고리3</div>
-				<div class="category-item">카테고리4</div>
-				<div class="category-item">카테고리5</div>
-				<div class="category-item">카테고리6</div>
-				<div class="category-item">카테고리7</div>
-				<div class="category-item">카테고리8</div>
-				<div class="category-item">카테고리9</div>
+				<div th:each="c:${category}"
+					th:onclick="|resaleCategoryChange(${c.no})|">
+					<div class="category-item" th:text="${c.name}"></div>
+				</div>
 			</div>
 		</div>
 
 		<div class="content-area">
 			<div class="product-detail">
 				<div class="image-gallery">
-					<button class="gallery-nav prev">◀</button>
-					<div class="image-placeholder"></div>
-					<button class="gallery-nav next">▶</button>
+					<div class="slider">
+						<div th:each="p : ${photos}">
+							<img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지" class="sliderImg"/>
+						</div>
+					</div>
 				</div>
 
 				<div class="seller-info">
 					<div class="seller-profile">
 						<img src="/placeholder.svg?height=40&width=40" alt="프로필"
 							class="profile-image">
-						<div class="seller-name">임채호</div>
+						<div class="seller-name" th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
 						<div class="rating">⭐⭐⭐⭐⭐</div>
 						<button class="like-button">♡</button>
 					</div>
 					<div class="sub-buttons">
-						<a href="/member-home" class="sub-button">정보보기</a>
-						<a href="#"class="sub-button">1:1쪽지 보내기</a>
-						<a href="#" class="sub-button">팔로우</a>
+						<a href="/member-home" class="sub-button">정보보기</a> <a href="#"
+							class="sub-button">1:1쪽지 보내기</a> <a href="#" class="sub-button">팔로우</a>
 					</div>
 				</div>
 
 				<div class="product-info">
-					<h1 class="product-title">제목</h1>
+					<h1 class="product-title" th:text="${product.title}">제목</h1>
 
 					<div class="meta-info">
-						<span class="category">카테고리</span> <span class="date-divider">•</span>
-						<span class="date">2025-01-23</span>
+						<span class="category" th:text="${product.category.name}">카테고리</span> <span class="date-divider">•</span>
+						<span class="date" th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
 					</div>
 
-					<div class="price">650,000 원</div>
+					<div class="price" th:text="${product.price + ' 원'}"></div>
 
 					<div class="description-box">
-						<textarea class="description-textarea" readonly>내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용</textarea>
+						<textarea class="description-textarea" readonly th:text="${product.description}"></textarea>
 					</div>
 
 					<div class="action-buttons">
-						<button class="action-button">댓글 가능</button>
-						<button class="action-button">직거래 가능</button>
+						<button class="action-button" th:if="${product.deal == '가능'}">댓글 가능</button>
+						<button class="action-button" th:if="${product.delivery == '가능'}">직거래 가능</button>
 					</div>
 				</div>
 			</div>
@@ -77,4 +81,3 @@
 	</div>
 </body>
 </html>
-

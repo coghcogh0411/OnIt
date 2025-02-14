@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ResaleCategoryRepo extends CrudRepository<ResaleCategory, Integer>{
 
-	List<ResaleCategory> findAll();
+	public abstract List<ResaleCategory> findAll();
 }

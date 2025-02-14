@@ -23,7 +23,7 @@
                     <div class="dropdowns-container">
                         <select class="dropdown" name="category">
                             <option value="">카테고리 선택</option>
-                            <th:block th:each="category : ${categories}">
+                            <th:block th:each="category : ${category}">
                                 <option th:value="${category.no}" th:text="${category.name}"></option>
                             </th:block>
                         </select>
