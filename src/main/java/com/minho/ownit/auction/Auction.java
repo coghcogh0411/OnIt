@@ -25,8 +25,8 @@ import lombok.NoArgsConstructor;
 @Entity(name = "auction")
 public class Auction {
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auction_seq")
     @SequenceGenerator(name = "auction_seq", sequenceName = "seq_auction_no", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "auction_seq")
     @Column(name = "auction_no")
     private Integer no;
 
@@ -47,7 +47,7 @@ public class Auction {
     private Integer price;
     
     @CreationTimestamp
-    @Column(name = "resale_create")
+    @Column(name = "auction_create")
     private Date date;
     
     @Column(name = "delivery")

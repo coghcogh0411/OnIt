@@ -30,12 +30,10 @@
 	<div class="main-content">
 
 		<div id="infoDiv">
-			<div class="category-header"
-				th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 상품'}">
-			</div>
+			
 			<div class="product-grid">
 				<a th:each="product : ${auctionList}"
-					th:href="@{/resale-product(no=${product.no})}">
+					>
 					<div class="product-card">
 						<div class="product-image">
 							<img

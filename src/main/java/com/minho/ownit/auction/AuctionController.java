@@ -3,6 +3,9 @@ package com.minho.ownit.auction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.member.MemberDAO;
 
@@ -17,7 +20,7 @@ public class AuctionController {
 	private AuctionDAO aDAO;
 	
 	@GetMapping("/auction")
-	public String resaleHome(HttpServletRequest req) {
+	public String AuctionHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
 		aDAO.getAllResaleItems(req);
 		req.setAttribute("contentPage", "auction/auctionhome");
@@ -27,6 +30,13 @@ public class AuctionController {
 	public String AuctionGoReg(HttpServletRequest req) {		
 		mDAO.isLogined(req);
         req.setAttribute("contentPage", "auction/auctionreg");
+		return "index";
+	}
+	@PostMapping("/auction-reg")
+	public String AuctionReg(Auction a, HttpServletRequest req, @RequestParam("files") MultipartFile[] file) {
+		mDAO.isLogined(req);
+		aDAO.auctionReg(a, req, file);
+		req.setAttribute("contentPage", "auction/auctionhome");
 		return "index";
 	}
 }
