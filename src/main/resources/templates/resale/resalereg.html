@@ -4,61 +4,93 @@
 <meta charset="UTF-8">
 <title>상품 등록</title>
 <link rel="stylesheet" href="/css/resalereg.css">
+<script>
+function previewFiles() {
+    // 미리보기 담을 컨테이너
+    const previewContainer = document.getElementById('previewContainer');
+    // 새로 업로드 시 기존 내용 초기화
+    previewContainer.innerHTML = '';
+
+    // 파일 입력 요소
+    const fileInput = document.querySelector('input[name="files"]');
+    const files = fileInput.files;
+
+    // 파일이 없으면 종료
+    if (!files || files.length === 0) {
+      return;
+    }
+
+    // 여러 파일을 순회하며 <img> 동적 생성
+    Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        const img = document.createElement('img');
+        img.src = e.target.result;
+        img.classList.add('preview-image');
+        previewContainer.appendChild(img);
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+</script>
+
 </head>
 <body>
 
-    <div class="container">
-        <div class="top-content">
-            <button class="location-button">
-                <span class="location-icon">📍</span> 종로구
-            </button>
-            <div class="title-banner">상품 등록</div>
-        </div>
+	<div class="container">
+		<div class="top-content">
+			<button class="location-button">
+				<span class="location-icon">📍</span> 종로구
+			</button>
+			<div class="title-banner">상품 등록</div>
+		</div>
 
-        <div class="main-content">
-            <form class="form-container" action="/resale-reg" method="post" enctype="multipart/form-data">
-                <div class="form-fields">
-                    <input type="text" name="title" class="input-field" placeholder="제목을 입력하세요">
-                    <textarea class="textarea-field" name="description" placeholder="설명을 입력하세요"></textarea>
-                    <div class="dropdowns-container">
-                        <select class="dropdown" name="category">
-                            <option value="">카테고리 선택</option>
-                            <th:block th:each="category : ${category}">
-                                <option th:value="${category.no}" th:text="${category.name}"></option>
-                            </th:block>
-                        </select>
-                        <select class="dropdown" name="delivery">
-                            <option>택배 여부</option>
-                            <option value="Y">가능</option>
-                            <option value="N">불가능</option>
-                        </select>
-                        <select class="dropdown" name="deal">
-                            <option>직거래 여부</option>
-                            <option value="Y">가능</option>
-                            <option value="N">불가능</option>
-                        </select>
-                    </div>
-                </div>
+		<div class="main-content">
+			<form class="form-container" action="/resale-reg" method="post"
+				enctype="multipart/form-data">
+				<div class="form-fields">
+					<input type="text" name="title" class="input-field"
+						placeholder="제목을 입력하세요">
+					<textarea class="textarea-field" name="description"
+						placeholder="설명을 입력하세요"></textarea>
+					<div class="dropdowns-container">
+						<select class="dropdown" name="category">
+							<option value="">카테고리 선택</option>
+							<th:block th:each="category : ${category}">
+								<option th:value="${category.no}" th:text="${category.name}"></option>
+							</th:block>
+						</select> <select class="dropdown" name="delivery">
+							<option>택배 여부</option>
+							<option value="Y">가능</option>
+							<option value="N">불가능</option>
+						</select> <select class="dropdown" name="deal">
+							<option>직거래 여부</option>
+							<option value="Y">가능</option>
+							<option value="N">불가능</option>
+						</select>
+					</div>
+				</div>
 
-                <div class="image-section">
-                    <div class="upload-area">
-                        <span>이미지를 올려주세요</span>
-                        <input type="file" name="files" accept="image/*" multiple>
-                    </div>
-                    <div class="preview-carousel">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 1">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 2">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 3">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 4">
-                    </div>
-                    
-                    <div class="price-section">
-                        <input type="text" class="price-input" name="price" placeholder="가격 입력">
-                        <button type="submit" class="submit-button">등록</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+				<div class="image-section">
+					<div class="upload-area">
+						<span>이미지를 올려주세요</span>
+						<input type="file" name="files" accept="image/*" multiple
+							onchange="previewFiles()">
+					</div>
+
+					<div class="preview-carousel" id="previewContainer">
+					
+					</div>
+
+					<div class="price-section">
+						<input type="text" class="price-input" name="price"
+							placeholder="가격 입력">
+						<button type="submit" class="submit-button">등록</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
+
 </html>
