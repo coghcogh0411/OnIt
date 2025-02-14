@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,13 +27,26 @@ public class CommunityDAO {
 	private CommunityCategoryRepo ccRepo;
 	@Autowired
 	private CommunityLikeRepo clRepo;
-
+	
+	@Value("${ho.img.folder}")
+	private String imgFolder;
+	
 	private int postPerPage;
 
 	public CommunityDAO() {
 		// TODO Auto-generated constructor stub
 		postPerPage = 8;
 		
+	}
+	
+	public Resource getImage(String n) {
+		try {
+			return new UrlResource("file:" + imgFolder + "/" + n);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public void categoryselect(HttpServletRequest req) {

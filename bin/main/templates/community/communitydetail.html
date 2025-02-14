@@ -10,7 +10,7 @@
 	<div class="main-container">
 		<form action="/reply-reg">
 		<div class="post-info">
-			<input name="pno" th:value="${postdetail.no}">
+			<input type="hidden" name="pno" th:value="${postdetail.no}">
 			<div>
 				조회수: <span th:text="${postdetail.view}"></span>
 			</div>
@@ -47,7 +47,7 @@
 				<!-- 댓글 작성자 정보 표시 -->
 				<div class="comment-author">
 					<img  alt="프로필 사진"
-						class="author-profile-pic"> <span class="author-name"
+						class="author-profile-pic" th:src="@{|member/${r.writer.photo}|}"> <span class="author-name"
 						th:text="${r.writer.id}">작성자 이름</span>
 				</div>
 				<!-- 댓글 내용 표시 -->

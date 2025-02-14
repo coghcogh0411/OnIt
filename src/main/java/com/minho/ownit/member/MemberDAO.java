@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,16 @@ public class MemberDAO {
 	public MemberDAO() {
 		bcpe = new BCryptPasswordEncoder();
 		sdf = new SimpleDateFormat("yyyyMMdd");
+	}
+	
+	public Resource getImage(String n) {
+		try {
+			return new UrlResource("file:" + imgFolder + "/" + n);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public void memberReg(Member m, HttpServletRequest req, MultipartFile file) {

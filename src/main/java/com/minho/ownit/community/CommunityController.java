@@ -1,9 +1,12 @@
 package com.minho.ownit.community;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.minho.ownit.member.MemberDAO;
 
@@ -16,6 +19,11 @@ public class CommunityController {
 	private MemberDAO mDAO;
 	@Autowired
 	private CommunityDAO cDAO;
+	
+	@GetMapping("member/{name}")
+	public @ResponseBody Resource img(@PathVariable("name") String n, HttpServletRequest req) {
+		return cDAO.getImage(n);
+	}
 	
 	@GetMapping("/community")
 	public String CommunityHome(HttpServletRequest req) {
