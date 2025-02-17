@@ -112,5 +112,6 @@ public class ResaleDAO {
             e.printStackTrace();
         }
     }
+	
 
 }
