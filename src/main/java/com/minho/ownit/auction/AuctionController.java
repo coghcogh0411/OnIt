@@ -22,7 +22,7 @@ public class AuctionController {
 	@GetMapping("/auction")
 	public String AuctionHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
-		aDAO.getAllResaleItems(req);
+		aDAO.getAllAuctionItems(req);
 		req.setAttribute("contentPage", "auction/auctionhome");
 		return "index";
 	}
@@ -37,6 +37,13 @@ public class AuctionController {
 		mDAO.isLogined(req);
 		aDAO.auctionReg(a, req, file);
 		req.setAttribute("contentPage", "auction/auctionhome");
+		return "index";
+	}
+	@GetMapping("/auction-product")
+	public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
+		mDAO.isLogined(req);
+		aDAO.getAuctionDetail(req, pno);
+        req.setAttribute("contentPage", "auction/auctionproduct");
 		return "index";
 	}
 }
