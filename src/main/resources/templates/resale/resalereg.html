@@ -5,33 +5,55 @@
 <title>상품 등록</title>
 <link rel="stylesheet" href="/css/resalereg.css">
 <script>
+//전역 이미지 카운터 (업로드된 총 이미지 수)
+let imageCounter = 0;
+
 function previewFiles() {
-    // 미리보기 담을 컨테이너
-    const previewContainer = document.getElementById('previewContainer');
-    // 새로 업로드 시 기존 내용 초기화
-    previewContainer.innerHTML = '';
+  // 미리보기 컨테이너 (이전에 추가된 미리보기들은 유지)
+  const previewContainer = document.getElementById('previewContainer');
+  // 파일 입력 요소
+  const fileInput = document.querySelector('input[name="files"]');
+  const files = fileInput.files;
 
-    // 파일 입력 요소
-    const fileInput = document.querySelector('input[name="files"]');
-    const files = fileInput.files;
-
-    // 파일이 없으면 종료
-    if (!files || files.length === 0) {
-      return;
-    }
-
-    // 여러 파일을 순회하며 <img> 동적 생성
-    Array.from(files).forEach(file => {
-      const reader = new FileReader();
-      reader.onload = e => {
-        const img = document.createElement('img');
-        img.src = e.target.result;
-        img.classList.add('preview-image');
-        previewContainer.appendChild(img);
-      };
-      reader.readAsDataURL(file);
-    });
+  // 파일이 없으면 종료
+  if (!files || files.length === 0) {
+    return;
   }
+
+  // 파일들을 순회하며 미리보기 추가
+  Array.from(files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      // 이미지 카운터 증가 및 번호 할당
+      imageCounter++;
+
+      // 미리보기 이미지와 번호를 감싸는 래퍼 생성
+      const imageWrapper = document.createElement('div');
+      imageWrapper.classList.add('preview-wrapper');
+
+      // 이미지 순번을 보여줄 요소 생성
+      const numberLabel = document.createElement('div');
+      numberLabel.classList.add('image-number');
+      numberLabel.textContent = imageCounter; // 순번 표시
+
+      // 실제 이미지 요소 생성
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.classList.add('preview-image');
+
+      // 래퍼에 번호와 이미지를 추가
+      imageWrapper.appendChild(numberLabel);
+      imageWrapper.appendChild(img);
+
+      // 미리보기 컨테이너에 래퍼 추가
+      previewContainer.appendChild(imageWrapper);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // 파일 입력값 초기화(같은 파일 재선택 가능하게)
+  fileInput.value = '';
+}
 </script>
 
 </head>
