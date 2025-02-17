@@ -4,6 +4,126 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/resalehome.css">
+<style>
+    /* 전체 화면을 어둡게 덮는 배경 */
+    .modal-overlay {
+      position: fixed;
+      top: 0; 
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.3); /* 투명도 0.3 */
+      display: none; /* 초기에는 숨김 */
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    /* 모달 박스 (흰색 테마) */
+    .modal {
+      background-color: #fff; /* 흰색 배경 */
+      width: 400px;
+      border-radius: 8px;
+      overflow: hidden;
+      color: #333; /* 텍스트는 어두운 색 */
+      font-family: sans-serif;
+      position: relative;
+      margin: auto;
+      margin-top: 100px;
+    }
+
+    /* 헤더 영역 */
+    .modal-header {
+      padding: 16px;
+      border-bottom: 1px solid #ccc;
+      font-size: 18px;
+      font-weight: bold;
+      position: relative;
+      color: #333;
+    }
+
+    /* 닫기 버튼 (모달 우측 상단) */
+    .close-modal {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #999;
+    }
+
+    /* 본문 영역 */
+    .modal-content {
+      padding: 16px;
+      color: #333;
+    }
+
+    /* 검색 영역 */
+    .search-box {
+      position: relative;
+      margin-bottom: 16px;
+    }
+    .search-box input {
+      width: 85%;
+      padding: 12px 40px 12px 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      color: #333;
+      outline: none;
+    }
+    .search-box input::placeholder {
+      color: #999;
+    }
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      right: 12px;
+      top: 10px;
+      font-size: 15px;
+      color: #999;
+    }
+
+    /* 모달 내부 위치 버튼 */
+    .modal-location-button {
+      display: inline-block;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      color: #333;
+      padding: 10px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-bottom: 16px;
+    }
+    .modal-location-button:hover {
+      background-color: #f0f0f0;
+    }
+
+    /* 추천 리스트 */
+    .recommend-title {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .region-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .region-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      color: #333;
+    }
+    .region-list li:last-child {
+      border-bottom: none;
+    }
+    .region-list li:hover {
+      background-color: #f5f5f5;
+    }
+
+  </style>
 <script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
 <script type="text/javascript">
@@ -23,6 +143,15 @@
 				$(".sub-buttons").removeClass("show");
 			}
 		})
+
+		$(".location-button").on("click", function() {
+	        $(".modal-overlay").fadeIn(200);
+	    });
+
+	    // 닫기 버튼 클릭 시 모달 닫기
+	    $(".close-modal").on("click", function() {
+	        $(".modal-overlay").fadeOut(200);
+	    });
 	});
 </script>
 </head>
@@ -62,8 +191,33 @@
 	<div class="floating-button">
 		<span class="icon">+</span>
 		<div class="sub-buttons">
-			<a href="/resale-go-reg" class="sub-button">중고거래 등록</a>
-			<a href="/auction-go-reg" class="sub-button">경매 등록</a>
+			<a href="/resale-go-reg" class="sub-button">중고거래 등록</a> <a
+				href="/auction-go-reg" class="sub-button">경매 등록</a>
+		</div>
+	</div>
+	<!-- 위치테이블 -->
+	<div class="modal-overlay">
+		<div class="modal">
+			<div class="modal-header">
+				지역 변경
+				<span class="close-modal">✕</span>
+			</div>
+			<div class="modal-content">
+				<div class="search-box">
+					<input type="text" placeholder="지역이나 동네로 검색하기">
+				</div>
+				<button class="location-button">현재 내 위치 사용하기</button>
+				<div class="recommend-title">추천</div>
+				<ul class="region-list">
+					<li>서울특별시, 강남구</li>
+					<li>서울특별시, 송파구</li>
+					<li>경기도, 부천시</li>
+					<li>경기도, 화성시</li>
+					<li>서울특별시, 강서구</li>
+					<li>인천광역시, 서구</li>
+					<li>경기도, 남양주시</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>
