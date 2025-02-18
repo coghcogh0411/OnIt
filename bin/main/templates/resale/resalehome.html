@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/resalehome.css">
+
 <script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
 <script type="text/javascript">
@@ -23,6 +24,31 @@
 				$(".sub-buttons").removeClass("show");
 			}
 		})
+
+		$(".location-button").on("click", function() {
+	        $(".modal-overlay").fadeIn(200);
+	    });
+
+	    // 닫기 버튼 클릭 시 모달 닫기
+	    $(".close-modal").on("click", function() {
+	        $(".modal-overlay").fadeOut(200);
+	    });
+	    
+	    $("#locationInput").keyup(function(){
+	    	var region = $(this).val();
+	    	$.getJSON("region.get?region="+region,function(regionData){
+	    		console.log(regionData);
+	    		$(".region-list").empty();
+	    		$.each(regionData.region, function(index, item){
+	    			console.log(item);
+	    			$(".region-list").append("<li>" + item.firstName+", "+ item.secondName + "</li>");
+	    		})
+	    	}).fail(function() {
+	    		console.log("Request failed");
+	            $(".region-list").empty();
+	            $(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
+	        });
+	    });
 	});
 </script>
 </head>
@@ -62,8 +88,33 @@
 	<div class="floating-button">
 		<span class="icon">+</span>
 		<div class="sub-buttons">
-			<a href="/resale-go-reg" class="sub-button">중고거래 등록</a>
-			<a href="/auction-go-reg" class="sub-button">경매 등록</a>
+			<a href="/resale-go-reg" class="sub-button">중고거래 등록</a> <a
+				href="/auction-go-reg" class="sub-button">경매 등록</a>
+		</div>
+	</div>
+	<!-- 위치테이블 -->
+	<div class="modal-overlay">
+		<div class="modal">
+			<div class="modal-header">
+				지역 변경
+				<span class="close-modal">✕</span>
+			</div>
+			<div class="modal-content">
+				<div class="search-box">
+					<input id="locationInput" type="text" placeholder="지역이나 동네로 검색하기">
+				</div>
+				<button class="location-button">현재 내 위치 사용하기</button>
+				<div class="recommend-title">추천</div>
+				<ul class="region-list">
+					<li>서울특별시, 강남구</li>
+					<li>서울특별시, 송파구</li>
+					<li>경기도, 부천시</li>
+					<li>경기도, 화성시</li>
+					<li>서울특별시, 강서구</li>
+					<li>인천광역시, 서구</li>
+					<li>경기도, 남양주시</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </body>

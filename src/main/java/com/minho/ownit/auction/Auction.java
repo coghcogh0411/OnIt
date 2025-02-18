@@ -61,4 +61,5 @@ public class Auction {
     
     @Column(name = "final_bidder_id")
     private String bidder;
+
 }
