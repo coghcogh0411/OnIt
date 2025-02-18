@@ -6,11 +6,12 @@
 <link rel="stylesheet" href="/css/resaleproduct.css">
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script
 	src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
-<script src="http://192.168.0.51:8888/socket.io/socket.io.js"></script>
+<script
+	src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
 <script>
 	$(function() {
 		$(".seller-info").click(function() {
@@ -19,17 +20,29 @@
 		$('.slider').bxSlider({
 			captions : true
 		});
-		var socket = io.connect("http://192.168.0.51:8888");
-		$(".bid-button").click(function(){
-            var cost = $(".auction-cost").val();
-            socket.emit("myMsg",cost);
-            $("input").val("");
+		var socket = io.connect("http://sd-beanmouse.duckdns.org:43218");
 
-        })
-        socket.on("srvMsg", function(txt){
-                $(".bidder-list").append(txt);
-            })
-		
+	    socket.on("connect", function() {
+	        console.log("✅ 소켓 연결 성공!");
+	    });
+
+	    socket.on("connect_error", function(error) {
+	        console.error("❌ 소켓 연결 실패!", error);
+	    });
+
+	    $(".bid-button").click(function() {
+	        var cost = $(".auction-cost").val();
+	        var username = $(".seller-name").text(); // 판매자 이름을 사용 (사용자 정보로 수정 가능)
+	        
+	        console.log("💰 입찰 시도: " + cost + ", 사용자: " + username);
+
+	        socket.emit("bid", { amount: cost, username: username });
+
+	        $(".auction-cost").val(""); // 입력창 초기화
+	    });
+
+	    
+
 	});
 </script>
 </head>
