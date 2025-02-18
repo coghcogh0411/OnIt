@@ -218,7 +218,60 @@
 .preview-carousel::-webkit-scrollbar-thumb {
   background-color: #9AA2EC; /* 스크롤바 '손잡이' 색상 */
   border-radius: 4px;
-  min-width: 50px;           /* thumb 최소 너비 지정 */
+  min-width: 100px;           /* thumb 최소 너비 지정 */
   /* width: 50px;            // 일부 브라우저에서 필요하다면 추가 */
 }
 
+/* 모달 오버레이 (화면 전체를 덮는 어두운 배경) */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* 어둡게 */
+  display: none; /* 초기에는 숨김 */
+  justify-content: center; /* flex 정렬을 위한 속성 */
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 모달 박스 (흰색 배경 박스) */
+.modal {
+  background-color: #fff;
+  width: 400px;         /* 원하는 너비 */
+  border-radius: 8px;
+  overflow: hidden;
+  color: #333;
+  font-family: sans-serif;
+  position: relative;
+  margin: auto;
+  margin-top: 100px;    /* 상단 여백 */
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+/* 모달 헤더 영역 */
+.modal-header {
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+  color: #333;
+}
+
+/* 닫기 버튼 (모달 우측 상단) */
+.close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #999;
+}
+
+/* 모달 본문 */
+.modal-content {
+  padding: 16px;
+  color: #333;
+  text-align: center; /* 이미지 중앙 정렬 */
+}

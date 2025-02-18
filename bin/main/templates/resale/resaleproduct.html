@@ -4,17 +4,18 @@
 <meta charset="UTF-8">
 <title>상품 상세 페이지</title>
 <link rel="stylesheet" href="/css/resaleproduct.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
 <script
 	src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
 <script>
 	$(function() {
 		$(".seller-info").click(function() {
 			$(".sub-buttons").toggleClass("show");
 		});
+
 		$('.slider').bxSlider({
 			captions : true
 		});
@@ -36,9 +37,12 @@
 		<div class="content-area">
 			<div class="product-detail">
 				<div class="image-gallery">
+					<!-- bxSlider 컨테이너 -->
 					<div class="slider">
+						<!-- 각 이미지를 담을 div (슬라이드 하나) -->
 						<div th:each="p : ${photos}">
-							<img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지" class="sliderImg"/>
+							<img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지"
+								class="sliderImg" />
 						</div>
 					</div>
 				</div>
@@ -47,7 +51,8 @@
 					<div class="seller-profile">
 						<img src="/placeholder.svg?height=40&width=40" alt="프로필"
 							class="profile-image">
-						<div class="seller-name" th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
+						<div class="seller-name"
+							th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
 						<div class="rating">⭐⭐⭐⭐⭐</div>
 						<button class="like-button">♡</button>
 					</div>
@@ -61,19 +66,23 @@
 					<h1 class="product-title" th:text="${product.title}">제목</h1>
 
 					<div class="meta-info">
-						<span class="category" th:text="${product.category.name}">카테고리</span> <span class="date-divider">•</span>
-						<span class="date" th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
+						<span class="category" th:text="${product.category.name}">카테고리</span>
+						<span class="date-divider">•</span> <span class="date"
+							th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
 					</div>
 
 					<div class="price" th:text="${product.price + ' 원'}"></div>
 
 					<div class="description-box">
-						<textarea class="description-textarea" readonly th:text="${product.description}"></textarea>
+						<textarea class="description-textarea" readonly
+							th:text="${product.description}"></textarea>
 					</div>
 
 					<div class="action-buttons">
-						<button class="action-button" th:if="${product.deal == '가능'}">댓글 가능</button>
-						<button class="action-button" th:if="${product.delivery == '가능'}">직거래 가능</button>
+						<button class="action-button" th:if="${product.deal == '가능'}">댓글
+							가능</button>
+						<button class="action-button" th:if="${product.delivery == '가능'}">직거래
+							가능</button>
 					</div>
 				</div>
 			</div>

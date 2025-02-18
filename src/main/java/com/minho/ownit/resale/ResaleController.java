@@ -60,11 +60,14 @@ public class ResaleController {
 	}
 	
 	@PostMapping("/resale-reg")
-	public String ResaleReg(Resale r, HttpServletRequest req, @RequestParam("files") MultipartFile[] file) {
-		mDAO.isLogined(req);
-		rDAO.resaleReg(r, req, file);
-		req.setAttribute("contentPage", "resale/resalehome");
-		return "index";
+	public String ResaleReg(Resale r, HttpServletRequest req,
+	                        @RequestParam("files") MultipartFile[] photos) {
+	    mDAO.isLogined(req);
+	    rDAO.resaleReg(r, req, photos);
+	    rDAO.getAllCategories(req);
+	    rDAO.getAllResaleItems(req);
+	    req.setAttribute("contentPage", "resale/resalehome");
+	    return "index";
 	}
 	
 }

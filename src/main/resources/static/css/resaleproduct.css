@@ -48,48 +48,44 @@
 	grid-template-columns: 400px 1fr;
 }
 
+/* 
+ * (수정) 이미지 갤러리를 bxSlider용으로 변경 
+ * - .image-placeholder, .gallery-nav 제거
+ * - 대신 .slider, .slider > div, .sliderImg 추가 
+ */
 .image-gallery {
 	position: relative;
 	width: 400px;
 	height: 400px;
 	flex-shrink: 0;
 	grid-area: image;
+	/* (원한다면) border: 1px solid #ddd; border-radius: 8px; 등 추가 가능 */
 }
 
-.image-placeholder {
+/* bxSlider가 <div>를 슬라이드로 인식할 때 */
+.slider {
 	width: 100%;
 	height: 100%;
-	background-color: #f5f5f5;
-	border-radius: 8px;
+	/* 슬라이드 영역 크기 고정 (400x400) */
+	/* bxSlider에서 slideWidth 등 옵션으로도 제어 가능 */
+}
+
+.slider > div {
+	width: 100%;
+	height: 100%;
+	/* 각 슬라이드 하나하나에 대한 스타일 */
+	/* 필요하다면 display: flex; align-items: center; justify-content: center; 등 */
+}
+
+.sliderImg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 	border: 1px solid #ddd;
+	border-radius: 4px;
 }
 
-.gallery-nav {
-	position: absolute;
-	top: 50%;
-	transform: translateY(-50%);
-	background: rgba(255, 255, 255, 0.8);
-	border: none;
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 18px;
-	color: #666;
-	z-index: 1;
-}
-
-.gallery-nav.prev {
-	left: 10px;
-}
-
-.gallery-nav.next {
-	right: 10px;
-}
-
+/* product-info */
 .product-info {
 	flex: 1;
 	grid-area: info;
@@ -137,6 +133,7 @@
 	cursor: default;
 }
 
+/* seller-info */
 .seller-info {
 	grid-area: seller;
 	margin-top: 20px;
@@ -193,6 +190,7 @@
 	background: #f5f5f5;
 }
 
+/* sub-buttons (판매자 정보 클릭 시 표시되는 추가 버튼) */
 .sub-buttons {
 	display: none;
 	flex-direction: column;
@@ -201,10 +199,10 @@
 	background-color: #9aa2ec;
 	padding: 0;
 	overflow: hidden;
-	position: absolute; /* 변경: 절대 위치로 설정 */
-	top: 100%; /* 추가: seller-info 바로 아래에 위치 */
-	left: 0; /* 추가: 왼쪽 정렬 */
-	z-index: 10; /* 추가: 다른 요소 위에 표시 */
+	position: absolute; 
+	top: 100%;
+	left: 0; 
+	z-index: 10; 
 }
 
 .sub-buttons.show {

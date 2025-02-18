@@ -17,6 +17,6 @@ public class WebConfig implements WebMvcConfigurer {
         // /HoMini/Img/** 로 들어오는 요청을
         // file:///C:/HoMini/Img/ 에 매핑
         registry.addResourceHandler("/HoMini/Img/**")
-                .addResourceLocations("file:///C:/Users/soldesk/HoMini/Img/");
+                .addResourceLocations("file:///C:/HoMini/Img/");
     }
 }

@@ -29,49 +29,53 @@ public class ResaleDAO {
 	private String imgFolder;
 
 	public void resaleReg(Resale r, HttpServletRequest req, MultipartFile[] files) {
-		String thumbnailFileName = null;
-		String fileName = null;
-		try {
-			Member m = (Member) req.getSession().getAttribute("loginMember");
-			r.setUser(m);
+	    try {
+	        Member m = (Member) req.getSession().getAttribute("loginMember");
+	        if (m == null) {
+	            throw new RuntimeException("로그인 정보가 없습니다.");
+	        }
+	        r.setUser(m);
 
-			
-			if (files != null && files.length > 0) {
-				thumbnailFileName = FileNameGenerator.generator(files[0]);
-				files[0].transferTo(new File(imgFolder + "/" + thumbnailFileName));
-				
-				ResalePhoto thumbnailPhoto = new ResalePhoto();
-				thumbnailPhoto.setResale(r);
-				thumbnailPhoto.setUrl(thumbnailFileName);
-				rpRepo.save(thumbnailPhoto);
-				
-				r.setThumbnail(thumbnailFileName);
-			}
+	        // 1) Resale 먼저 DB에 저장 (PK 생성)
+	        rRepo.save(r);
 
-			
-			for (int i = 1; i < files.length; i++) {
-				if (files[i] != null && !files[i].isEmpty()) {
-					fileName = FileNameGenerator.generator(files[i]);
-					files[i].transferTo(new File(imgFolder + "/" + fileName));
+	        // 2) 첫 번째 파일(썸네일)을 찾았는지 여부
+	        boolean thumbnailSet = false;
 
-					
-					ResalePhoto resalePhoto = new ResalePhoto();
-					resalePhoto.setResale(r);
-					resalePhoto.setUrl(fileName);
-					
-					rpRepo.save(resalePhoto);
-				}
-			}
+	        // 3) 모든 파일을 순회
+	        for (int i = 0; i < files.length; i++) {
+	            MultipartFile mf = files[i];
+	            if (mf != null && !mf.isEmpty()) {
+	                // 파일명 생성 + 로컬에 저장
+	                String fileName = FileNameGenerator.generator(mf);
+	                mf.transferTo(new File(imgFolder + "/" + fileName));
 
-			rRepo.save(r);
+	                // 아직 썸네일이 설정되지 않았다면 → 첫 파일을 썸네일로
+	                if (!thumbnailSet) {
+	                    r.setThumbnail(fileName);
+	                    rRepo.save(r); // 썸네일 정보 업데이트
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			if (thumbnailFileName != null) {
-				new File(imgFolder + "/" + thumbnailFileName).delete();
-			}
-			throw new RuntimeException("상품 등록 실패");
-		}
+	                    // (선택) 썸네일도 Photo 테이블에 넣고 싶다면:
+	                    ResalePhoto rp = new ResalePhoto();
+	                    rp.setResale(r);
+	                    rp.setUrl(fileName);
+	                    rpRepo.save(rp);
+
+	                    thumbnailSet = true;
+	                } else {
+	                    // 나머지 파일은 일반 사진으로 저장
+	                    ResalePhoto rp = new ResalePhoto();
+	                    rp.setResale(r);
+	                    rp.setUrl(fileName);
+	                    rpRepo.save(rp);
+	                }
+	            }
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("상품 등록 실패");
+	    }
 	}
 
 	public void getAllCategories(HttpServletRequest req) {
