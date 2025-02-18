@@ -56,7 +56,7 @@
 .image-gallery {
 	position: relative;
 	width: 400px;
-	height: 400px;
+	max-height: 350px;
 	flex-shrink: 0;
 	grid-area: image;
 	/* (원한다면) border: 1px solid #ddd; border-radius: 8px; 등 추가 가능 */
@@ -66,6 +66,7 @@
 .slider {
 	width: 100%;
 	height: 100%;
+	max-height: 350px;
 	/* 슬라이드 영역 크기 고정 (400x400) */
 	/* bxSlider에서 slideWidth 등 옵션으로도 제어 가능 */
 }
@@ -80,7 +81,7 @@
 .sliderImg {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: fill;
 	border: 1px solid #ddd;
 	border-radius: 4px;
 }
