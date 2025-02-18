@@ -37,17 +37,21 @@
 	    $("#locationInput").keyup(function(){
 	    	var region = $(this).val();
 	    	$.getJSON("region.get?region="+region,function(regionData){
-	    		console.log(regionData);
 	    		$(".region-list").empty();
 	    		$.each(regionData.region, function(index, item){
-	    			console.log(item);
-	    			$(".region-list").append("<li>" + item.firstName+", "+ item.secondName + "</li>");
+	    			$(".region-list").append("<li><a href='/region-get'>" + item.firstName + ", " + item.secondName + "</a></li>");
 	    		})
 	    	}).fail(function() {
-	    		console.log("Request failed");
 	            $(".region-list").empty();
 	            $(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
 	        });
+	    });
+	    $(document).on("click", ".region-list li", function() {
+	        var name = $(this).text();
+	        var namearr = name.split(", ");
+	        
+	        $(".location-button").text(namearr[1]);
+	        $(".modal-overlay").fadeOut(200);
 	    });
 	});
 </script>
@@ -55,7 +59,7 @@
 <body>
 	<div class="main-content">
 		<div class="sidebar-container">
-			<button class="location-button">📍 동호구</button>
+			<button class="location-button">종로구</button>
 			<div class="sidebar">
 				<div th:each="c : ${category}"
 					th:onclick="|resaleCategoryChange(${c.no})|">
@@ -106,13 +110,13 @@
 				<button class="location-button">현재 내 위치 사용하기</button>
 				<div class="recommend-title">추천</div>
 				<ul class="region-list">
-					<li>서울특별시, 강남구</li>
-					<li>서울특별시, 송파구</li>
-					<li>경기도, 부천시</li>
-					<li>경기도, 화성시</li>
-					<li>서울특별시, 강서구</li>
-					<li>인천광역시, 서구</li>
-					<li>경기도, 남양주시</li>
+					<li><a href="/region-get">서울특별시, 강남구</a></li>
+					<li><a href="/region-get">서울특별시, 송파구</a></li>
+					<li><a href="/region-get">경기도, 부천시</a></li>
+					<li><a href="/region-get">경기도, 화성시</a></li>
+					<li><a href="/region-get">서울특별시, 강서구</a></li>
+					<li><a href="/region-get">인천광역시, 서구</a></li>
+					<li><a href="/region-get">경기도, 남양주시</a></li>
 				</ul>
 			</div>
 		</div>

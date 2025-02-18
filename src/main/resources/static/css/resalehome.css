@@ -264,6 +264,20 @@
 	max-height: 400px;
 	overflow: auto;
 }
+.region-list::-webkit-scrollbar {
+  height: 8px;               /* 가로 스크롤바의 두께 */
+  max-width: 5px;           
+}
+
+.region-list::-webkit-scrollbar-track {
+  background: #eee;          /* 스크롤바 트랙 색상 */
+  border-radius: 4px;
+}
+
+.region-list::-webkit-scrollbar-thumb {
+  background-color: #9AA2EC; /* 스크롤바 '손잡이' 색상 */
+  border-radius: 4px;
+}
 
 .region-list li {
 	padding: 12px 0;

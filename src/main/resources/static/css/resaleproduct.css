@@ -233,3 +233,109 @@
 .sub-button:hover {
 	transform: translateX(-5px);
 }
+/* 경매 섹션 */
+.auction-section {
+	display: flex;
+	gap: 30px;
+	align-items: center;
+	padding: 20px;
+	width: 100%;
+}
+
+.bidders {
+	flex: 1;
+}
+
+.bidder-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bidder-list li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 18px;
+	padding: 5px 0;
+}
+
+.rank {
+	margin-right: 10px;
+}
+
+.gold {
+	color: gold;
+}
+
+.silver {
+	color: silver;
+}
+
+.bronze {
+	color: #cd7f32;
+}
+
+.amount {
+	font-weight: bold;
+}
+
+.auction-bid {
+	flex: 1;
+	text-align: center;
+	margin-top: 50px;
+	padding: 30px;
+	
+}
+
+.auction-bid h3 {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.bid-options {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.bid-option {
+	padding: 8px 15px;
+	border: 1px solid #aaa;
+	background: white;
+	cursor: pointer;
+	border-radius: 5px;
+	width: 20%;
+}
+
+.bid-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	height: 100px;
+}
+
+.bid-input input {
+	width: 40%;
+	height: 50%;
+	padding: 8px;
+	border: 1px solid #aaa;
+	text-align: center;
+}
+
+.bid-button {
+	width:40%;
+	height:65%;
+	padding: 8px 20px;
+	background: #9aa2ec;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.bid-button:hover {
+	background: #7f89d7;
+}

@@ -48,7 +48,8 @@ public class Member {
 
 	@Column(name = "user_address")
 	private String addr;
-
+	
+	
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
 	private List<Community> communityList;
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)

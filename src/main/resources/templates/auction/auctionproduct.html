@@ -10,6 +10,7 @@
 	src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
+<script src="http://192.168.0.51:8888/socket.io/socket.io.js"></script>
 <script>
 	$(function() {
 		$(".seller-info").click(function() {
@@ -18,6 +19,8 @@
 		$('.slider').bxSlider({
 			captions : true
 		});
+		var socket = io.connect("http://192.168.0.51:8888");
+		
 	});
 </script>
 </head>
@@ -29,7 +32,8 @@
 				<div class="image-gallery">
 					<div class="slider">
 						<div th:each="p : ${photos}">
-							<img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지" class="sliderImg"/>
+							<img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지"
+								class="sliderImg" />
 						</div>
 					</div>
 				</div>
@@ -38,7 +42,8 @@
 					<div class="seller-profile">
 						<img src="/placeholder.svg?height=40&width=40" alt="프로필"
 							class="profile-image">
-						<div class="seller-name" th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
+						<div class="seller-name"
+							th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
 						<div class="rating">⭐⭐⭐⭐⭐</div>
 						<button class="like-button">♡</button>
 					</div>
@@ -52,18 +57,55 @@
 					<h1 class="product-title" th:text="${product.title}">제목</h1>
 
 					<div class="meta-info">
-						<span class="date" th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
+						<span class="date"
+							th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
 					</div>
 
 					<div class="price" th:text="${product.price + ' 원'}"></div>
 
 					<div class="description-box">
-						<textarea class="description-textarea" readonly th:text="${product.description}"></textarea>
+						<textarea class="description-textarea" readonly
+							th:text="${product.description}"></textarea>
 					</div>
 
 					<div class="action-buttons">
-						<button class="action-button" th:if="${product.deal == '가능'}">댓글 가능</button>
-						<button class="action-button" th:if="${product.delivery == '가능'}">직거래 가능</button>
+						<button class="action-button" th:if="${product.deal == '가능'}">댓글
+							가능</button>
+						<button class="action-button" th:if="${product.delivery == '가능'}">직거래
+							가능</button>
+					</div>
+				</div>
+				<div class="auction-section">
+					<div class="bidders">
+						<h3>🏆 입찰자 명단</h3>
+						<ul class="bidder-list">
+							<li><span class="rank gold">🥇</span> 구파 <span
+								class="amount">5,550,000원</span></li>
+							<li><span class="rank silver">🥈</span> 마농 <span
+								class="amount">5,500,000원</span></li>
+							<li><span class="rank bronze">🥉</span> 02남호준 <span
+								class="amount">5,000,000원</span></li>
+							<li>coghcogh1141 <span class="amount">4,600,000원</span></li>
+							<li>여자친구신비 <span class="amount">4,550,000원</span></li>
+						</ul>
+					</div>
+
+				</div>
+				<div>
+					<div class="auction-bid">
+						<h3>
+							경매 시작가 <strong>4,550,000 원</strong>
+						</h3>
+						<div class="bid-options">
+							<button class="bid-option">+@ 원</button>
+							<button class="bid-option">+@ 원</button>
+							<button class="bid-option">+@ 원</button>
+							<button class="bid-option">+@ 원</button>
+						</div>
+						<div class="bid-input">
+							<input type="text" value="4,550,000">
+							<button class="bid-button">입찰하기</button>
+						</div>
 					</div>
 				</div>
 			</div>
