@@ -20,6 +20,15 @@
 			captions : true
 		});
 		var socket = io.connect("http://192.168.0.51:8888");
+		$(".bid-button").click(function(){
+            var cost = $(".auction-cost").val();
+            socket.emit("myMsg",cost);
+            $("input").val("");
+
+        })
+        socket.on("srvMsg", function(txt){
+                $(".bidder-list").append(txt);
+            })
 		
 	});
 </script>
@@ -103,7 +112,7 @@
 							<button class="bid-option">+@ 원</button>
 						</div>
 						<div class="bid-input">
-							<input type="text" value="4,550,000">
+							<input class="auction-cost" type="text" value="4,550,000">
 							<button class="bid-button">입찰하기</button>
 						</div>
 					</div>
