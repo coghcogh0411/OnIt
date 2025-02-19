@@ -7,5 +7,5 @@ import com.minho.ownit.member.Member;
 
 @Repository
 public interface RegionMemberRepo extends CrudRepository<RegionMember, Integer>{
-	RegionMember findByUser(Member user);
+	public abstract RegionMember findByUser(Member user);
 }
