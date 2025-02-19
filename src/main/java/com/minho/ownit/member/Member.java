@@ -3,8 +3,6 @@ package com.minho.ownit.member;
 import java.util.Date;
 import java.util.List;
 
-import com.minho.ownit.community.Community;
-import com.minho.ownit.community.CommunityLike;
 import com.minho.ownit.community.CommunityReply;
 
 import jakarta.persistence.CascadeType;
