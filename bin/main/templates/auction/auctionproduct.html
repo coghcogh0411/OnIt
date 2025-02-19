@@ -24,6 +24,7 @@
 
 	    socket.on("connect", function() {
 	        console.log("✅ 소켓 연결 성공!");
+	        
 	    });
 
 	    socket.on("connect_error", function(error) {
@@ -39,7 +40,6 @@
 
 	        socket.emit("bid", {auctionNo: auctionNo, amount: cost, username: username });
 
-	        $(".auction-cost").val(""); // 입력창 초기화
 	    });
 
 	    socket.on("updateBids", function(data){
@@ -96,13 +96,12 @@
 
 				<div class="product-info">
 					<h1 class="product-title" th:text="${product.title}">제목</h1>
-					<input class="auctionNo" type="text" th:value="${product.no}">
 					<div class="meta-info">
 						<span class="date"
 							th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
 					</div>
 
-					<div class="price" th:text="${product.price + ' 원'}"></div>
+					<div class="price" ></div>
 
 					<div class="description-box">
 						<textarea class="description-textarea" readonly
@@ -120,22 +119,20 @@
 					<div class="bidders">
 						<h3>🏆 입찰자 명단</h3>
 						<ul class="bidder-list">
-							<li><span class="rank gold">🥇</span> 구파 <span
-								class="amount">5,550,000원</span></li>
-							<li><span class="rank silver">🥈</span> 마농 <span
-								class="amount">5,500,000원</span></li>
-							<li><span class="rank bronze">🥉</span> 02남호준 <span
-								class="amount">5,000,000원</span></li>
-							<li>coghcogh1141 <span class="amount">4,600,000원</span></li>
-							<li>여자친구신비 <span class="amount">4,550,000원</span></li>
+							<li th:each="b:${bidList}">
+								<span th:text="${b.user.name}"></span>
+								<span th:text="${b.amount+' 원'}"></span>
+							</li>
 						</ul>
 					</div>
 
 				</div>
 				<div>
+				<form action="/auction-bid">
+					<input class="auctionNo" name="auctionNo" type="hidden" th:value="${product.no}">
 					<div class="auction-bid">
 						<h3>
-							경매 시작가 <strong>4,550,000 원</strong>
+							경매 시작가 <strong th:text="${product.price + ' 원'}"></strong>
 						</h3>
 						<div class="bid-options">
 							<button class="bid-option">+@ 원</button>
@@ -144,10 +141,11 @@
 							<button class="bid-option">+@ 원</button>
 						</div>
 						<div class="bid-input">
-							<input class="auction-cost" type="text" value="4,550,000">
-							<button class="bid-button">입찰하기</button>
+							<input class="auction-cost" name="amount" type="text" th:value="${product.price}">
+							<button class="bid-button" type="submit">입찰하기</button>
 						</div>
 					</div>
+				</form>
 				</div>
 			</div>
 		</div>

@@ -46,4 +46,13 @@ public class AuctionController {
         req.setAttribute("contentPage", "auction/auctionproduct");
 		return "index";
 	}
+	@GetMapping("/auction-bid")
+	public String Bid(@RequestParam("auctionNo") int no, Bid b, HttpServletRequest req) {
+		mDAO.isLogined(req);
+		aDAO.getAuctionDetail(req, no);
+		aDAO.Bid(b, req);
+		req.setAttribute("contentPage", "auction/auctionproduct");
+		return "index";
+	}
+	
 }

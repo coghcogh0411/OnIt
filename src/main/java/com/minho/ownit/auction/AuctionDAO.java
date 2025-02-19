@@ -21,6 +21,8 @@ public class AuctionDAO {
 	private AuctionRepo aRepo;
 	@Autowired
 	private AuctionPhotoRepo apRepo;
+	@Autowired
+	private BidRepo bRepo;
 	
 	@Value("${ho.img.folder}")
 	private String imgFolder;
@@ -80,10 +82,18 @@ public class AuctionDAO {
             req.setAttribute("product", a);
             
             req.setAttribute("photos", apRepo.findByAuction_no(no));
+            req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(no));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+	
+	public void Bid(Bid b, HttpServletRequest req) {
+		Member m = (Member) req.getSession().getAttribute("loginMember");
+		b.setUser(m);
+		bRepo.save(b);
+		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(Integer.parseInt(req.getParameter("auctionNo"))));;
+	}
 
 }

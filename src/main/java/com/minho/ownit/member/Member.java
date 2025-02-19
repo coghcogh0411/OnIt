@@ -56,4 +56,5 @@ public class Member {
 	private List<CommunityReply> replies;
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<CommunityLike> likes;
+	
 }
