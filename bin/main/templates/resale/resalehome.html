@@ -47,7 +47,7 @@
 	        });
 	    });
 	    $(document).on("click", ".region-list li", function(e) {
-	        e.preventDefault();
+	    	e.preventDefault();
 	        e.stopPropagation();
 
 	        var name = $(this).text();
@@ -55,7 +55,8 @@
 	        $(".location-button").text(namearr[1]);
 
 	        $(".modal-overlay").fadeOut(200, function() {
-	            location.href = "/region-get?region=" + encodeURIComponent(namearr[1]);
+	        	var fromValue = "home";
+	            location.href = "/region-get?region=" + encodeURIComponent(namearr[1]) + "&from=" + encodeURIComponent(fromValue);
 	        });
 	        });
 	    });
