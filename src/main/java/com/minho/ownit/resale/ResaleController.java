@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.member.MemberDAO;
+import com.minho.ownit.region.RegionDAO;
+import com.minho.ownit.region.RegionMember;
 
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,13 +25,17 @@ public class ResaleController {
 	private MemberDAO mDAO;
 	
 	@Autowired
-	private ResaleDAO rDAO;
+	private ResaleDAO rsDAO;
+	
+	@Autowired
+	private RegionDAO rgDAO;
 	
 	@GetMapping("/resale")
-	public String resaleHome(HttpServletRequest req) {
+	public String resaleHome(HttpServletRequest req, RegionMember user) {
 		mDAO.isLogined(req);
-		rDAO.getAllCategories(req);
-		rDAO.getAllResaleItems(req);
+		rsDAO.getAllCategories(req);
+		rsDAO.getAllResaleItems(req);
+		rgDAO.regionAttribute(req, user);
 		req.setAttribute("contentPage", "resale/resalehome");
 		return "index";
 	}
@@ -37,15 +43,14 @@ public class ResaleController {
 	@GetMapping("/resale-category")
 	public String getResaleByCategory(@RequestParam("no") int pno, HttpServletRequest req) {
 	    mDAO.isLogined(req);
-	    rDAO.getResaleByCategory(req, pno);
+	    rsDAO.getResaleByCategory(req, pno);
 	    req.setAttribute("contentPage", "resale/resalehome");
 	    return "index";
 	}
-	
 	@GetMapping("/resale-go-reg")
 	public String ResaleGoReg(HttpServletRequest req) {		
 		mDAO.isLogined(req);
-		rDAO.getAllCategories(req);
+		rsDAO.getAllCategories(req);
         req.setAttribute("contentPage", "resale/resalereg");
 		return "index";
 	}
@@ -53,8 +58,8 @@ public class ResaleController {
 	@GetMapping("/resale-product")
 	public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
 		mDAO.isLogined(req);
-		rDAO.getAllCategories(req);
-		rDAO.getResaleDetail(req, pno);
+		rsDAO.getAllCategories(req);
+		rsDAO.getResaleDetail(req, pno);
         req.setAttribute("contentPage", "resale/resaleproduct");
 		return "index";
 	}
@@ -63,9 +68,9 @@ public class ResaleController {
 	public String ResaleReg(Resale r, HttpServletRequest req,
 	                        @RequestParam("files") MultipartFile[] photos) {
 	    mDAO.isLogined(req);
-	    rDAO.resaleReg(r, req, photos);
-	    rDAO.getAllCategories(req);
-	    rDAO.getAllResaleItems(req);
+	    rsDAO.resaleReg(r, req, photos);
+	    rsDAO.getAllCategories(req);
+	    rsDAO.getAllResaleItems(req);
 	    req.setAttribute("contentPage", "resale/resalehome");
 	    return "index";
 	}

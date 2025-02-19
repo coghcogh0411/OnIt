@@ -65,7 +65,9 @@
 <body>
 	<div class="main-content">
 		<div class="sidebar-container">
-			<button class="location-button">종로구</button>
+			<button class="location-button"
+				th:text="${userRegion.region != null} ? ${userRegion.region.secondName} : '지역 없음'">
+			</button>
 			<div class="sidebar">
 				<div th:each="c : ${category}"
 					th:onclick="|resaleCategoryChange(${c.no})|">
