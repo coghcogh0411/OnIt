@@ -32,16 +32,35 @@
 
 	    $(".bid-button").click(function() {
 	        var cost = $(".auction-cost").val();
-	        var username = $(".seller-name").text(); // 판매자 이름을 사용 (사용자 정보로 수정 가능)
+	        var username = $(".user").text(); // 판매자 이름을 사용 (사용자 정보로 수정 가능)
+	        var auctionNo = $(".auctionNo").val();
 	        
-	        console.log("💰 입찰 시도: " + cost + ", 사용자: " + username);
+	        console.log("💰 입찰 시도: " + cost + ", 사용자: " + username+"방 번호"+auctionNo);
 
-	        socket.emit("bid", { amount: cost, username: username });
+	        socket.emit("bid", {auctionNo: auctionNo, amount: cost, username: username });
 
 	        $(".auction-cost").val(""); // 입력창 초기화
 	    });
 
-	    
+	    socket.on("updateBids", function(data){
+	    	let pageAuctionNo = $(".auctionNo").val();
+
+	        // 현재 페이지의 상품번호와 다르면 무시
+	        if (String(data.auctionNo) !== pageAuctionNo) {
+	            return;
+	        }
+
+	        // 같은 상품이라면 목록 갱신
+	        $(".bidder-list").empty();
+	        data.bids.forEach(function(bid, index) {
+	            // 입찰자 정보 표시
+	            let name = $("<span></span>").text(bid.username);
+	            let amount = $("<span></span>").text(bid.amount + "원");
+
+	            let li = $("<li></li>").append(name, " ", amount);
+	            $(".bidder-list").append(li);
+	        });
+	    });
 
 	});
 </script>
@@ -77,7 +96,7 @@
 
 				<div class="product-info">
 					<h1 class="product-title" th:text="${product.title}">제목</h1>
-
+					<input class="auctionNo" type="text" th:value="${product.no}">
 					<div class="meta-info">
 						<span class="date"
 							th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
