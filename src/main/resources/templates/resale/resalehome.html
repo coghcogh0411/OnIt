@@ -46,14 +46,19 @@
 	            $(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
 	        });
 	    });
-	    $(document).on("click", ".region-list li", function() {
+	    $(document).on("click", ".region-list li", function(e) {
+	        e.preventDefault();
+	        e.stopPropagation();
+
 	        var name = $(this).text();
 	        var namearr = name.split(", ");
-	        
 	        $(".location-button").text(namearr[1]);
-	        $(".modal-overlay").fadeOut(200);
+
+	        $(".modal-overlay").fadeOut(200, function() {
+	            location.href = "/region-get?region=" + encodeURIComponent(namearr[1]);
+	        });
+	        });
 	    });
-	});
 </script>
 </head>
 <body>

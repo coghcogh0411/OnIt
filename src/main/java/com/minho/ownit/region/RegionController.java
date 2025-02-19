@@ -18,4 +18,10 @@ public class RegionController {
 		return rDAO.RegionGet(region);
 	}
 	
+	@GetMapping("/region-get")
+	public String regionReg(@RequestParam String param) {
+		return new String();
+	}
+	
+	
 }
