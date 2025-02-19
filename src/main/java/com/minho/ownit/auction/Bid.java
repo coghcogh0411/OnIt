@@ -4,6 +4,9 @@ import java.util.Date;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.minho.ownit.member.Member;
 
 import jakarta.persistence.Column;
@@ -24,7 +27,6 @@ import lombok.NoArgsConstructor;
 @Entity(name = "bid")
 public class Bid {
 	@Id
-	
     @Column(name = "bid_name")
 	private String bidName;
 	@ManyToOne

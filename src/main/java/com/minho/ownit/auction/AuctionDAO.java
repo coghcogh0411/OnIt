@@ -26,7 +26,13 @@ public class AuctionDAO {
 	
 	@Value("${ho.img.folder}")
 	private String imgFolder;
-
+	
+	public Bids BidGet(String auctionNo) {
+		
+		List<Bid> bids = bRepo.findByAuctionNo_No(Integer.parseInt(auctionNo));
+		return new Bids(bids);
+	}
+	
 	public void getAllAuctionItems(HttpServletRequest req) {
 		req.setAttribute("auctionList", aRepo.findAll());
 	}
@@ -95,6 +101,7 @@ public class AuctionDAO {
 		String auctionNoStr = auctionNo+"";
 		b.setUser(m);
 		b.setBidName(auctionNoStr+m.getNickname());
+		System.out.println();
 		bRepo.save(b);
 		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(auctionNo));;
 	}
