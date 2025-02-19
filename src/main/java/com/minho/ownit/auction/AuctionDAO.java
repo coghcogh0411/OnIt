@@ -91,9 +91,12 @@ public class AuctionDAO {
 	
 	public void Bid(Bid b, HttpServletRequest req) {
 		Member m = (Member) req.getSession().getAttribute("loginMember");
+		int auctionNo = Integer.parseInt(req.getParameter("auctionNo"));
+		String auctionNoStr = auctionNo+"";
 		b.setUser(m);
+		b.setBidName(auctionNoStr+m.getNickname());
 		bRepo.save(b);
-		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(Integer.parseInt(req.getParameter("auctionNo"))));;
+		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(auctionNo));;
 	}
 
 }

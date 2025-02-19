@@ -6,6 +6,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BidRepo extends CrudRepository<Bid, Integer>{
+public interface BidRepo extends CrudRepository<Bid, String>{
 	public abstract List<Bid> findByAuctionNoNoOrderByAmountDesc(int auctionNo);
 }

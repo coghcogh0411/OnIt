@@ -24,10 +24,9 @@ import lombok.NoArgsConstructor;
 @Entity(name = "bid")
 public class Bid {
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_seq")
-    @SequenceGenerator(name = "bid_seq", sequenceName = "seq_bid_no", allocationSize = 1)
-    @Column(name = "bid_no")
-	private Integer bidNo;
+	
+    @Column(name = "bid_name")
+	private String bidName;
 	@ManyToOne
 	@JoinColumn(name = "auction_no")
 	private Auction auctionNo;
