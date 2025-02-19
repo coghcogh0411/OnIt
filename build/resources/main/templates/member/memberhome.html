@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/memberhome.css">
+</head>
+<body>
+	<div class="main-content">
+		<div class="sidebar-container">
+			<div class="sidebar">
+				<div class="category-item">개인정보</div>
+				<a href="/member-home" class="category-item-child">-개인정보 수정</a>
+				<a href="/member-home" class="category-item-child">-회원탈퇴</a>
+				<div class="category-item">내 상품</div>
+				<a href="/member-home" class="category-item-child">-내가 올린 상품</a>
+				<a href="/member-home" class="category-item-child">-종아요 표시한 상품</a>
+				<a href="/member-home" class="category-item">팔로우</a>
+			</div>
+		</div>
+
+		<div class="profile-card">
+			<div class="profile-header">
+				<div class="profile-name">
+					<div class="username">구파</div>
+				</div>
+
+				<div class="profile-content">
+					<textarea class="description"></textarea>
+				</div>
+				<div class="badge">
+					<div>asd</div>
+					<div>asd</div>
+					<div>asd</div>
+				</div>
+				<button class="action-buttons" type="submit">
+					<div class="edit-button">프로필 수정 ✏️</div>
+				</button>
+			</div>
+			
+			<div class="profile-image">
+				<img src="" alt="프로필 이미지">
+			</div>
+		</div>
+	</div>
+	
+	<div class="content" th:insert="~{${myPageContent}}"></div>
+</body>
+</html>

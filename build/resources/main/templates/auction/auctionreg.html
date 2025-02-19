@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>상품 등록</title>
+<link rel="stylesheet" href="/css/resalereg.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="top-content">
+            <button class="location-button">
+                <span class="location-icon">📍</span> 종로구
+            </button>
+            <div class="title-banner">상품 등록</div>
+        </div>
+
+        <div class="main-content">
+            <form class="form-container" action="/auction-reg" method="post" enctype="multipart/form-data">
+                <div class="form-fields">
+                    <input type="text" name="title" class="input-field" placeholder="제목을 입력하세요">
+                    <textarea class="textarea-field" name="description" placeholder="설명을 입력하세요"></textarea>
+                    <div class="dropdowns-container">
+                        <select class="dropdown" name="delivery">
+                            <option>택배 여부</option>
+                            <option value="1">가능</option>
+                            <option value="0">불가능</option>
+                        </select>
+                        <select class="dropdown" name="deal">
+                            <option>직거래 여부</option>
+                            <option value="1">가능</option>
+                            <option value="0">불가능</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="image-section">
+                    <div class="upload-area">
+                        <span>이미지를 올려주세요</span>
+                        <input type="file" name="files" accept="image/*" multiple>
+                    </div>
+                    <div class="preview-carousel">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 1">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 2">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 3">
+                        <img src="/placeholder.svg" class="preview-image" alt="Preview 4">
+                    </div>
+                    
+                    <div class="price-section">
+						<input class="price-input" name="price"
+							placeholder="가격 입력">
+						<button type="submit" class="submit-button">등록</button>
+					</div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

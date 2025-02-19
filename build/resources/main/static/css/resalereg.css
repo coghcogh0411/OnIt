@@ -1,0 +1,277 @@
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+.top-content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	gap: 20px;
+}
+
+.location-button {
+	display: flex;
+	align-items: center;
+	padding: 10px 20px;
+	border: 2px solid #9AA2EC;
+	border-radius: 25px;
+	background-color: white;
+	color: #333;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.location-icon {
+	margin-right: 8px;
+	color: #7986CB;
+}
+
+.title-banner {
+	background-color: #9AA2EC;
+	color: white;
+	padding: 10px 20px;
+	border-radius: 8px;
+	font-size: 18px;
+	text-align: center;
+	flex-grow: 1;
+}
+
+.main-content {
+	display: flex;
+	gap: 20px;
+}
+
+.form-container {
+	display: flex;
+	flex-grow: 1;
+	gap: 20px;
+}
+
+.form-fields {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: 15px;
+}
+
+.dropdown,
+.price-input {
+	width: 95%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	font-size: 16px;
+}
+
+.input-field {
+	width: 80%;
+	height: 67px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 8px;
+	font-size: 30px;
+	box-shadow: 3px 3px #ddd;
+}
+
+.textarea-field {
+	width: 90%;
+	height: 350px;
+	padding: 10px;
+	border: 1px solid black;
+	border-radius: 8px;
+	font-size: 16px;
+	box-shadow: 3px 3px #ddd;
+}
+
+.textarea-field {
+	min-height: 150px;
+	resize: none;
+}
+
+.dropdowns-container {
+	display: flex;
+	gap: 10px;
+}
+
+.dropdown {
+	flex: 1;
+}
+
+.image-section {
+	width: 450px;
+}
+
+.upload-area {
+	width: 60%;
+	height: 200px;
+	border: 2px dashed #ddd;
+	border-radius: 8px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f9f9f9;
+	position: relative;
+	overflow: hidden;
+	margin: auto;
+	margin-bottom: 50px;
+}
+
+.upload-area input[type="file"] {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	cursor: pointer;
+}
+
+.preview-carousel {
+	display: flex;
+	margin-top: 10px;
+	margin-bottom: 80px;
+	overflow-x: auto;
+	height: 150px;
+	gap: 10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	background-color: #f9f9f9;
+	scroll-snap-type: x mandatory;
+	align-items: center;
+}
+
+.preview-image {
+	flex-shrink: 0;
+	width: 100px;
+	height: 130px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	object-fit: cover;
+	scroll-snap-align: start;
+}
+
+.price-section {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+	margin-top: 20px;
+}
+
+.submit-button {
+	padding: 10px 20px;
+	background-color: #9AA2EC;
+	color: white;
+	border: none;
+	border-radius: 8px;
+	font-size: 16px;
+	cursor: pointer;
+	flex-shrink: 0;
+}
+
+.submit-button:hover {
+	background-color: #5c6bc0;
+}
+
+/* 추가: 미리보기 이미지에 번호를 표시하기 위한 스타일 */
+.preview-wrapper {
+	position: relative;
+	display: inline-block;
+	margin: 5px;
+}
+
+.image-number {
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	background-color: rgba(0, 0, 0, 0.6);
+	color: #fff;
+	padding: 2px 4px;
+	border-radius: 3px;
+	font-size: 12px;
+}
+.preview-carousel {
+  display: flex;
+  margin-top: 10px;
+  margin-bottom: 80px;
+  overflow-x: auto;    
+  overflow-y: hidden;  /* 세로 스크롤 제거 */
+  height: 150px;
+  gap: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  scroll-snap-type: x mandatory;
+  align-items: center;
+}
+
+/* WebKit 브라우저 전용 스크롤바 스타일 */
+.preview-carousel::-webkit-scrollbar {
+  height: 8px;               /* 가로 스크롤바의 두께 */
+}
+
+.preview-carousel::-webkit-scrollbar-track {
+  background: #eee;          /* 스크롤바 트랙 색상 */
+  border-radius: 4px;
+}
+
+.preview-carousel::-webkit-scrollbar-thumb {
+  background-color: #9AA2EC; /* 스크롤바 '손잡이' 색상 */
+  border-radius: 4px;
+  min-width: 100px;           /* thumb 최소 너비 지정 */
+  /* width: 50px;            // 일부 브라우저에서 필요하다면 추가 */
+}
+
+/* 모달 오버레이 (화면 전체를 덮는 어두운 배경) */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* 어둡게 */
+  display: none; /* 초기에는 숨김 */
+  justify-content: center; /* flex 정렬을 위한 속성 */
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 모달 박스 (흰색 배경 박스) */
+.modal {
+  background-color: #fff;
+  width: 400px;         /* 원하는 너비 */
+  border-radius: 8px;
+  overflow: hidden;
+  color: #333;
+  font-family: sans-serif;
+  position: relative;
+  margin: auto;
+  margin-top: 100px;    /* 상단 여백 */
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+}
+
+/* 모달 헤더 영역 */
+.modal-header {
+  padding: 16px;
+  border-bottom: 1px solid #ccc;
+  font-size: 18px;
+  font-weight: bold;
+  position: relative;
+  color: #333;
+}
+
+/* 닫기 버튼 (모달 우측 상단) */
+.close-modal {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #999;
+}
+
+/* 모달 본문 */
+.modal-content {
+  padding: 16px;
+  color: #333;
+  text-align: center; /* 이미지 중앙 정렬 */
+}

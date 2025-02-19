@@ -1,0 +1,149 @@
+.main-container {
+	margin: auto;
+	padding: 20px;
+	max-width: 800px;
+}
+
+h1 {
+	font-size: 24px;
+	margin-bottom: 10px;
+}
+
+.post-info {
+	display: flex;
+	font-size: 14px;
+	color: #666;
+	margin-bottom: 20px;
+}
+
+.post-info div {
+	margin: auto;
+}
+
+.content {
+	margin-bottom: 20px;
+	min-height: 400px;
+}
+
+.like {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.like img{
+	max-height: 20px;
+	max-width: 20px;
+}
+
+.like-button {
+	display: flex;
+	align-items: center;
+	padding: 8px 15px;
+	border: 2px solid #000;
+	border-radius: 20px;
+	background: none;
+	font-size: 16px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
+
+.like-button .icon {
+	margin: 0 5px;
+	font-size: 18px;
+	transition: color 0.3s ease;
+}
+
+.like-button.active {
+	border-color: #ff4d4d;
+}
+
+.like-button.active .icon {
+	color: #ff4d4d;
+}
+
+/* 댓글 섹션 */
+.comment-section {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column; /* 댓글 입력란과 댓글을 수직으로 배치 */
+	width: 100%;
+}
+
+/* 댓글 목록 */
+.comment {
+	display: flex;
+	flex-direction: column; /* 댓글 작성자 정보와 댓글 내용을 세로로 배치 */
+	padding: 10px;
+	margin-bottom: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	border: 1px solid #ddd;
+}
+
+/* 댓글 작성자 정보 */
+.comment-author {
+	display: flex;
+	align-items: center;
+	margin-bottom: 10px;
+}
+
+.author-name {
+	margin-left: 10px;
+	font-weight: bold;
+	font-size: 14px;
+	color: #333;
+}
+
+.author-profile-pic {
+	width: 35px;
+	height: 35px;
+	border-radius: 50%; /* 프로필 사진을 원형으로 만들기 */
+	object-fit: cover;
+}
+
+/* 댓글 내용 */
+.comment-content {
+	font-size: 14px;
+	color: #555;
+	line-height: 1.5;
+}
+
+/* 댓글 입력란 */
+.comment-box {
+	align-items: center;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 5px;
+	width: 80%;
+	margin-right: 20px;
+	margin-bottom: 10px;
+}
+
+.comment-input {
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	font-size: 14px;
+}
+
+.comment-box:focus-within {
+	border: 2px solid #007bff; /* 클릭 시 테두리 강조 */
+}
+
+/* 댓글 작성 버튼 */
+.submit-comment {
+	padding: 10px 15px;
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	font-size: 14px;
+	cursor: pointer;
+	transition: all 0.3s;
+	margin-top: 10px;
+}
+
+.submit-comment:hover {
+	background: #007bff;
+	color: white;
+}

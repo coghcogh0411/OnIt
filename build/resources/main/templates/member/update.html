@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/join.css">
+</head>
+<body>
+	<form name="updateForm">
+		<div class="container">
+			<div class="form-group">
+				<label for="email">이메일</label> <input type="email" id="email"
+					name="email" placeholder="이메일 입력">
+				<div class="error">*올바르지 않은 이메일 형식입니다.</div>
+			</div>
+			<div class="form-group">
+				<label for="username">아이디</label> <input type="text" id="username"
+					name="username" placeholder="아이디 입력">
+				<div class="error">*이미 존재하는 ID입니다.</div>
+			</div>
+			<div class="form-group">
+				<label for="password">비밀번호</label> <input type="password"
+					id="password" name="password" placeholder="비밀번호 입력">
+			</div>
+			<div class="form-group">
+				<label for="password-confirm">비밀번호 확인</label> <input type="password"
+					id="password-confirm" name="password-confirm" placeholder="비밀번호 확인">
+				<div class="error">*비밀번호가 일치하지 않습니다.</div>
+			</div>
+			<div class="form-group">
+				<label for="nickname">닉네임</label> <input type="text" id="nickname"
+					name="nickname" placeholder="닉네임 입력" maxlength="8">
+				<div class="error">*이미 존재하는 닉네임입니다.</div>
+			</div>			
+			<div class="form-group">
+				<label for="phone">휴대전화</label> <input type="text" id="phone"
+					name="phone" placeholder="010-1234-5678">
+			</div>
+			<div class="form-group">
+				<label>주소</label>
+				<div class="address-search">
+					<input type="text" id="addr1" readonly="readonly">
+					<button type="button" id="addr2">우편번호 검색</button>
+				</div>
+				<input type="text" id="addr3" placeholder="상세주소">
+			</div>
+			<div class="form-group">
+				<label>프로필 사진</label>
+				<div class="profile-picture-container">
+					<div class="profile-picture">
+						<label for="profile-image" class="upload-label">
+							여기를 눌러 이미지를 선택하거나<br>
+							드래그해서 이미지를 추가하세요
+						</label> <input type="file" id="profile-image" name="profile-image"
+							accept="image/*">
+					</div>
+					<div class="preview-area">
+						<img id="preview-image" alt="프로필 미리보기">
+					</div>
+				</div>
+			</div>
+			<div id="updateBtnDiv">
+				<button type="submit" class="btn">회원 정보 수정</button>
+			</div>
+		</div>
+	</form>
+</body>
+</html>
