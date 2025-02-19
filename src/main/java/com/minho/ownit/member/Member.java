@@ -50,11 +50,9 @@ public class Member {
 	private String addr;
 	
 	
-	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
-	private List<Community> communityList;
+	
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
 	private List<CommunityReply> replies;
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<CommunityLike> likes;
+	
 	
 }
