@@ -1,4 +1,41 @@
 {
 	"folders": {},
-	"connections": {}
+	"connections": {
+		"oracle_thin-1951a72a880-59545b73278857e0": {
+			"provider": "oracle",
+			"driver": "oracle_thin",
+			"name": "sd-beanmouse.duckdns.org",
+			"save-password": true,
+			"configuration": {
+				"host": "sd-beanmouse.duckdns.org",
+				"port": "43217",
+				"database": "xe",
+				"url": "jdbc:oracle:thin:@sd-beanmouse.duckdns.org:43217:xe",
+				"configurationType": "MANUAL",
+				"type": "dev",
+				"closeIdleConnection": true,
+				"provider-properties": {
+					"@dbeaver-connection-type@": "BASIC",
+					"@dbeaver-sid-service@": "SID"
+				},
+				"auth-model": "oracle_native"
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false,
+			"smart-commit": false,
+			"smart-commit-recover": true,
+			"auto-close-transactions": true,
+			"close-transactions-period": 1800,
+			"auto-close-connections": true,
+			"close-connections-period": 14400
+		}
+	}
 }
