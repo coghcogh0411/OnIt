@@ -37,7 +37,46 @@
 	</nav>
 
 	<div class="content" th:insert="~{${contentPage}}"></div>
+	
+	<div class="subcontent">
+		<div class="toggle-sidebar"><div>&lt;</div></div>
+		<aside>
+			<!-- 알림함 -->
+			<section class="notifications">
+				<h2 align="center">OnIt</h2>
+				<hr>
+				<h2>알림함</h2>
+				<div class="notification-item">
+					<img src="user1.jpg" alt="프로필 이미지">
+					<p>
+						<strong>구파님</strong>이 좋아요를 눌렀습니다.
+					</p>
+				</div>
+			</section>
 
+			<!-- 채팅방 -->
+			<section class="chat-box">
+				<hr>
+				<h2>채팅방</h2>
+				<div class="chat-room">
+					<img src="user2.jpg" alt="마농 프로필">
+					<p>
+						<strong>마농</strong><br>
+						<span class="message-preview">안녕하세요...</span>
+					</p>
+					<span class="new-message">1</span>
+				</div>
+				<div class="chat-room">
+					<img src="user3.jpg" alt="손아이파 프로필">
+					<p>
+						<strong>손아이파</strong><br>
+						<span class="message-preview">상품에 대해 질문이...</span>
+					</p>
+					<span class="new-message">1</span>
+				</div>
+			</section>
+		</aside>
+	</div>
 
 	<footer>
 		<div class="footer-info">

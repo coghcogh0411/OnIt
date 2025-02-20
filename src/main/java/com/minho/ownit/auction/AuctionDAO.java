@@ -29,7 +29,7 @@ public class AuctionDAO {
 	
 	public Bids BidGet(String auctionNo) {
 		
-		List<Bid> bids = bRepo.findByAuctionNo_No(Integer.parseInt(auctionNo));
+		List<Bid> bids = bRepo.findByAuctionNoNoOrderByAmountDesc(Integer.parseInt(auctionNo));
 		return new Bids(bids);
 	}
 	
