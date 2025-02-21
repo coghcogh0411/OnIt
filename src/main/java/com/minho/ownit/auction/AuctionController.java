@@ -38,6 +38,7 @@ public class AuctionController {
 	public String AuctionReg(Auction a, HttpServletRequest req, @RequestParam("files") MultipartFile[] file) {
 		mDAO.isLogined(req);
 		aDAO.auctionReg(a, req, file);
+		aDAO.getAllAuctionItems(req);
 		req.setAttribute("contentPage", "auction/auctionhome");
 		return "index";
 	}
