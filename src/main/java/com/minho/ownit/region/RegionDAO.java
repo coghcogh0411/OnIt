@@ -27,11 +27,7 @@ public class RegionDAO {
 		return new Regions(regions);
 	}
 	
-	public void regionAttribute(HttpServletRequest req, RegionMember user) {
-        req.setAttribute("userRegion", user);
-    }
-	
-	public RegionMember regionReg(HttpServletRequest req) {
+	public void regionReg(HttpServletRequest req) {
 	    RegionMember result = null;
 	    try {
 	        // 1) 세션에서 로그인 사용자 가져오기
@@ -45,35 +41,22 @@ public class RegionDAO {
 	                .orElseThrow(() -> new RuntimeException("해당 유저가 DB에 없습니다."));
 
 	        // 3) 쿼리 파라미터 "region" 가져오기
-	        String regionParam = req.getParameter("region");
-	        if (regionParam == null || regionParam.isEmpty()) {
+	        String regionParam1 = req.getParameter("region");
+	        String regionParam2 = req.getParameter("region2");
+	        req.getSession().setAttribute("regionSession", regionParam2);
+	        if (regionParam2 == null || regionParam2.isEmpty()) {
 	            throw new RuntimeException("지역 파라미터가 없습니다.");
 	        }
-
+	        String hapParam = regionParam1+regionParam2;
+	        
 	        // 4) regionParam 파싱
 	        Region region = null;
-	        if (regionParam.contains(",")) {
-	            // 예: "서울특별시, 강남구"
-	            String[] arr = regionParam.split(", ");
-	            if (arr.length < 2) {
-	                throw new RuntimeException("지역 파라미터 형식이 올바르지 않습니다. (예: '서울특별시, 강남구')");
-	            }
-	            String first = arr[0].trim();
-	            String second = arr[1].trim();
-
-	            List<Region> found = rRepo.findByFirstNameAndSecondName(first, second);
+	        
+	            List<Region> found = rRepo.findByName(hapParam);
 	            if (found.isEmpty()) {
-	                throw new RuntimeException("해당 지역이 DB에 없습니다. (검색: " + first + ", " + second + ")");
+	                throw new RuntimeException("해당 지역이 DB에 없습니다. (검색: " + hapParam + ")");
 	            }
 	            region = found.get(0);
-	        } else {
-	            // 예: "강남구" 만 입력되었다면 secondName만 검색
-	            List<Region> found = rRepo.findBySecondName(regionParam);
-	            if (found.isEmpty()) {
-	                throw new RuntimeException("해당 지역이 DB에 없습니다. (검색: " + regionParam + ")");
-	            }
-	            region = found.get(0);
-	        }
 
 	        // 5) region_user 테이블에서 user_id로 조회
 	        RegionMember existing = rmRepo.findByUser(user);
@@ -88,10 +71,16 @@ public class RegionDAO {
 	            rm.setUser(user);
 	            result = rmRepo.save(rm);
 	        }
-
+	        req.getSession().getAttribute("regionSession");
+	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	    return result; // <- 최종 RegionMember 반환
+	}
+	public void noLoginRegion(HttpServletRequest req) {
+		String regionParam2 = req.getParameter("region2");
+        if (regionParam2 != null && !regionParam2.isEmpty()) {
+            req.getSession().setAttribute("regionSession", regionParam2);
+        }
 	}
 }

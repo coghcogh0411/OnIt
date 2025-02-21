@@ -30,13 +30,17 @@ public class RegionController {
 	}
 
 	@GetMapping("/region-get")
-	public String regionReg(@RequestParam(value = "from") String from, HttpServletRequest req, RegionMember user) {
-		mDAO.isLogined(req);
-        rgDAO.regionReg(req);
+	public String regionReg(@RequestParam(value = "from") String from, HttpServletRequest req) {
+		if (mDAO.isLogined(req)) {
+			mDAO.isLogined(req);
+	        rgDAO.regionReg(req);
+	    } else {
+	    	mDAO.isLogined(req);
+	        rgDAO.noLoginRegion(req);
+	    }
         rsDAO.getAllCategories(req);
         rsDAO.getAllResaleItems(req);
-        rgDAO.regionAttribute(req, user);
-
+        
         // 4) 어느 화면으로 이동할지 결정 (from 파라미터)
         if ("home".equals(from)) {
             req.setAttribute("contentPage", "resale/resalehome");

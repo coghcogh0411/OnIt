@@ -56,7 +56,7 @@
 
 	        $(".modal-overlay").fadeOut(200, function() {
 	        	var fromValue = "home";
-	            location.href = "/region-get?region=" + encodeURIComponent(namearr[1]) + "&from=" + encodeURIComponent(fromValue);
+	            location.href = "/region-get?region=" + encodeURIComponent(namearr[0])+"&region2="+encodeURIComponent(namearr[1]) + "&from=" + encodeURIComponent(fromValue);
 	        });
 	        });
 	    });
@@ -66,7 +66,7 @@
 	<div class="main-content">
 		<div class="sidebar-container">
 			<button class="location-button"
-				th:text="${userRegion.region != null} ? ${userRegion.region.secondName} : '지역 없음'">
+				th:text="${session.regionSession != null} ? ${session.regionSession} : '지역 없음'">
 			</button>
 			<div class="sidebar">
 				<div th:each="c : ${category}"
