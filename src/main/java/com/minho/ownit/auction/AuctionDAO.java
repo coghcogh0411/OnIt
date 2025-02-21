@@ -10,6 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.FileNameGenerator;
 import com.minho.ownit.member.Member;
+import com.minho.ownit.region.Region;
+import com.minho.ownit.region.RegionAuction;
+import com.minho.ownit.region.RegionAuctionRepo;
+import com.minho.ownit.region.RegionMember;
+import com.minho.ownit.region.RegionMemberRepo;
 import com.minho.ownit.resale.Resale;
 import com.minho.ownit.resale.ResalePhoto;
 
@@ -23,16 +28,20 @@ public class AuctionDAO {
 	private AuctionPhotoRepo apRepo;
 	@Autowired
 	private BidRepo bRepo;
-	
+	@Autowired
+	private RegionMemberRepo rmRepo;
+	@Autowired
+	private RegionAuctionRepo regionAuctionRepo;
+
 	@Value("${ho.img.folder}")
 	private String imgFolder;
-	
+
 	public Bids BidGet(String auctionNo) {
-		
+
 		List<Bid> bids = bRepo.findByAuctionNoNoOrderByAmountDesc(Integer.parseInt(auctionNo));
 		return new Bids(bids);
 	}
-	
+
 	public void getAllAuctionItems(HttpServletRequest req) {
 		req.setAttribute("auctionList", aRepo.findAll());
 	}
@@ -44,7 +53,7 @@ public class AuctionDAO {
 			Member m = (Member) req.getSession().getAttribute("loginMember");
 			a.setUser(m);
 			a.setStatus("start");
-			
+
 			if (files != null && files.length > 0) {
 				thumbnailFileName = FileNameGenerator.generator(files[0]);
 				files[0].transferTo(new File(imgFolder + "/" + thumbnailFileName));
@@ -64,14 +73,23 @@ public class AuctionDAO {
 					AuctionPhoto auctionPhoto = new AuctionPhoto();
 					auctionPhoto.setAuction(a);
 					auctionPhoto.setUrl(fileName);
-					
+
 					apRepo.save(auctionPhoto);
 				}
 			}
-			
-			
-			aRepo.save(a);
 
+			aRepo.save(a);
+			
+			RegionMember regionMember = rmRepo.findByUser(m);
+            if (regionMember != null) {
+                Region region = regionMember.getRegion();
+                RegionAuction regionAuction = new RegionAuction();
+                regionAuction.setRegion(region);
+                regionAuction.setAuctionNo(a);
+                regionAuctionRepo.save(regionAuction);
+            } else {
+                System.out.println("해당 사용자의 위치정보(region_user)가 DB에 없습니다.");
+            }
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (thumbnailFileName != null) {
@@ -80,30 +98,31 @@ public class AuctionDAO {
 			throw new RuntimeException("상품 등록 실패");
 		}
 	}
-	
-	public void getAuctionDetail(HttpServletRequest req, int no) {
-        try {
-  
-            Auction a = aRepo.findById(no).orElse(null);
-            req.setAttribute("product", a);
-            
-            req.setAttribute("photos", apRepo.findByAuction_no(no));
-            req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(no));
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-	
+	public void getAuctionDetail(HttpServletRequest req, int no) {
+		try {
+
+			Auction a = aRepo.findById(no).orElse(null);
+			req.setAttribute("product", a);
+
+			req.setAttribute("photos", apRepo.findByAuction_no(no));
+			req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(no));
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	public void Bid(Bid b, HttpServletRequest req) {
 		Member m = (Member) req.getSession().getAttribute("loginMember");
 		int auctionNo = Integer.parseInt(req.getParameter("auctionNo"));
-		String auctionNoStr = auctionNo+"";
+		String auctionNoStr = auctionNo + "";
 		b.setUser(m);
-		b.setBidName(auctionNoStr+m.getNickname());
+		b.setBidName(auctionNoStr + m.getNickname());
 		System.out.println();
 		bRepo.save(b);
-		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(auctionNo));;
+		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(auctionNo));
+		;
 	}
 
 }

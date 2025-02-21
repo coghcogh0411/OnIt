@@ -50,9 +50,6 @@ public class Resale {
     @Column(name = "resale_price")
     private Integer price;
     
-    @Column(name = "resale_location")
-    private String location;
-    
     @CreationTimestamp
     @Column(name = "resale_create")
     private Date date;
