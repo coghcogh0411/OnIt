@@ -73,6 +73,7 @@ public class RegionDAO {
 	        }
 	        req.getSession().getAttribute("regionSession");
 	        
+	        
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
@@ -83,4 +84,6 @@ public class RegionDAO {
             req.getSession().setAttribute("regionSession", regionParam2);
         }
 	}
+
+	
 }

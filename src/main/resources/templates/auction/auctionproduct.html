@@ -20,6 +20,9 @@
       $('.slider').bxSlider({
         captions : true
       });
+      
+      
+      
       var socket = io.connect("http://sd-beanmouse.duckdns.org:43218");
 
       socket.on("connect", function() {
@@ -110,7 +113,7 @@
                   th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
           </div>
 
-          <div class="price"></div>
+          <div class="price" th:text="${#lists.isEmpty(bidList) ? product.price : bidList[0].amount} + ' 원'"></div>
 
           <div class="description-box">
             <textarea class="description-textarea" readonly
@@ -147,7 +150,7 @@
                 <button class="bid-option">+@ 원</button>
               </div>
               <div class="bid-input">
-                <input class="auction-cost" name="amount" type="text" th:value="${product.price}">
+                <input class="auction-cost" name="amount" type="text" th:value="${#lists.isEmpty(bidList) ? product.price : bidList[0].amount}">
                 <button class="bid-button" type="submit">입찰하기</button>
               </div>
             </div>
