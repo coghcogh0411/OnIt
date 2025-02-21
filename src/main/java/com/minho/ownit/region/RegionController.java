@@ -38,20 +38,20 @@ public class RegionController {
 	    	mDAO.isLogined(req);
 	        rgDAO.noLoginRegion(req);
 	    }
-        rsDAO.getAllCategories(req);
-        rsDAO.getAllResaleItems(req);
-        
-        // 4) 어느 화면으로 이동할지 결정 (from 파라미터)
-        if ("home".equals(from)) {
-            req.setAttribute("contentPage", "resale/resalehome");
-        } else if ("product".equals(from)) {
-            req.setAttribute("contentPage", "resale/resaleproduct");
-        } else if ("reg".equals(from)) {
-            req.setAttribute("contentPage", "resale/resalereg");
-        } else {
-            // 기본값: home
-            req.setAttribute("contentPage", "resale/resalehome");
-        }
-		return "index";
-	}
-}
+		
+		if ("home".equals(from)) {
+	        return "redirect:/resale";
+	    } else if ("product".equals(from)) {
+	        // 실제 상품 번호는 "no" 파라미터로 전달되고 있음
+	        String productNo = req.getParameter("no");
+	        if (productNo == null || productNo.isEmpty()) {
+	            // 파라미터가 없으면 기본적으로 홈으로 리다이렉트
+	            return "redirect:/resale";
+	        }
+	        return "redirect:/resale-product?no=" + productNo;
+	    } else if ("reg".equals(from)) {
+	        return "redirect:/resale-go-reg";
+	    } else {
+	        return "redirect:/resale";
+	    }
+}}

@@ -35,7 +35,6 @@ public class ResaleController {
 		mDAO.isLogined(req);
 		rsDAO.getAllCategories(req);
 		rsDAO.getAllResaleItems(req);
-		req.setAttribute("userRegion", req.getSession().getAttribute("regionSession"));
 		req.setAttribute("contentPage", "resale/resalehome");
 		return "index";
 	}
@@ -60,7 +59,6 @@ public class ResaleController {
 		mDAO.isLogined(req);
 		rsDAO.getAllCategories(req);
 		rsDAO.getResaleDetail(req, pno);
-		req.setAttribute("userRegion", req.getSession().getAttribute("regionSession"));
         req.setAttribute("contentPage", "resale/resaleproduct");
 		return "index";
 	}
@@ -72,7 +70,6 @@ public class ResaleController {
 	    rsDAO.resaleReg(r, req, photos);
 	    rsDAO.getAllCategories(req);
 	    rsDAO.getAllResaleItems(req);
-	    req.setAttribute("userRegion", req.getSession().getAttribute("regionSession"));
 	    req.setAttribute("contentPage", "resale/resalehome");
 	    return "index";
 	}
