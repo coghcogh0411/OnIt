@@ -9,6 +9,8 @@
 <script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/kwonValidChecker_v1.0.js"></script>
 <script type="text/javascript" src="/js/check.js"></script>
+<script
+    src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/js/mainJS.js"></script>
 </head>
 <body>
@@ -66,18 +68,25 @@
 					</p>
 					<span class="new-message">1</span>
 				</div>
-				<div class="chat-room">
-					<img src="user3.jpg" alt="손아이파 프로필">
-					<p>
-						<strong>손아이파</strong><br>
-						<span class="message-preview">상품에 대해 질문이...</span>
-					</p>
-					<span class="new-message">1</span>
-				</div>
+				
 			</section>
 		</aside>
 	</div>
-
+	
+	<div id="chatModal">
+    <header>
+      <span id="chatTitle">채팅방</span>
+      <span class="close-btn">X</span>
+    </header>
+    <div class="chat-content" id="chatContent">
+      <!-- 대화내용이 채워짐 -->
+    </div>
+    <footer>
+      <input type="text" id="modalMessageInput" placeholder="메시지 입력..." style="width:80%">
+      <button id="modalSendBtn">전송</button>
+    </footer>
+  </div>
+	
 	<footer>
 		<div class="footer-info">
 			(주) 온잇<br> 대표자: 임채호, 마뇽채찍<br> 사업자등록번호: 000-00-00000<br>
