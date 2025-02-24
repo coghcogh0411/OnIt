@@ -1,7 +1,10 @@
 package com.minho.ownit.resale;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +16,6 @@ import com.minho.ownit.member.Member;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionMember;
 import com.minho.ownit.region.RegionMemberRepo;
-import com.minho.ownit.region.RegionRepo;
 import com.minho.ownit.region.RegionResale;
 import com.minho.ownit.region.RegionResaleRepo;
 
@@ -105,38 +107,117 @@ public class ResaleDAO {
 	}
 
 	public void getAllResaleItems(HttpServletRequest req) {
-		List<Resale> allItems = (List<Resale>) rRepo.findAll();
-		req.setAttribute("resaleList", allItems);
-		req.setAttribute("categorytitle", null);
-	}
+        List<Resale> items = new ArrayList<>();
 
-	public void getResaleByCategory(HttpServletRequest req, int no) {
-		try {
-			req.getSession().setAttribute("category", no);
-			ResaleCategory category = rcRepo.findById(no).orElse(null);
-			req.setAttribute("categorytitle", category);
-			List<Resale> resaleList = rRepo.findByCategory_No(no);
-			req.setAttribute("resaleList", resaleList);
-			req.setAttribute("category", rcRepo.findAll());
+        try {
+            Member m = (Member) req.getSession().getAttribute("loginMember");
+            if (m != null) {
+                // (A) 로그인된 사용자
+                RegionMember regionMember = rmRepo.findByUser(m);
+                if (regionMember != null) {
+                    // region_user에 있는 regionName으로 필터
+                    String regionName = regionMember.getRegion().getName();
+                    List<RegionResale> rrList = rrRepo.findByRegion_Name(regionName);
+                    for (RegionResale rr : rrList) {
+                        items.add(rr.getResaleNo());
+                    }
+                } else {
+                    // region_user 정보가 없으면 전체 상품
+                    items = (List<Resale>) rRepo.findAll();
+                }
+            } else {
+                // (B) 로그인 안 됨 => 세션 regionSession 확인
+                String sessionRegion = (String) req.getSession().getAttribute("regionSession");
+                if (sessionRegion != null && !sessionRegion.isEmpty()) {
+                    // 세션에 저장된 regionSession으로 필터
+                    List<RegionResale> rrList = rrRepo.findByRegion_Name(sessionRegion);
+                    for (RegionResale rr : rrList) {
+                        items.add(rr.getResaleNo());
+                    }
+                } else {
+                    // regionSession도 없으면 전체 상품
+                    items = (List<Resale>) rRepo.findAll();
+                }
+            }
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+            // 결과를 request에 저장
+            req.setAttribute("resaleList", items);
+            // 카테고리 목록
+            req.setAttribute("category", rcRepo.findAll());
+            req.setAttribute("categorytitle", null);
 
-	public void getResaleDetail(HttpServletRequest req, int no) {
-		try {
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-			Resale r = rRepo.findById(no).orElse(null);
-			req.setAttribute("product", r);
+	// 카테고리별 조회
+    public void getResaleByCategory(HttpServletRequest req, int no) {
+        try {
+            req.getSession().setAttribute("category", no);
+            ResaleCategory category = rcRepo.findById(no).orElse(null);
+            req.setAttribute("categorytitle", category);
 
-			List<ResalePhoto> photos = rpRepo.findByResale_no(no);
-			req.setAttribute("photos", photos);
-			req.setAttribute("category", rcRepo.findAll());
+            List<Resale> items = new ArrayList<>();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+            Member m = (Member) req.getSession().getAttribute("loginMember");
+            if (m != null) {
+                // 로그인된 사용자 => region_user 확인
+                RegionMember regionMember = rmRepo.findByUser(m);
+                if (regionMember != null) {
+                    String regionName = regionMember.getRegion().getName();
+                    List<RegionResale> rrList = rrRepo.findByRegion_Name(regionName);
+                    // rrList에 있는 상품 중 카테고리 no와 일치하는 것만 필터
+                    for (RegionResale rr : rrList) {
+                        Resale r = rr.getResaleNo();
+                        if (r.getCategory().getNo() == no) {
+                            items.add(r);
+                        }
+                    }
+                } else {
+                    // region_user 없음 => 전체 상품 중 카테고리 no
+                    items = rRepo.findByNo(no);
+                }
+            } else {
+                // 로그인 안 됨 => 세션 regionSession 확인
+                String sessionRegion = (String) req.getSession().getAttribute("regionSession");
+                if (sessionRegion != null && !sessionRegion.isEmpty()) {
+                    // regionSession으로 필터
+                    List<RegionResale> rrList = rrRepo.findByRegion_Name(sessionRegion);
+                    for (RegionResale rr : rrList) {
+                        Resale r = rr.getResaleNo();
+                        if (r.getCategory().getNo() == no) {
+                            items.add(r);
+                        }
+                    }
+                } else {
+                    // 세션 regionSession도 없으면 전체 상품 중 카테고리 no
+                    items = rRepo.findByNo(no);
+                }
+            }
+
+            req.setAttribute("resaleList", items);
+            req.setAttribute("category", rcRepo.findAll());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
+	
+	
+    public void getResaleDetail(HttpServletRequest req, int no) {
+        try {
+            Resale r = rRepo.findById(no).orElse(null);
+            req.setAttribute("product", r);
+
+            List<ResalePhoto> photos = rpRepo.findByResale_no(no);
+            req.setAttribute("photos", photos);
+            req.setAttribute("category", rcRepo.findAll());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }

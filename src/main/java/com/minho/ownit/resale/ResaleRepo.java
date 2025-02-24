@@ -6,5 +6,5 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface ResaleRepo extends CrudRepository<Resale, Integer>{
 
-	public abstract List<Resale> findByCategory_No(int no);
+	public abstract List<Resale> findByNo(int no);
 }

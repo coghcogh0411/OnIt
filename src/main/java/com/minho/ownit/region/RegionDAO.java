@@ -78,11 +78,15 @@ public class RegionDAO {
 	        e.printStackTrace();
 	    }
 	}
+	
 	public void noLoginRegion(HttpServletRequest req) {
-		String regionParam2 = req.getParameter("region2");
-        if (regionParam2 != null && !regionParam2.isEmpty()) {
-            req.getSession().setAttribute("regionSession", regionParam2);
-        }
+	    String regionParam2 = req.getParameter("region2");
+	    if (regionParam2 != null && !regionParam2.isEmpty()) {
+	        // 예: 세션에 "서울특별시강남구" 형태로 합쳐서 저장
+	        String regionParam1 = req.getParameter("region");
+	        String hapParam = regionParam1 + regionParam2;
+	        req.getSession().setAttribute("regionSession", hapParam);
+	    }
 	}
 
 	

@@ -31,47 +31,48 @@ public class ResaleController {
 	private RegionDAO rgDAO;
 	
 	@GetMapping("/resale")
-	public String resaleHome(HttpServletRequest req, RegionMember user) {
-		mDAO.isLogined(req);
-		rsDAO.getAllCategories(req);
-		rsDAO.getAllResaleItems(req);
-		req.setAttribute("contentPage", "resale/resalehome");
-		return "index";
-	}
+    public String resaleHome(HttpServletRequest req) {
+        mDAO.isLogined(req);
+        rsDAO.getAllCategories(req);
+        rsDAO.getAllResaleItems(req);
+        req.setAttribute("contentPage", "resale/resalehome");
+        return "index";
+    }
 	
 	@GetMapping("/resale-category")
-	public String getResaleByCategory(@RequestParam("no") int pno, HttpServletRequest req) {
-	    mDAO.isLogined(req);
-	    rsDAO.getResaleByCategory(req, pno);
-	    req.setAttribute("contentPage", "resale/resalehome");
-	    return "index";
-	}
+    public String getResaleByCategory(@RequestParam("no") int pno, HttpServletRequest req) {
+        mDAO.isLogined(req);
+        rsDAO.getResaleByCategory(req, pno);
+        req.setAttribute("contentPage", "resale/resalehome");
+        return "index";
+    }
+	
 	@GetMapping("/resale-go-reg")
-	public String ResaleGoReg(HttpServletRequest req) {		
-		mDAO.isLogined(req);
-		rsDAO.getAllCategories(req);
+    public String resaleGoReg(HttpServletRequest req) {
+        mDAO.isLogined(req);
+        rsDAO.getAllCategories(req);
         req.setAttribute("contentPage", "resale/resalereg");
-		return "index";
-	}
+        return "index";
+    }
 
 	@GetMapping("/resale-product")
-	public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
-		mDAO.isLogined(req);
-		rsDAO.getAllCategories(req);
-		rsDAO.getResaleDetail(req, pno);
+    public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
+        mDAO.isLogined(req);
+        rsDAO.getAllCategories(req);
+        rsDAO.getResaleDetail(req, pno);
         req.setAttribute("contentPage", "resale/resaleproduct");
-		return "index";
-	}
+        return "index";
+    }
 	
 	@PostMapping("/resale-reg")
-	public String ResaleReg(Resale r, HttpServletRequest req,
-	                        @RequestParam("files") MultipartFile[] photos) {
-	    mDAO.isLogined(req);
-	    rsDAO.resaleReg(r, req, photos);
-	    rsDAO.getAllCategories(req);
-	    rsDAO.getAllResaleItems(req);
-	    req.setAttribute("contentPage", "resale/resalehome");
-	    return "index";
-	}
+    public String resaleReg(Resale r, HttpServletRequest req,
+                            @RequestParam("files") MultipartFile[] photos) {
+        mDAO.isLogined(req);
+        rsDAO.resaleReg(r, req, photos);
+        rsDAO.getAllCategories(req);
+        rsDAO.getAllResaleItems(req);
+        req.setAttribute("contentPage", "resale/resalehome");
+        return "index";
+    }
 	
 }
