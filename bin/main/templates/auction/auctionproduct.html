@@ -1,163 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>상품 상세 페이지</title>
-  <link rel="stylesheet" href="/css/resaleproduct.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script
-    src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
-  <script type="text/javascript" src="/js/move.js"></script>
-  <script
-    src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
-  <script>
-    $(function() {
-      $(".seller-info").click(function() {
-        $(".sub-buttons").toggleClass("show");
-      });
-      $('.slider').bxSlider({
-        captions : true
-      });
-      
-      
-      
-      var socket = io.connect("http://sd-beanmouse.duckdns.org:43218");
-
-      socket.on("connect", function() {
-        console.log("✅ 소켓 연결 성공!");
-      });
-
-      socket.on("connect_error", function(error) {
-        console.error("❌ 소켓 연결 실패!", error);
-      });
-
-      $(".bid-button").click(function() {
-        var cost = $(".auction-cost").val();
-        var username = $(".user").text(); // 판매자 이름을 사용 (사용자 정보로 수정 가능)
-        var auctionNo = $(".auctionNo").val();
-        
-        console.log("💰 입찰 시도: " + cost + ", 사용자: " + username + " / 경매번호: " + auctionNo);
-
-        // 서버로 입찰 정보 전송
-        socket.emit("bid", { auctionNo: auctionNo, amount: cost, username: username });
-      });
-
-      socket.on("updateBids", function(bids) {
-        var pageAuctionNo = $(".auctionNo").val();
-        
-        // 입찰 목록 새로고침: 기존 목록 초기화
-        $(".bidder-list").empty();
-        
-     	// 서버로부터 받은 입찰 목록(data.bids)에서 현재 페이지 경매번호와 일치하는 항목만 표시
-        bids.forEach(function(bid) {
-          console.log(bid);
-          if (bid.auctionNo.no == pageAuctionNo) {
-              // auctionNo의 no, user의 nickname, amount 저장
-              var auctionNo = bid.auctionNo.no;
-              var nickname = bid.user.nickname;
-              var amount = bid.amount;
-
-              console.log("경매 번호:", auctionNo);
-              console.log("입찰자 닉네임:", nickname);
-              console.log("입찰 금액:", amount);
-              
-              // 여기에 해당 입찰 정보를 표시하는 로직 추가
-              
-              // 입찰자 이름과 입찰 금액 표시
-              var name = $("<span></span>").text(bid.user.name);
-              var amount = $("<span></span>").text(bid.amount + "원");
-              var li = $("<li></li>").append(name, " ", amount);
-              $(".bidder-list").append(li);
-            }
-        });
-        
-      });
-    });
-  </script>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/resalehome.css">
+<script type="text/javascript" src="/js/jQuery.js"></script>
+<script type="text/javascript" src="/js/move.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var isRotate = false;
+		$(".floating-button").mouseup(function(e) {
+			isRotate = !isRotate;
+			if (isRotate) {
+				$(".icon").css({
+					"transform" : "rotate(-45deg)"
+				});
+				$(".sub-buttons").addClass("show");
+			} else {
+				$(".icon").css({
+					"transform" : "rotate(0deg)"
+				});
+				$(".sub-buttons").removeClass("show");
+			}
+		})
+	});
+</script>
 </head>
 <body>
-  <div class="main-content">
-    <div class="content-area">
-      <div class="product-detail">
-        <div class="image-gallery">
-          <div class="slider">
-            <div th:each="p : ${photos}">
-              <img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지"
-                   class="sliderImg" />
-            </div>
-          </div>
-        </div>
+	<div class="main-content">
 
-        <div class="seller-info">
-          <div class="seller-profile">
-            <img src="/placeholder.svg?height=40&width=40" alt="프로필"
-                 class="profile-image">
-            <div class="seller-name"
-                 th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
-            <div class="rating">⭐⭐⭐⭐⭐</div>
-            <button class="like-button">♡</button>
-          </div>
-          <div class="sub-buttons">
-            <a href="/member-home" class="sub-button">정보보기</a>
-            <a href="#" class="sub-button chat-btn">1:1쪽지 보내기</a>
-            <a href="#" class="sub-button">팔로우</a>
-          </div>
-        </div>
-
-        <div class="product-info">
-          <h1 class="product-title" th:text="${product.title}">제목</h1>
-          <div class="meta-info">
-            <span class="date"
-                  th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
-          </div>
-
-          <div class="price" th:text="${#lists.isEmpty(bidList) ? product.price : bidList[0].amount} + ' 원'"></div>
-
-          <div class="description-box">
-            <textarea class="description-textarea" readonly
-                      th:utext="${product.description}"></textarea>
-          </div>
-
-          <div class="action-buttons">
-            <button class="action-button" th:if="${product.deal == '가능'}">댓글 가능</button>
-            <button class="action-button" th:if="${product.delivery == '가능'}">직거래 가능</button>
-          </div>
-        </div>
-        <div class="auction-section">
-          <div class="bidders">
-            <h3>🏆 입찰자 명단</h3>
-            <ul class="bidder-list">
-              <li th:each="b:${bidList}">
-                <span th:text="${b.user.name}"></span>
-                <span th:text="${b.amount+' 원'}"></span>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div>
-          <form action="/auction-bid">
-            <input class="auctionNo" name="auctionNo" type="hidden" th:value="${product.no}">
-            <div class="auction-bid">
-              <h3>
-                경매 시작가 <strong th:text="${product.price + ' 원'}"></strong>
-              </h3>
-              <div class="bid-options">
-                <button class="bid-option">+@ 원</button>
-                <button class="bid-option">+@ 원</button>
-                <button class="bid-option">+@ 원</button>
-                <button class="bid-option">+@ 원</button>
-              </div>
-              <div class="bid-input">
-                <input class="auction-cost" name="amount" type="text" th:value="${#lists.isEmpty(bidList) ? product.price : bidList[0].amount}">
-                <button class="bid-button" type="submit">입찰하기</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
+		<div id="infoDiv">
+			
+			<div class="product-grid">
+				<a th:each="product : ${auctionList}"
+					th:href="@{/auction-product(no=${product.no})}">
+					<div class="product-card">
+						<div class="product-image">
+							<img
+								th:src="${product.thumbnail != null ? '/HoMini/Img/' + product.thumbnail : '/img/no-image.png'}"
+								alt="이미지" />
+						</div>
+						<div class="product-info" th:text="${product.title}">제품 이름</div>
+						<div class="product-price" th:text="${product.price + ' 원'}">가격</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- 여기부터 등록관련 버튼 -->
+	<div class="floating-button">
+		<span class="icon">+</span>
+		<div class="sub-buttons">
+			<a href="/resale-go-reg" class="sub-button">중고거래 등록</a>
+			<a href="/auction-go-reg" class="sub-button">경매 등록</a>
+		</div>
+	</div>
 </body>
 </html>

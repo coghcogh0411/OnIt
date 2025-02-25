@@ -29,7 +29,7 @@ public class AuctionController {
 	public String AuctionHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
 		aDAO.getAllAuctionItems(req);
-		req.setAttribute("contentPage", "auction/auctionhome");
+		req.setAttribute("contentPage", "auction/auctionproduct");
 		return "index";
 	}
 	@GetMapping("/auction-go-reg")
@@ -44,14 +44,14 @@ public class AuctionController {
 		mDAO.isLogined(req);
 		aDAO.auctionReg(a, req, file);
 		aDAO.getAllAuctionItems(req);
-		req.setAttribute("contentPage", "auction/auctionhome");
+		req.setAttribute("contentPage", "auction/auctionproduct");
 		return "index";
 	}
 	@GetMapping("/auction-product")
 	public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
 		mDAO.isLogined(req);
 		aDAO.getAuctionDetail(req, pno);
-        req.setAttribute("contentPage", "auction/auctionproduct");
+        req.setAttribute("contentPage", "auction/auctiondetailproduct");
 		return "index";
 	}
 	
@@ -66,7 +66,7 @@ public class AuctionController {
 		mDAO.isLogined(req);
 		aDAO.getAuctionDetail(req, no);
 		aDAO.Bid(b, req);
-		req.setAttribute("contentPage", "auction/auctionproduct");
+		req.setAttribute("contentPage", "auction/auctiondetailproduct");
 		return "index";
 	}
 	
