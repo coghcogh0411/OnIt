@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.member.MemberDAO;
+import com.minho.ownit.resale.ResaleDAO;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,6 +22,9 @@ public class AuctionController {
 	@Autowired
 	private AuctionDAO aDAO;
 	
+	@Autowired
+	private ResaleDAO rsDAO;
+	
 	@GetMapping("/auction")
 	public String AuctionHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
@@ -31,6 +35,7 @@ public class AuctionController {
 	@GetMapping("/auction-go-reg")
 	public String AuctionGoReg(HttpServletRequest req) {		
 		mDAO.isLogined(req);
+		rsDAO.setDisplayRegion(req);
         req.setAttribute("contentPage", "auction/auctionreg");
 		return "index";
 	}

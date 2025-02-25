@@ -1,6 +1,7 @@
 package com.minho.ownit.auction;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,6 @@ import com.minho.ownit.region.RegionAuction;
 import com.minho.ownit.region.RegionAuctionRepo;
 import com.minho.ownit.region.RegionMember;
 import com.minho.ownit.region.RegionMemberRepo;
-import com.minho.ownit.resale.Resale;
-import com.minho.ownit.resale.ResalePhoto;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -43,7 +42,12 @@ public class AuctionDAO {
 	}
 
 	public void getAllAuctionItems(HttpServletRequest req) {
-		req.setAttribute("auctionList", aRepo.findAll());
+		// 1) 만료 검사
+        closeExpiredAuctions();
+        // 2) DB에서 전체 목록 가져오기
+        List<Auction> auctions = aRepo.findAll();
+        // 3) request에 담아 Controller가 뷰로 전달할 수 있게 함
+        req.setAttribute("auctionList", auctions);
 	}
 
 	public void auctionReg(Auction a, HttpServletRequest req, MultipartFile[] files) {
@@ -77,6 +81,12 @@ public class AuctionDAO {
 					apRepo.save(auctionPhoto);
 				}
 			}
+			if (a.getDday() != null && a.getDday() > 0) {
+                long now = System.currentTimeMillis();
+                long plusTime = a.getDday() * 24L * 60L * 60L * 1000L;
+                Date endDate = new Date(now + plusTime);
+                a.setEnd(endDate);
+            }
 
 			aRepo.save(a);
 			
@@ -95,13 +105,24 @@ public class AuctionDAO {
 			if (thumbnailFileName != null) {
 				new File(imgFolder + "/" + thumbnailFileName).delete();
 			}
-			throw new RuntimeException("상품 등록 실패");
+			throw new RuntimeException("경매 등록 실패");
 		}
 	}
+	
+	private void closeExpiredAuctions() {
+        // (A) 현재 시각
+        Date now = new Date();
+        // (B) 만료된 경매 조회: "WHERE auction_end <= now AND auction_status='start'"
+        List<Auction> expiredList = aRepo.findByEndBeforeAndStatus(now, "start");
+        // (C) 상태를 'end'로 바꿔 DB에 저장
+        for (Auction auction : expiredList) {
+            auction.setStatus("end");
+        }
+        aRepo.saveAll(expiredList);
+    }
 
 	public void getAuctionDetail(HttpServletRequest req, int no) {
 		try {
-
 			Auction a = aRepo.findById(no).orElse(null);
 			req.setAttribute("product", a);
 

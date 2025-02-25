@@ -54,6 +54,12 @@ public class Auction {
     @Column(name = "auction_create")
     private Date date;
     
+    @Column(name = "auction_dday")
+    private Integer dday;
+    
+    @Column(name = "auction_end")
+    private Date end;
+    
     @Column(name = "delivery")
     private String delivery;
     
