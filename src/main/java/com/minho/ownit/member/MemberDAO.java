@@ -111,4 +111,7 @@ public class MemberDAO {
 		req.setAttribute("loginPage", "member/loginreg");
 		return false;
 	}
+	public void logout(HttpServletRequest req) {
+		req.getSession().setAttribute("loginMember", null);
+	}
 }
