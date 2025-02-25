@@ -43,6 +43,15 @@ public class MemberController {
 		return "index";
 	}
 	
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest req) {
+		mDAO.logout(req);
+		mDAO.isLogined(req);
+		req.setAttribute("contentPage", "home");
+		return "index";
+	}
+	
+	
 	@PostMapping("/sign-in")
 	public String loginDo(Member m, HttpServletRequest req) {
 		mDAO.memberLogin(m, req);
