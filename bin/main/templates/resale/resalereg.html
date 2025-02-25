@@ -149,20 +149,33 @@ let imageCounter = 0;
         });
       });
       $(document).on("click", ".region-list li", function(e) {
-        e.preventDefault();
-        e.stopPropagation();
+          e.preventDefault();
+          e.stopPropagation();
 
-        var name = $(this).text();
-        var namearr = name.split(", ");
-        $(".location-button").text(namearr[1]);
+          // 예: "광주광역시, 서구"
+          var name = $(this).text();
+          // 버튼에 전체 문자열 표시
+          $(".location-button").text(name);
 
-        $(".modal-overlay").fadeOut(200, function() {
-          var fromValue = "resalereg";
-          location.href = "/region-get?region=" + encodeURIComponent(namearr[0])
-            + "&region2=" + encodeURIComponent(namearr[1])
-            + "&from=" + encodeURIComponent(fromValue);
+          $(".modal-overlay").fadeOut(200, function() {
+            // 상품 등록 페이지이므로, from=resalereg
+            var fromValue = "resalereg";
+
+            // 쉼표 제거
+            var splitted = name.split(", ");
+            if(splitted.length >= 2){
+              location.href = "/region-get?region="
+                + encodeURIComponent(splitted[0])
+                + "&region2=" + encodeURIComponent(splitted[1])
+                + "&from=" + encodeURIComponent(fromValue);
+            } else {
+              location.href = "/region-get?region="
+                + encodeURIComponent(name)
+                + "&region2="
+                + "&from=" + encodeURIComponent(fromValue);
+            }
+          });
         });
-      });
 
       // 플로팅 버튼 및 기타 위치 모달 이벤트
       var isRotate = false;
@@ -191,9 +204,7 @@ let imageCounter = 0;
 <body>
 	<div class="container">
 		<div class="top-content">
-			<button class="location-button"
-				th:text="${session.regionSession != null} ? ${session.regionSession} : '지역 없음'">
-			</button>
+			<button class="location-button" th:text="${displayRegion}"></button>
 			<div class="title-banner">상품 등록</div>
 		</div>
 

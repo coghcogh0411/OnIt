@@ -33,6 +33,7 @@ public class ResaleController {
 	@GetMapping("/resale")
     public String resaleHome(HttpServletRequest req) {
         mDAO.isLogined(req);
+        rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         rsDAO.getAllResaleItems(req);
         req.setAttribute("contentPage", "resale/resalehome");
@@ -42,22 +43,27 @@ public class ResaleController {
 	@GetMapping("/resale-category")
     public String getResaleByCategory(@RequestParam("no") int pno, HttpServletRequest req) {
         mDAO.isLogined(req);
+        rsDAO.setDisplayRegion(req);
         rsDAO.getResaleByCategory(req, pno);
         req.setAttribute("contentPage", "resale/resalehome");
         return "index";
     }
 	
+	
 	@GetMapping("/resale-go-reg")
     public String resaleGoReg(HttpServletRequest req) {
         mDAO.isLogined(req);
+        rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         req.setAttribute("contentPage", "resale/resalereg");
         return "index";
     }
+	
 
 	@GetMapping("/resale-product")
     public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
         mDAO.isLogined(req);
+        rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         rsDAO.getResaleDetail(req, pno);
         req.setAttribute("contentPage", "resale/resaleproduct");
@@ -69,6 +75,7 @@ public class ResaleController {
                             @RequestParam("files") MultipartFile[] photos) {
         mDAO.isLogined(req);
         rsDAO.resaleReg(r, req, photos);
+        rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         rsDAO.getAllResaleItems(req);
         req.setAttribute("contentPage", "resale/resalehome");

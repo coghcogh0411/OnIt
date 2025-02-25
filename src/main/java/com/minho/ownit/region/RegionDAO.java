@@ -28,66 +28,76 @@ public class RegionDAO {
 	}
 	
 	public void regionReg(HttpServletRequest req) {
-	    RegionMember result = null;
-	    try {
-	        // 1) 세션에서 로그인 사용자 가져오기
-	        Member loginMember = (Member) req.getSession().getAttribute("loginMember");
-	        if (loginMember == null) {
-	            throw new RuntimeException("로그인되지 않았습니다.");
-	        }
+        try {
+            // 1) 세션에서 로그인 사용자 가져오기
+            Member loginMember = (Member) req.getSession().getAttribute("loginMember");
+            if (loginMember == null) {
+                throw new RuntimeException("로그인되지 않았습니다.");
+            }
 
-	        // 2) DB에서 Member 다시 조회
-	        Member user = mRepo.findById(loginMember.getId())
-	                .orElseThrow(() -> new RuntimeException("해당 유저가 DB에 없습니다."));
+            // 2) DB에서 Member 다시 조회
+            Member user = mRepo.findById(loginMember.getId())
+                    .orElseThrow(() -> new RuntimeException("해당 유저가 DB에 없습니다."));
 
-	        // 3) 쿼리 파라미터 "region" 가져오기
-	        String regionParam1 = req.getParameter("region");
-	        String regionParam2 = req.getParameter("region2");
-	        req.getSession().setAttribute("regionSession", regionParam2);
-	        if (regionParam2 == null || regionParam2.isEmpty()) {
-	            throw new RuntimeException("지역 파라미터가 없습니다.");
-	        }
-	        String hapParam = regionParam1+regionParam2;
-	        
-	        // 4) regionParam 파싱
-	        Region region = null;
-	        
-	            List<Region> found = rRepo.findByName(hapParam);
-	            if (found.isEmpty()) {
-	                throw new RuntimeException("해당 지역이 DB에 없습니다. (검색: " + hapParam + ")");
-	            }
-	            region = found.get(0);
+            // 3) 파라미터
+            String regionParam1 = req.getParameter("region");   // ex) "서울특별시"
+            String regionParam2 = req.getParameter("region2");  // ex) "강남구"
 
-	        // 5) region_user 테이블에서 user_id로 조회
-	        RegionMember existing = rmRepo.findByUser(user);
+            if (regionParam2 == null || regionParam2.isEmpty()) {
+                throw new RuntimeException("지역 파라미터가 없습니다.");
+            }
 
-	        // 6) INSERT or UPDATE
-	        if (existing != null) {
-	            existing.setRegion(region);
-	            result = rmRepo.save(existing);
-	        } else {
-	            RegionMember rm = new RegionMember();
-	            rm.setRegion(region);
-	            rm.setUser(user);
-	            result = rmRepo.save(rm);
-	        }
-	        req.getSession().getAttribute("regionSession");
-	        
-	        
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	}
+            // 3-1) DB 검색용 (예: "서울특별시강남구")
+            String hapParam = regionParam1 + regionParam2;
+
+            // 3-2) 세션 표시용 (예: "서울특별시, 강남구")
+            String displayParam = regionParam1 + ", " + regionParam2;
+            req.getSession().setAttribute("regionSession", displayParam);
+
+            // 4) DB 검색
+            List<Region> found = rRepo.findByName(hapParam);
+            if (found.isEmpty()) {
+                throw new RuntimeException("해당 지역이 DB에 없습니다. (검색: " + hapParam + ")");
+            }
+            Region region = found.get(0);
+
+            // 5) region_user 테이블에서 user_id로 조회
+            RegionMember existing = rmRepo.findByUser(user);
+
+            // 6) INSERT or UPDATE
+            if (existing != null) {
+                existing.setRegion(region);
+                rmRepo.save(existing);
+            } else {
+                RegionMember rm = new RegionMember();
+                rm.setRegion(region);
+                rm.setUser(user);
+                rmRepo.save(rm);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 	
 	public void noLoginRegion(HttpServletRequest req) {
-	    String regionParam2 = req.getParameter("region2");
-	    if (regionParam2 != null && !regionParam2.isEmpty()) {
-	        // 예: 세션에 "서울특별시강남구" 형태로 합쳐서 저장
-	        String regionParam1 = req.getParameter("region");
-	        String hapParam = regionParam1 + regionParam2;
-	        req.getSession().setAttribute("regionSession", hapParam);
-	    }
-	}
+        try {
+            String regionParam1 = req.getParameter("region");  // ex) "광주광역시"
+            String regionParam2 = req.getParameter("region2"); // ex) "서구"
+            if (regionParam1 == null || regionParam1.isEmpty()) return; 
+            if (regionParam2 == null || regionParam2.isEmpty()) return; 
+
+            // 검색용 => "광주광역시서구" (DB region_name과 일치)
+            String hapParamSearch = regionParam1 + regionParam2;
+
+            // 표시용 => "광주광역시, 서구"
+            String hapParamDisplay = regionParam1 + ", " + regionParam2;
+
+            req.getSession().setAttribute("regionSessionSearch", hapParamSearch);
+            req.getSession().setAttribute("regionSessionDisplay", hapParamDisplay);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	
 }

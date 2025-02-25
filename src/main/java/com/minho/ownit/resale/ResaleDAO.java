@@ -127,10 +127,9 @@ public class ResaleDAO {
                 }
             } else {
                 // (B) 로그인 안 됨 => 세션 regionSession 확인
-                String sessionRegion = (String) req.getSession().getAttribute("regionSession");
-                if (sessionRegion != null && !sessionRegion.isEmpty()) {
-                    // 세션에 저장된 regionSession으로 필터
-                    List<RegionResale> rrList = rrRepo.findByRegion_Name(sessionRegion);
+            	 String regionSearch = (String) req.getSession().getAttribute("regionSessionSearch");
+                 if (regionSearch != null && !regionSearch.isEmpty()) {
+                     List<RegionResale> rrList = rrRepo.findByRegion_Name(regionSearch);
                     for (RegionResale rr : rrList) {
                         items.add(rr.getResaleNo());
                     }
@@ -145,7 +144,7 @@ public class ResaleDAO {
             // 카테고리 목록
             req.setAttribute("category", rcRepo.findAll());
             req.setAttribute("categorytitle", null);
-
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -180,10 +179,10 @@ public class ResaleDAO {
                 }
             } else {
                 // 로그인 안 됨 => 세션 regionSession 확인
-                String sessionRegion = (String) req.getSession().getAttribute("regionSession");
-                if (sessionRegion != null && !sessionRegion.isEmpty()) {
+            	String regionSearch = (String) req.getSession().getAttribute("regionSessionSearch");
+                if (regionSearch != null && !regionSearch.isEmpty()) {
                     // regionSession으로 필터
-                    List<RegionResale> rrList = rrRepo.findByRegion_Name(sessionRegion);
+                    List<RegionResale> rrList = rrRepo.findByRegion_Name(regionSearch);
                     for (RegionResale rr : rrList) {
                         Resale r = rr.getResaleNo();
                         if (r.getCategory().getNo() == no) {
@@ -219,5 +218,37 @@ public class ResaleDAO {
             e.printStackTrace();
         }
     }
+    
+    public void setDisplayRegion(HttpServletRequest req) {
+        Member m = (Member) req.getSession().getAttribute("loginMember");
+        String displayRegion = "지역 없음";
 
+        if (m != null) {
+            // 로그인 사용자
+            RegionMember regionMember = rmRepo.findByUser(m);
+            if (regionMember != null) {
+                // region_user → region.getFirstName()+", "+region.getSecondName() 등
+                Region region = regionMember.getRegion();
+                if (region != null) {
+                    // 예: region.getFirstName()="광주광역시", region.getSecondName()="서구"
+                    displayRegion = region.getFirstName() + ", " + region.getSecondName();
+                }
+            } else {
+                // region_user가 없으면 비로그인 표시용과 동일하게 처리
+                String sessionDisplay = (String) req.getSession().getAttribute("regionSessionDisplay");
+                if (sessionDisplay != null && !sessionDisplay.isEmpty()) {
+                    displayRegion = sessionDisplay;
+                }
+            }
+        } else {
+            // 비로그인
+            String sessionDisplay = (String) req.getSession().getAttribute("regionSessionDisplay");
+            if (sessionDisplay != null && !sessionDisplay.isEmpty()) {
+                displayRegion = sessionDisplay;
+            }
+        }
+
+        req.setAttribute("displayRegion", displayRegion);
+    }
 }
+
