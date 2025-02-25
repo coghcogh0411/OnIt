@@ -26,11 +26,10 @@ function chatcontroller() {
 	var socket
 	if (userId != null) {
 		socket = io("http://sd-beanmouse.duckdns.org:43218");
-
+		socket.on("connect", function() {
+			socket.emit("joinRoom", userId); // 서버로 본인 아이디를 보내 룸에 join하도록 요청
+		});
 	}
-	socket.on("connect", function() {
-		socket.emit("joinRoom", userId); // 서버로 본인 아이디를 보내 룸에 join하도록 요청
-	});
 	// 채팅 기록 불러오기
 	function loadChatHistory(chatPartner) {
 		$.get(`http://sd-beanmouse.duckdns.org:43218/chat/history?userId=${userId}&partner=${chatPartner}`, function(data) {
