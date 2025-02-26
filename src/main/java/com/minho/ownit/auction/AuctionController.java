@@ -25,13 +25,21 @@ public class AuctionController {
 	@Autowired
 	private ResaleDAO rsDAO;
 	
-	@GetMapping("/auction")
-	public String AuctionHome(HttpServletRequest req) {
+	@GetMapping("/auction-home")
+	public String auctionHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
-		aDAO.getAllAuctionItems(req);
+		req.setAttribute("contentPage", "auction/auctionhome");
+		return "index";
+	}
+	
+	@GetMapping("/auction-product")
+	public String AuctionProduct(HttpServletRequest req) {
+		mDAO.isLogined(req);
+		aDAO.getAllStartAuctionItems(req);
 		req.setAttribute("contentPage", "auction/auctionproduct");
 		return "index";
 	}
+	
 	@GetMapping("/auction-go-reg")
 	public String AuctionGoReg(HttpServletRequest req) {		
 		mDAO.isLogined(req);
@@ -43,12 +51,12 @@ public class AuctionController {
 	public String AuctionReg(Auction a, HttpServletRequest req, @RequestParam("files") MultipartFile[] file) {
 		mDAO.isLogined(req);
 		aDAO.auctionReg(a, req, file);
-		aDAO.getAllAuctionItems(req);
+		aDAO.getAllStartAuctionItems(req);
 		req.setAttribute("contentPage", "auction/auctionproduct");
 		return "index";
 	}
-	@GetMapping("/auction-product")
-	public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
+	@GetMapping("/auction-detailproduct")
+	public String resaleDetailProduct(@RequestParam("no") int pno, HttpServletRequest req) {
 		mDAO.isLogined(req);
 		aDAO.getAuctionDetail(req, pno);
         req.setAttribute("contentPage", "auction/auctiondetailproduct");
@@ -70,4 +78,12 @@ public class AuctionController {
 		return "index";
 	}
 	
+	@GetMapping("/pastauction")
+    public String pastAuctionHome(HttpServletRequest req) {
+        mDAO.isLogined(req);
+        // 종료된 목록
+        aDAO.getAllEndAuctionItems(req);
+        req.setAttribute("contentPage", "auction/pastauctionproduct");
+        return "index";
+    }
 }

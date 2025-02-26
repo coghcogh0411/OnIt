@@ -35,20 +35,6 @@ public class AuctionDAO {
 	@Value("${ho.img.folder}")
 	private String imgFolder;
 
-	public Bids BidGet(String auctionNo) {
-
-		List<Bid> bids = bRepo.findByAuctionNoNoOrderByAmountDesc(Integer.parseInt(auctionNo));
-		return new Bids(bids);
-	}
-
-	public void getAllAuctionItems(HttpServletRequest req) {
-		// 1) 만료 검사
-        closeExpiredAuctions();
-        // 2) DB에서 전체 목록 가져오기
-        List<Auction> auctions = aRepo.findAll();
-        // 3) request에 담아 Controller가 뷰로 전달할 수 있게 함
-        req.setAttribute("auctionList", auctions);
-	}
 
 	public void auctionReg(Auction a, HttpServletRequest req, MultipartFile[] files) {
 		String thumbnailFileName = null;
@@ -109,6 +95,24 @@ public class AuctionDAO {
 		}
 	}
 	
+	public void Bid(Bid b, HttpServletRequest req) {
+		Member m = (Member) req.getSession().getAttribute("loginMember");
+		int auctionNo = Integer.parseInt(req.getParameter("auctionNo"));
+		String auctionNoStr = auctionNo + "";
+		b.setUser(m);
+		b.setBidName(auctionNoStr + m.getNickname());
+		System.out.println();
+		bRepo.save(b);
+		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(auctionNo));
+		;
+	}
+	
+	public Bids BidGet(String auctionNo) {
+
+		List<Bid> bids = bRepo.findByAuctionNoNoOrderByAmountDesc(Integer.parseInt(auctionNo));
+		return new Bids(bids);
+	}
+	
 	private void closeExpiredAuctions() {
         // (A) 현재 시각
         Date now = new Date();
@@ -119,6 +123,28 @@ public class AuctionDAO {
             auction.setStatus("end");
         }
         aRepo.saveAll(expiredList);
+    }
+	
+	public void getAllStartAuctionItems(HttpServletRequest req) {
+        // 1) 만료 검사
+        closeExpiredAuctions();
+
+        // 2) DB에서 status='start'인 경매 목록
+        List<Auction> auctions = aRepo.findByStatus("start");
+
+        // 3) request에 담기
+        req.setAttribute("auctionList", auctions);
+    }
+	
+	public void getAllEndAuctionItems(HttpServletRequest req) {
+        // 1) 만료 검사 (선택)
+        closeExpiredAuctions();
+
+        // 2) DB에서 status='end'인 경매 목록
+        List<Auction> auctions = aRepo.findByStatus("end");
+
+        // 3) request에 담기
+        req.setAttribute("auctionList", auctions);
     }
 
 	public void getAuctionDetail(HttpServletRequest req, int no) {
@@ -134,16 +160,6 @@ public class AuctionDAO {
 		}
 	}
 
-	public void Bid(Bid b, HttpServletRequest req) {
-		Member m = (Member) req.getSession().getAttribute("loginMember");
-		int auctionNo = Integer.parseInt(req.getParameter("auctionNo"));
-		String auctionNoStr = auctionNo + "";
-		b.setUser(m);
-		b.setBidName(auctionNoStr + m.getNickname());
-		System.out.println();
-		bRepo.save(b);
-		req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(auctionNo));
-		;
-	}
+	
 
 }

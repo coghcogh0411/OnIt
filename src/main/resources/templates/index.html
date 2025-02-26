@@ -10,7 +10,7 @@
 <script type="text/javascript" src="/js/kwonValidChecker_v1.0.js"></script>
 <script type="text/javascript" src="/js/check.js"></script>
 <script
-    src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
+	src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/js/mainJS.js"></script>
 </head>
 <body>
@@ -31,17 +31,20 @@
 	</header>
 
 	<nav class="menu">
-		<a href="/resale" class="menu-item">중고거래</a> <a href="/auction"
-			class="menu-item">경매</a> <a href="#" class="menu-item">랭킹</a> <a
-			href="/community?categoryNo=1" class="menu-item">커뮤니티</a> <a href="/member-home"
-			class="menu-item">마이페이지</a>
+		<a href="/resale-product" class="menu-item">중고거래</a> 
+		<a href="/auction-product" class="menu-item">경매</a> 
+		<a href="#"	class="menu-item">랭킹</a> 
+		<a href="/community?categoryNo=1"class="menu-item">커뮤니티</a>
+		<a href="#" class="menu-item">마이페이지</a>
 		<div th:text="${result}"></div>
 	</nav>
 
 	<div class="content" th:insert="~{${contentPage}}"></div>
-	
+
 	<div class="subcontent">
-		<div class="toggle-sidebar"><div>&lt;</div></div>
+		<div class="toggle-sidebar">
+			<div>&lt;</div>
+		</div>
 		<aside>
 			<!-- 알림함 -->
 			<section class="notifications">
@@ -60,26 +63,26 @@
 			<section class="chat-box">
 				<hr>
 				<h2>채팅방</h2>
-				
-				
+
+
 			</section>
 		</aside>
 	</div>
-	
+
 	<div id="chatModal">
-    <header>
-      <span id="chatTitle">채팅방</span>
-      <span class="close-btn">X</span>
-    </header>
-    <div class="chat-content" id="chatContent">
-      <!-- 대화내용이 채워짐 -->
-    </div>
-    <footer>
-      <input type="text" id="modalMessageInput" placeholder="메시지 입력..." style="width:80%">
-      <button id="modalSendBtn">전송</button>
-    </footer>
-  </div>
-	
+		<header>
+			<span id="chatTitle">채팅방</span> <span class="close-btn">X</span>
+		</header>
+		<div class="chat-content" id="chatContent">
+			<!-- 대화내용이 채워짐 -->
+		</div>
+		<footer>
+			<input type="text" id="modalMessageInput" placeholder="메시지 입력..."
+				style="width: 80%">
+			<button id="modalSendBtn">전송</button>
+		</footer>
+	</div>
+
 	<footer>
 		<div class="footer-info">
 			(주) 온잇<br> 대표자: 임채호, 마뇽채찍<br> 사업자등록번호: 000-00-00000<br>

@@ -1,48 +1,29 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<link rel="stylesheet" href="/css/home.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
-	<script>
-		$(function () {
-			$('.slider').bxSlider({
-				captions: true
-			});
-		});
-	</script>
+  <meta charset="UTF-8">
+  <title>OnIt - 홈</title>
+  <link rel="stylesheet" href="/css/home.css">
 </head>
-
 <body>
-	<div class="main-banner">
-		<div class="slider">
-			<div><a href="#"><img id="sliderImg" src="img/back4.jpg"></a></div>
-			<div><a href="#"><img id="sliderImg" src="img/back3.jpg"></a></div>
-			<div><a href="#"><img id="sliderImg" src="img/backpack.jpg"></a></div>
-		</div>
-	</div>
-	<div class="center-text">이런 상품 어때요?</div>
-	<div class="main-banner">
-		<div class="slider">
-			<div><a href="#"><img id="sliderImg" src="img/back4.jpg"></a></div>
-			<div><a href="#"><img id="sliderImg" src="img/back3.jpg"></a></div>
-			<div><a href="#"><img id="sliderImg" src="img/backpack.jpg"></a></div>
-		</div>
-	</div>
+  <div class="home-container">
+    <!-- 중고거래 카드 -->
+    <div class="home-card resale-card">
+      <a href="/resale-home">
+        <!-- 중고거래 이미지 (resale.png) -->
+        <img src="/img/resale.png" alt="중고거래" class="home-image">
+        <div class="home-card-title">중고거래</div>
+      </a>
+    </div>
 
-	<div class="grid">
-		<a href="/resale"><div class="circle"></div></a>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-	</div>
+    <!-- 경매 카드 -->
+    <div class="home-card auction-card">
+      <a href="/auction-home">
+        <!-- 경매 이미지 (auction.png) -->
+        <img src="/img/auction.png" alt="경매" class="home-image">
+        <div class="home-card-title">경매</div>
+      </a>
+    </div>
+  </div>
 </body>
-
 </html>
