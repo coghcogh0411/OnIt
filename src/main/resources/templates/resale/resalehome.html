@@ -1,152 +1,48 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" href="/css/resalehome.css">
-
-<script type="text/javascript" src="/js/jQuery.js"></script>
-<script type="text/javascript" src="/js/move.js"></script>
-<script type="text/javascript">
-	$(function() {
-		var isRotate = false;
-		$(".floating-button").mouseup(function(e) {
-			isRotate = !isRotate;
-			if (isRotate) {
-				$(".icon").css({
-					"transform" : "rotate(-45deg)"
-				});
-				$(".sub-buttons").addClass("show");
-			} else {
-				$(".icon").css({
-					"transform" : "rotate(0deg)"
-				});
-				$(".sub-buttons").removeClass("show");
-			}
-		})
-
-		$(".location-button").on("click", function() {
-	        $(".modal-overlay").fadeIn(200);
-	    });
-		
-	    
-		// 닫기 버튼 클릭 시 모달 닫기
-	    $(".close-modal").on("click", function() {
-	        $(".modal-overlay").fadeOut(200);
-	    });
-	    
-	    $("#locationInput").keyup(function(){
-	    	var region = $(this).val();
-	    	$.getJSON("region.get?region="+region,function(regionData){
-	    		$(".region-list").empty();
-	    		$.each(regionData.region, function(index, item){
-	    			$(".region-list").append("<li><a href='/region-get'>" + item.firstName + ", " + item.secondName + "</a></li>");
-	    		})
-	    	}).fail(function() {
-	            $(".region-list").empty();
-	            $(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
-	        });
-	    });
-	    $(document).on("click", ".region-list li", function(e) {
-	        e.preventDefault();
-	        e.stopPropagation();
-
-	        // 예: <li>광주광역시, 서구</li> -> text() = "광주광역시, 서구"
-	        var name = $(this).text(); 
-	        // 화면에는 전체 문자열("광주광역시, 서구")를 표시
-	        $(".location-button").text(name);
-
-	        // 모달 닫은 뒤 서버로 파라미터 전송
-	        $(".modal-overlay").fadeOut(200, function() {
-	          var fromValue = "home";
-
-	          // DB 검색용: 쉼표 제거
-	          // 예: "광주광역시, 서구" -> split -> ["광주광역시", "서구"]
-	          var splitted = name.split(", "); 
-	          if(splitted.length >= 2){
-	            // region=광주광역시 & region2=서구
-	            // 최종적으로 region + region2 = "광주광역시서구" 로 DB 검색
-	            location.href = "/region-get?region=" 
-	              + encodeURIComponent(splitted[0]) 
-	              + "&region2=" + encodeURIComponent(splitted[1]) 
-	              + "&from=" + encodeURIComponent(fromValue);
-	          } else {
-	            // 혹시 split이 안 된 경우(지역명에 쉼표가 없는 경우 등)
-	            // 그냥 regionParam1만 보내거나, 예외처리
-	            location.href = "/region-get?region=" 
-	              + encodeURIComponent(name)
-	              + "&region2="
-	              + "&from=" + encodeURIComponent(fromValue);
-	          }
-	        });
-	      });
-	    });
-</script>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<link rel="stylesheet" href="/css/resalehome.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+	<script>
+		$(function () {
+			$('.slider').bxSlider({
+				captions: true
+			});
+		});
+	</script>
 </head>
-<body>
-	<div class="main-content">
-		<div class="sidebar-container">
-			<button class="location-button" th:text="${displayRegion}"></button>
-			<div class="sidebar">
-				<div th:each="c : ${category}"
-					th:onclick="|resaleCategoryChange(${c.no})|">
-					<div class="category-item" th:text="${c.name}"></div>
-				</div>
-			</div>
-		</div>
 
-		<div id="infoDiv">
-			<div class="category-header"
-				th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 상품'}">
-			</div>
-			<div class="product-grid">
-				<a th:each="product : ${resaleList}"
-					th:href="@{/resale-product(no=${product.no})}">
-					<div class="product-card">
-						<div class="product-image">
-							<img
-								th:src="${product.thumbnail != null ? '/HoMini/Img/' + product.thumbnail : '/img/no-image.png'}"
-								alt="이미지" />
-						</div>
-						<div class="product-info" th:text="${product.title}">제품 이름</div>
-						<div class="product-price" th:text="${product.price + ' 원'}">가격</div>
-					</div>
-				</a>
-			</div>
+<body>
+	<div class="main-banner">
+		<div class="slider">
+			<div><a href="#"><img id="sliderImg" src="img/back4.jpg"></a></div>
+			<div><a href="#"><img id="sliderImg" src="img/back3.jpg"></a></div>
+			<div><a href="#"><img id="sliderImg" src="img/backpack.jpg"></a></div>
 		</div>
 	</div>
-	<!-- 여기부터 등록관련 버튼 -->
-	<div class="floating-button">
-		<span class="icon">+</span>
-		<div class="sub-buttons">
-			<a href="/resale-go-reg" class="sub-button">중고거래 등록</a> <a
-				href="/auction-go-reg" class="sub-button">경매 등록</a>
+	<div class="center-text">이런 상품 어때요?</div>
+	<div class="main-banner">
+		<div class="slider">
+			<div><a href="#"><img id="sliderImg" src="img/back4.jpg"></a></div>
+			<div><a href="#"><img id="sliderImg" src="img/back3.jpg"></a></div>
+			<div><a href="#"><img id="sliderImg" src="img/backpack.jpg"></a></div>
 		</div>
 	</div>
-	<!-- 위치테이블 -->
-	<div class="modal-overlay">
-		<div class="modal">
-			<div class="modal-header">
-				지역 변경
-				<span class="close-modal">✕</span>
-			</div>
-			<div class="modal-content">
-				<div class="search-box">
-					<input id="locationInput" type="text" placeholder="지역이나 동네로 검색하기">
-				</div>
-				<button class="location-button">현재 내 위치 사용하기</button>
-				<div class="recommend-title">추천</div>
-				<ul class="region-list">
-					<li><a href="/region-get">서울특별시, 강남구</a></li>
-					<li><a href="/region-get">서울특별시, 송파구</a></li>
-					<li><a href="/region-get">경기도, 부천시</a></li>
-					<li><a href="/region-get">경기도, 화성시</a></li>
-					<li><a href="/region-get">서울특별시, 강서구</a></li>
-					<li><a href="/region-get">인천광역시, 서구</a></li>
-					<li><a href="/region-get">경기도, 남양주시</a></li>
-				</ul>
-			</div>
-		</div>
+
+	<div class="grid">
+		<a href="/resale"><div class="circle"></div></a>
+		<div class="circle"></div>
+		<div class="circle"></div>
+		<div class="circle"></div>
+		<div class="circle"></div>
+		<div class="circle"></div>
+		<div class="circle"></div>
 	</div>
 </body>
+
 </html>

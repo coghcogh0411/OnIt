@@ -2,8 +2,7 @@
 	display: flex;
 	max-width: 1200px;
 	margin: 0 auto;
-	margin-bottom: 50px;
-	padding: 50px;
+	padding: 20px;
 }
 
 .sidebar-container {
@@ -16,7 +15,7 @@
 	width: 100%;
 	margin-bottom: 10px;
 	padding: 8px 16px;
-	border: 2px solid #9aa2ec;
+	border: 2px solid #9AA2EC;
 	border-radius: 20px;
 	background: white;
 	cursor: pointer;
@@ -25,10 +24,6 @@
 .sidebar {
 	border: 1px solid #ddd;
 	padding: 10px;
-	width: 20%;
-	min-width: 200px;
-	margin-right: 20px;
-	flex-shrink: 0;
 }
 
 .category-item {
@@ -36,178 +31,102 @@
 	cursor: pointer;
 }
 
-.content-area {
-	padding: 20px;
-	flex-grow: 1;
+#infoDiv {
+	flex: 1;
 }
 
-.product-detail {
-	display: grid;
-	grid-template-areas: "image info" "seller info";
-	gap: 20px;
-	grid-template-columns: 400px 1fr;
-}
-
-/* 
- * (수정) 이미지 갤러리를 bxSlider용으로 변경 
- * - .image-placeholder, .gallery-nav 제거
- * - 대신 .slider, .slider > div, .sliderImg 추가 
- */
-.image-gallery {
-	position: relative;
-	width: 400px;
-	max-height: 350px;
-	flex-shrink: 0;
-	grid-area: image;
-	/* (원한다면) border: 1px solid #ddd; border-radius: 8px; 등 추가 가능 */
-}
-
-/* bxSlider가 <div>를 슬라이드로 인식할 때 */
-.slider {
-	width: 100%;
-	height: 100%;
-	max-height: 350px;
-	/* 슬라이드 영역 크기 고정 (400x400) */
-	/* bxSlider에서 slideWidth 등 옵션으로도 제어 가능 */
-}
-
-.slider > div {
-	width: 100%;
-	height: 100%;
-	/* 각 슬라이드 하나하나에 대한 스타일 */
-	/* 필요하다면 display: flex; align-items: center; justify-content: center; 등 */
-}
-
-.sliderImg {
-	width: 100%;
-	height: 100%;
-	object-fit: fill;
-	border: 1px solid #ddd;
+.category-header {
+	background-color: #9AA2EC;
+	color: white;
+	padding: 10px;
+	margin-bottom: 20px;
 	border-radius: 4px;
 }
 
-/* product-info */
-.product-info {
-	flex: 1;
-	grid-area: info;
+.product-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	gap: 20px;
 }
 
-.product-title {
-	font-size: 24px;
-	color: #333;
+.product-card {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+
+.product-image img {
+	object-fit: cover;
+	width: 100%;
+	height: 100%;
+	aspect-ratio: 1;
+	background-color: #f5f5f5;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 	margin-bottom: 10px;
 }
 
-.meta-info {
-	color: #666;
-	margin-bottom: 15px;
-}
-
-.date-divider {
-	margin: 0 8px;
-}
-
-.price {
-	font-size: 28px;
-	font-weight: bold;
-	margin-bottom: 20px;
-}
-
-.description-box {
-	background: white;
-	border: 1px solid #ddd;
-	border-radius: 8px;
-	padding: 10px;
-	margin-bottom: 20px;
-}
-
-.description-textarea {
-	width: 100%;
-	min-height: 300px;
-	border: none;
-	resize: none;
-	background: transparent;
+.product-info {
 	font-size: 14px;
-	line-height: 1.6;
-	color: #333;
-	outline: none;
-	cursor: default;
+	color: #666;
 }
 
-/* seller-info */
-.seller-info {
-	grid-area: seller;
-	margin-top: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	margin-bottom: 20px;
+.product-price {
+	font-weight: bold;
+	margin-top: 5px;
+}
+/* 여기부터 등록버튼관련css */
+.floating-button {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 50px;
+	height: 50px;
+	background-color: white;
+	color: #9AA2EC;
+	border: 8px solid #9AA2EC;
+	border-radius: 50%;
+	font-size: 60px;
+	font-weight: bold;
 	cursor: pointer;
-	position: relative;
-}
-
-.seller-profile {
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 	display: flex;
 	align-items: center;
-	gap: 10px;
-	width: 100%;
-}
-
-.profile-image {
-	width: 40px;
-	height: 40px;
-	border-radius: 50%;
-}
-
-.seller-name {
-	font-weight: bold;
-}
-
-.like-button {
-	background: none;
-	margin-left: auto;
-	border: none;
-	font-size: 24px;
-	cursor: pointer;
-	color: #666;
-}
-
-.action-buttons {
-	position: absolute;
-	gap: 10px;
-}
-
-.action-button {
-	flex: 1;
-	padding: 12px;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	background: white;
-	color: #666;
+	justify-content: center;
+	transition: transform 0.3s ease;
 	cursor: pointer;
 }
 
-.action-button:hover {
-	background: #f5f5f5;
+.floating-button:hover {
+	transform: translateY(-2px);
 }
 
-/* sub-buttons (판매자 정보 클릭 시 표시되는 추가 버튼) */
+.floating-button .icon {
+	transition: transform 0.3s ease;
+}
+
 .sub-buttons {
-	display: none;
+	position: absolute;
+	bottom: 80px;
+	right: 0;
+	display: flex;
 	flex-direction: column;
-	width: 100%;
+	opacity: 0;
+	transform: translateY(20px);
+	transition: all 0.3s ease;
+	pointer-events: none;
+	width: 200px;
+	height: 100px;
 	border-radius: 15px;
-	background-color: #9aa2ec;
+	background-color: #9AA2EC;
 	padding: 0;
 	overflow: hidden;
-	position: absolute; 
-	top: 100%;
-	left: 0; 
-	z-index: 10; 
 }
 
 .sub-buttons.show {
-	display: flex;
+	opacity: 1;
+	transform: translateY(0);
+	pointer-events: auto;
 }
 
 .sub-button {
@@ -222,123 +141,16 @@
 	display: block;
 	background-color: transparent;
 	flex: 1;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.sub-button:last-child {
-	border-bottom: none;
+.sub-button:first-child {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .sub-button:hover {
 	transform: translateX(-5px);
 }
 
-/* 경매 섹션 */
-.auction-section {
-	display: flex;
-	gap: 30px;
-	align-items: center;
-	padding: 20px;
-	width: 100%;
-}
-
-.bidders {
-	flex: 1;
-}
-
-.bidder-list {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-.bidder-list li {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	font-size: 18px;
-	padding: 5px 0;
-}
-
-.rank {
-	margin-right: 10px;
-}
-
-.gold {
-	color: gold;
-}
-
-.silver {
-	color: silver;
-}
-
-.bronze {
-	color: #cd7f32;
-}
-
-.amount {
-	font-weight: bold;
-}
-
-.auction-bid {
-	flex: 1;
-	text-align: center;
-	margin-top: 50px;
-	padding: 30px;
-	
-}
-
-.auction-bid h3 {
-	font-size: 18px;
-	font-weight: bold;
-}
-
-.bid-options {
-	display: flex;
-	justify-content: center;
-	gap: 10px;
-	margin-bottom: 10px;
-}
-
-.bid-option {
-	padding: 8px 15px;
-	border: 1px solid #aaa;
-	background: white;
-	cursor: pointer;
-	border-radius: 5px;
-	width: 20%;
-}
-
-.bid-input {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 10px;
-	height: 100px;
-}
-
-.bid-input input {
-	width: 40%;
-	height: 50%;
-	padding: 8px;
-	border: 1px solid #aaa;
-	text-align: center;
-}
-
-.bid-button {
-	width:40%;
-	height:65%;
-	padding: 8px 20px;
-	background: #9aa2ec;
-	color: white;
-	border: none;
-	border-radius: 5px;
-	cursor: pointer;
-}
-
-.bid-button:hover {
-	background: #7f89d7;
-}
 /* 여기부터 위치테이블 */
 .modal-overlay {
 	position: fixed;

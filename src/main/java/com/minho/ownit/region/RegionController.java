@@ -36,15 +36,15 @@ public class RegionController {
 		}
 
 		if ("home".equals(f)) {
-			return "redirect:/resale";
+			return "redirect:/resale-product";
 		} else if ("product".equals(f)) {
 			// 실제 상품 번호는 "no" 파라미터로 전달되고 있음
 			String productNo = req.getParameter("no");
 			if (productNo == null || productNo.isEmpty()) {
 				// 파라미터가 없으면 기본적으로 홈으로 리다이렉트
-				return "redirect:/resale";
+				return "redirect:/resale-product";
 			}
-			return "redirect:/resale-product?no=" + productNo;
+			return "redirect:/resale-detailproduct?no=" + productNo;
 		} else if ("resalereg".equals(f)) {
 			return "redirect:/resale-go-reg";
 		} else {

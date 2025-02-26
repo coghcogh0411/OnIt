@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="/css/resalehome.css">
+<link rel="stylesheet" href="/css/resaleproduct.css">
 <script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
 <script type="text/javascript">
@@ -33,7 +33,7 @@
 			
 			<div class="product-grid">
 				<a th:each="product : ${auctionList}"
-					th:href="@{/auction-product(no=${product.no})}">
+					th:href="@{/auction-detailproduct(no=${product.no})}">
 					<div class="product-card">
 						<div class="product-image">
 							<img

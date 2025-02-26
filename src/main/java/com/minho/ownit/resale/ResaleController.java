@@ -30,13 +30,20 @@ public class ResaleController {
 	@Autowired
 	private RegionDAO rgDAO;
 	
-	@GetMapping("/resale")
-    public String resaleHome(HttpServletRequest req) {
+	@GetMapping("/resale-home")
+	public String resaleHome(HttpServletRequest req) {
+		mDAO.isLogined(req);
+		req.setAttribute("contentPage", "resale/resalehome");
+		return "index";
+	}
+	
+	@GetMapping("/resale-product")
+    public String resaleProduct(HttpServletRequest req) {
         mDAO.isLogined(req);
         rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         rsDAO.getAllResaleItems(req);
-        req.setAttribute("contentPage", "resale/resalehome");
+        req.setAttribute("contentPage", "resale/resaleproduct");
         return "index";
     }
 	
@@ -45,7 +52,7 @@ public class ResaleController {
         mDAO.isLogined(req);
         rsDAO.setDisplayRegion(req);
         rsDAO.getResaleByCategory(req, pno);
-        req.setAttribute("contentPage", "resale/resalehome");
+        req.setAttribute("contentPage", "resale/resaleproduct");
         return "index";
     }
 	
@@ -60,13 +67,13 @@ public class ResaleController {
     }
 	
 
-	@GetMapping("/resale-product")
-    public String resaleProduct(@RequestParam("no") int pno, HttpServletRequest req) {
+	@GetMapping("/resale-detailproduct")
+    public String resaleDetailProduct(@RequestParam("no") int pno, HttpServletRequest req) {
         mDAO.isLogined(req);
         rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         rsDAO.getResaleDetail(req, pno);
-        req.setAttribute("contentPage", "resale/resaleproduct");
+        req.setAttribute("contentPage", "resale/resaledetailproduct");
         return "index";
     }
 	
@@ -78,7 +85,7 @@ public class ResaleController {
         rsDAO.setDisplayRegion(req);
         rsDAO.getAllCategories(req);
         rsDAO.getAllResaleItems(req);
-        req.setAttribute("contentPage", "resale/resalehome");
+        req.setAttribute("contentPage", "resale/resaleproduct");
         return "index";
     }
 	
