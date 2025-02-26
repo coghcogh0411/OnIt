@@ -237,6 +237,41 @@
 .sub-button:hover {
 	transform: translateX(-5px);
 }
+.bid-sub-buttons {
+  position: absolute; 
+  display: none;      /* 기본 숨김 */
+  background-color: #9aa2ec;
+  border-radius: 15px;
+  z-index: 9999;      /* 위로 오게 */
+  /* top, left는 JS에서 동적으로 설정 */
+}
+
+.bid-sub-buttons.show {
+  display: block;      /* show 클래스가 붙으면 표시 */
+}
+
+.bid-sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bid-sub-button:last-child {
+	border-bottom: none;
+}
+
+.bid-sub-button:hover {
+	transform: translateX(-5px);
+}
 
 /* 경매 섹션 */
 .auction-section {
@@ -263,6 +298,7 @@
 	justify-content: space-between;
 	font-size: 18px;
 	padding: 5px 0;
+	cursor: pointer;
 }
 
 .rank {
