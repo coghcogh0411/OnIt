@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.FileNameGenerator;
+import com.minho.ownit.ItemLike;
+import com.minho.ownit.ItemLikeRepo;
+import com.minho.ownit.auction.Auction;
 import com.minho.ownit.member.Member;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionMember;
@@ -37,6 +40,9 @@ public class ResaleDAO {
 
 	@Autowired
 	private RegionMemberRepo rmRepo;
+
+	@Autowired
+	private ItemLikeRepo ilRepo;
 
 	@Value("${ho.img.folder}")
 	private String imgFolder;
@@ -107,148 +113,177 @@ public class ResaleDAO {
 	}
 
 	public void getAllResaleItems(HttpServletRequest req) {
-        List<Resale> items = new ArrayList<>();
+		List<Resale> items = new ArrayList<>();
 
-        try {
-            Member m = (Member) req.getSession().getAttribute("loginMember");
-            if (m != null) {
-                // (A) 로그인된 사용자
-                RegionMember regionMember = rmRepo.findByUser(m);
-                if (regionMember != null) {
-                    // region_user에 있는 regionName으로 필터
-                    String regionName = regionMember.getRegion().getName();
-                    List<RegionResale> rrList = rrRepo.findByRegion_Name(regionName);
-                    for (RegionResale rr : rrList) {
-                        items.add(rr.getResaleNo());
-                    }
-                } else {
-                    // region_user 정보가 없으면 전체 상품
-                    items = (List<Resale>) rRepo.findAll();
-                }
-            } else {
-                // (B) 로그인 안 됨 => 세션 regionSession 확인
-            	 String regionSearch = (String) req.getSession().getAttribute("regionSessionSearch");
-                 if (regionSearch != null && !regionSearch.isEmpty()) {
-                     List<RegionResale> rrList = rrRepo.findByRegion_Name(regionSearch);
-                    for (RegionResale rr : rrList) {
-                        items.add(rr.getResaleNo());
-                    }
-                } else {
-                    // regionSession도 없으면 전체 상품
-                    items = (List<Resale>) rRepo.findAll();
-                }
-            }
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			if (m != null) {
+				// (A) 로그인된 사용자
+				RegionMember regionMember = rmRepo.findByUser(m);
+				if (regionMember != null) {
+					// region_user에 있는 regionName으로 필터
+					String regionName = regionMember.getRegion().getName();
+					List<RegionResale> rrList = rrRepo.findByRegion_Name(regionName);
+					for (RegionResale rr : rrList) {
+						items.add(rr.getResaleNo());
+					}
+				} else {
+					// region_user 정보가 없으면 전체 상품
+					items = (List<Resale>) rRepo.findAll();
+				}
+			} else {
+				// (B) 로그인 안 됨 => 세션 regionSession 확인
+				String regionSearch = (String) req.getSession().getAttribute("regionSessionSearch");
+				if (regionSearch != null && !regionSearch.isEmpty()) {
+					List<RegionResale> rrList = rrRepo.findByRegion_Name(regionSearch);
+					for (RegionResale rr : rrList) {
+						items.add(rr.getResaleNo());
+					}
+				} else {
+					// regionSession도 없으면 전체 상품
+					items = (List<Resale>) rRepo.findAll();
+				}
+			}
 
-            // 결과를 request에 저장
-            req.setAttribute("resaleList", items);
-            // 카테고리 목록
-            req.setAttribute("category", rcRepo.findAll());
-            req.setAttribute("categorytitle", null);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+			// 결과를 request에 저장
+			req.setAttribute("resaleList", items);
+			// 카테고리 목록
+			req.setAttribute("category", rcRepo.findAll());
+			req.setAttribute("categorytitle", null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	// 카테고리별 조회
-    public void getResaleByCategory(HttpServletRequest req, int no) {
-        try {
-            req.getSession().setAttribute("category", no);
-            ResaleCategory category = rcRepo.findById(no).orElse(null);
-            req.setAttribute("categorytitle", category);
+	public void getResaleByCategory(HttpServletRequest req, int no) {
+		try {
+			req.getSession().setAttribute("category", no);
+			ResaleCategory category = rcRepo.findById(no).orElse(null);
+			req.setAttribute("categorytitle", category);
 
-            List<Resale> items = new ArrayList<>();
+			List<Resale> items = new ArrayList<>();
 
-            Member m = (Member) req.getSession().getAttribute("loginMember");
-            if (m != null) {
-                // 로그인된 사용자 => region_user 확인
-                RegionMember regionMember = rmRepo.findByUser(m);
-                if (regionMember != null) {
-                    String regionName = regionMember.getRegion().getName();
-                    List<RegionResale> rrList = rrRepo.findByRegion_Name(regionName);
-                    // rrList에 있는 상품 중 카테고리 no와 일치하는 것만 필터
-                    for (RegionResale rr : rrList) {
-                        Resale r = rr.getResaleNo();
-                        if (r.getCategory().getNo() == no) {
-                            items.add(r);
-                        }
-                    }
-                } else {
-                    // region_user 없음 => 전체 상품 중 카테고리 no
-                    items = rRepo.findByNo(no);
-                }
-            } else {
-                // 로그인 안 됨 => 세션 regionSession 확인
-            	String regionSearch = (String) req.getSession().getAttribute("regionSessionSearch");
-                if (regionSearch != null && !regionSearch.isEmpty()) {
-                    // regionSession으로 필터
-                    List<RegionResale> rrList = rrRepo.findByRegion_Name(regionSearch);
-                    for (RegionResale rr : rrList) {
-                        Resale r = rr.getResaleNo();
-                        if (r.getCategory().getNo() == no) {
-                            items.add(r);
-                        }
-                    }
-                } else {
-                    // 세션 regionSession도 없으면 전체 상품 중 카테고리 no
-                    items = rRepo.findByNo(no);
-                }
-            }
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			if (m != null) {
+				// 로그인된 사용자 => region_user 확인
+				RegionMember regionMember = rmRepo.findByUser(m);
+				if (regionMember != null) {
+					String regionName = regionMember.getRegion().getName();
+					List<RegionResale> rrList = rrRepo.findByRegion_Name(regionName);
+					// rrList에 있는 상품 중 카테고리 no와 일치하는 것만 필터
+					for (RegionResale rr : rrList) {
+						Resale r = rr.getResaleNo();
+						if (r.getCategory().getNo() == no) {
+							items.add(r);
+						}
+					}
+				} else {
+					// region_user 없음 => 전체 상품 중 카테고리 no
+					items = rRepo.findByNo(no);
+				}
+			} else {
+				// 로그인 안 됨 => 세션 regionSession 확인
+				String regionSearch = (String) req.getSession().getAttribute("regionSessionSearch");
+				if (regionSearch != null && !regionSearch.isEmpty()) {
+					// regionSession으로 필터
+					List<RegionResale> rrList = rrRepo.findByRegion_Name(regionSearch);
+					for (RegionResale rr : rrList) {
+						Resale r = rr.getResaleNo();
+						if (r.getCategory().getNo() == no) {
+							items.add(r);
+						}
+					}
+				} else {
+					// 세션 regionSession도 없으면 전체 상품 중 카테고리 no
+					items = rRepo.findByNo(no);
+				}
+			}
 
-            req.setAttribute("resaleList", items);
-            req.setAttribute("category", rcRepo.findAll());
+			req.setAttribute("resaleList", items);
+			req.setAttribute("category", rcRepo.findAll());
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-	
-	
-	
-    public void getResaleDetail(HttpServletRequest req, int no) {
-        try {
-            Resale r = rRepo.findById(no).orElse(null);
-            req.setAttribute("product", r);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-            List<ResalePhoto> photos = rpRepo.findByResale_no(no);
-            req.setAttribute("photos", photos);
-            req.setAttribute("category", rcRepo.findAll());
+	public void getResaleDetail(HttpServletRequest req, int no) {
+		try {
+			Resale r = rRepo.findById(no).orElse(null);
+			req.setAttribute("product", r);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void setDisplayRegion(HttpServletRequest req) {
-        Member m = (Member) req.getSession().getAttribute("loginMember");
-        String displayRegion = "지역 없음";
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			boolean isLike = ilRepo.existsByUserIdAndResaleNo(m, r);
+			req.setAttribute("isLike", isLike);
 
-        if (m != null) {
-            // 로그인 사용자
-            RegionMember regionMember = rmRepo.findByUser(m);
-            if (regionMember != null) {
-                // region_user → region.getFirstName()+", "+region.getSecondName() 등
-                Region region = regionMember.getRegion();
-                if (region != null) {
-                    // 예: region.getFirstName()="광주광역시", region.getSecondName()="서구"
-                    displayRegion = region.getFirstName() + ", " + region.getSecondName();
-                }
-            } else {
-                // region_user가 없으면 비로그인 표시용과 동일하게 처리
-                String sessionDisplay = (String) req.getSession().getAttribute("regionSessionDisplay");
-                if (sessionDisplay != null && !sessionDisplay.isEmpty()) {
-                    displayRegion = sessionDisplay;
-                }
-            }
-        } else {
-            // 비로그인
-            String sessionDisplay = (String) req.getSession().getAttribute("regionSessionDisplay");
-            if (sessionDisplay != null && !sessionDisplay.isEmpty()) {
-                displayRegion = sessionDisplay;
-            }
-        }
+			List<ResalePhoto> photos = rpRepo.findByResale_no(no);
+			req.setAttribute("photos", photos);
+			req.setAttribute("category", rcRepo.findAll());
 
-        req.setAttribute("displayRegion", displayRegion);
-    }
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void setDisplayRegion(HttpServletRequest req) {
+		Member m = (Member) req.getSession().getAttribute("loginMember");
+		String displayRegion = "지역 없음";
+
+		if (m != null) {
+			// 로그인 사용자
+			RegionMember regionMember = rmRepo.findByUser(m);
+			if (regionMember != null) {
+				// region_user → region.getFirstName()+", "+region.getSecondName() 등
+				Region region = regionMember.getRegion();
+				if (region != null) {
+					// 예: region.getFirstName()="광주광역시", region.getSecondName()="서구"
+					displayRegion = region.getFirstName() + ", " + region.getSecondName();
+				}
+			} else {
+				// region_user가 없으면 비로그인 표시용과 동일하게 처리
+				String sessionDisplay = (String) req.getSession().getAttribute("regionSessionDisplay");
+				if (sessionDisplay != null && !sessionDisplay.isEmpty()) {
+					displayRegion = sessionDisplay;
+				}
+			}
+		} else {
+			// 비로그인
+			String sessionDisplay = (String) req.getSession().getAttribute("regionSessionDisplay");
+			if (sessionDisplay != null && !sessionDisplay.isEmpty()) {
+				displayRegion = sessionDisplay;
+			}
+		}
+
+		req.setAttribute("displayRegion", displayRegion);
+	}
+
+	public void like(ItemLike il, HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			il.setUserId(m);
+			int pno = Integer.parseInt(req.getParameter("pno"));
+			Resale r = rRepo.findById(pno).orElse(null);
+			il.setResaleNo(r);
+			il.setAuctionNo(null);
+			il.setItemType("resale");
+			ilRepo.save(il);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+
+	public void liked(ItemLike il, HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			int pno = Integer.parseInt(req.getParameter("pno"));
+			Resale r = rRepo.findById(pno).orElse(null);
+			ItemLike existingLike = ilRepo.findByUserIdAndResaleNo(m, r);
+			ilRepo.delete(existingLike);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }
-

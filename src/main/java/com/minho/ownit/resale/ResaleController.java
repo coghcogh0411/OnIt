@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.minho.ownit.ItemLike;
+import com.minho.ownit.auction.Auction;
 import com.minho.ownit.member.MemberDAO;
 import com.minho.ownit.region.RegionDAO;
 import com.minho.ownit.region.RegionMember;
@@ -88,5 +90,24 @@ public class ResaleController {
         req.setAttribute("contentPage", "resale/resaleproduct");
         return "index";
     }
-	
+	@GetMapping("/resale-like")
+	public String auctionLike(HttpServletRequest req, Auction a, ItemLike il, @RequestParam("pno") int no) {
+		mDAO.isLogined(req);
+		rsDAO.setDisplayRegion(req);
+		rsDAO.getAllCategories(req);
+		rsDAO.like(il, req);
+		rsDAO.getResaleDetail(req, no);
+		req.setAttribute("contentPage", "resale/resaledetailproduct");
+		return "index";
+	}
+	@GetMapping("/resale-liked")
+	public String auctionLiked(HttpServletRequest req, Auction a, ItemLike il, @RequestParam("pno") int no) {
+		mDAO.isLogined(req);
+		rsDAO.setDisplayRegion(req);
+		rsDAO.getAllCategories(req);
+		rsDAO.liked(il, req);
+		rsDAO.getResaleDetail(req, no);
+		req.setAttribute("contentPage", "resale/resaledetailproduct");
+		return "index";
+	}
 }

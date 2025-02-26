@@ -13,7 +13,7 @@
 <script type="text/javascript" src="/js/move.js"></script>
 <script>
 	$(function() {
-		$(".seller-info").click(function() {
+		$(".profile-image, .seller-name, .rating").click(function() {
 			$(".sub-buttons").toggleClass("show");
 		});
 
@@ -110,7 +110,8 @@
 						<div class="seller-name"
 							th:text="${product != null and product.user != null ? product.user.nickname : '판매자'}"></div>
 						<div class="rating">⭐⭐⭐⭐⭐</div>
-						<button class="like-button">♡</button>
+						<button class="like-button" type="button" th:if="${isLike==false}" th:onclick="resaleLike([[${product.no}]])"><img alt="" src="img/like.png"></button>
+            			<button class="like-button" type="button" th:if="${isLike==true}" th:onclick="resaleLiked([[${product.no}]])"><img alt="" src="img/liked.png"></button>
 					</div>
 					<div class="sub-buttons">
 						<a href="/member-home" class="sub-button">정보보기</a> <a href="#"

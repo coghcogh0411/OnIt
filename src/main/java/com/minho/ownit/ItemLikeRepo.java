@@ -10,6 +10,7 @@ import com.minho.ownit.resale.Resale;
 @Repository
 public interface ItemLikeRepo extends CrudRepository<ItemLike, Integer>{
 	public abstract ItemLike findByUserIdAndAuctionNo(Member userId, Auction auctionNo);
+	public abstract ItemLike findByUserIdAndResaleNo(Member userId, Resale resaleNo);
 	
 	// 1) "사용자 + 경매글" 좋아요 여부 확인
     public abstract boolean existsByUserIdAndAuctionNo(Member userId, Auction auctionNo);

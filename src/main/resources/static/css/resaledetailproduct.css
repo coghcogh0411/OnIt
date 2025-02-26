@@ -172,6 +172,11 @@
 	color: #666;
 }
 
+.like-button img{
+	max-height: 20px;
+	max-width: 20px;
+}
+
 .action-buttons {
 	position: absolute;
 	gap: 10px;

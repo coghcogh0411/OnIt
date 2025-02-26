@@ -24,3 +24,9 @@ function auctionLike(no){
 function auctionLiked(no){
 	location.href="auction-liked?pno="+no
 }
+function resaleLike(no){
+	location.href="resale-like?pno="+no
+}
+function resaleLiked(no){
+	location.href="resale-liked?pno="+no
+}
