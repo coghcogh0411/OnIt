@@ -111,7 +111,54 @@ public class MemberDAO {
 		req.setAttribute("loginPage", "member/loginreg");
 		return false;
 	}
+	
 	public void logout(HttpServletRequest req) {
 		req.getSession().setAttribute("loginMember", null);
+	}
+	
+	public void update(Member m, HttpServletRequest req, MultipartFile file) {
+		try {
+			Member oldmember = (Member)req.getSession().getAttribute("loginMember");
+			String id = oldmember.getId();
+			m.setId(id);
+			m.setNickname(oldmember.getNickname());
+			m.setName(oldmember.getName());
+			m.setBirthday(oldmember.getBirthday());
+			m.setEmail(oldmember.getEmail());
+			
+			
+			String dbPw = bcpe.encode(m.getPw());
+			m.setPw(dbPw);
+			
+			String phone1 = req.getParameter("phone1");
+			String phone2 = req.getParameter("phone2");
+			String phone3 = req.getParameter("phone3");
+			String phone = phone1 + "-" + phone2 + "-" + phone3;
+			m.setPhone(phone);
+
+			String addr1 = req.getParameter("addr1");
+			String addr2 = req.getParameter("addr2");
+			String addr = addr1 + "*" + addr2;
+			m.setAddr(addr);
+			
+			
+			String oldPhoto = oldmember.getPhoto();
+			if(file.isEmpty()) {
+				String newPhoto = oldPhoto;
+				m.setPhoto(newPhoto);
+			}else {
+				String fileName = FileNameGenerator.generator(file);
+				file.transferTo(new File(imgFolder + "/" + fileName));
+				m.setPhoto(fileName);
+				new File(oldPhoto).delete();
+			}
+			Mrepo.save(m);
+			req.setAttribute("result", "수정성공");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			req.setAttribute("result", "수정실패");
+		}
+		
 	}
 }

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 
@@ -75,5 +77,12 @@ public class MemberController {
 		return "index";
 	}
 	
+	@PostMapping("/update-member")
+	public String updateMember(Member m, HttpServletRequest req, @RequestParam("photoTemp")MultipartFile file ) {
+		mDAO.update(m, req, file);
+		mDAO.isLogined(req);
+		req.setAttribute("contentPage", "home");
+		return logout(req);
+	}
 	
 }
