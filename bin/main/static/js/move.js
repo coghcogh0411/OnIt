@@ -18,3 +18,9 @@ function communityLike(no){
 function communityLiked(no){
 	location.href="community-liked?pno="+no
 }
+function auctionLike(no){
+	location.href="auction-like?pno="+no
+}
+function auctionLiked(no){
+	location.href="auction-liked?pno="+no
+}

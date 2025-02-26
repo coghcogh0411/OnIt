@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.minho.ownit.ItemLike;
 import com.minho.ownit.member.MemberDAO;
 import com.minho.ownit.resale.ResaleDAO;
 
@@ -86,4 +87,21 @@ public class AuctionController {
         req.setAttribute("contentPage", "auction/pastauctionproduct");
         return "index";
     }
+	@GetMapping("/auction-like")
+	public String auctionLike(HttpServletRequest req, Auction a, ItemLike il, @RequestParam("pno") int no) {
+		mDAO.isLogined(req);
+		aDAO.like(il, req);
+		aDAO.getAuctionDetail(req,no);
+		req.setAttribute("contentPage", "auction/auctiondetailproduct");
+		return "index";
+	}
+	@GetMapping("/auction-liked")
+	public String auctionLiked(HttpServletRequest req, Auction a, ItemLike il, @RequestParam("pno") int no) {
+		mDAO.isLogined(req);
+		aDAO.liked(il, req);
+		aDAO.getAuctionDetail(req,no);
+		req.setAttribute("contentPage", "auction/auctiondetailproduct");
+		return "index";
+	}
+	
 }

@@ -4,12 +4,17 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.FileNameGenerator;
+import com.minho.ownit.ItemLike;
+import com.minho.ownit.ItemLikeRepo;
+import com.minho.ownit.community.Community;
+import com.minho.ownit.community.CommunityLike;
 import com.minho.ownit.member.Member;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionAuction;
@@ -31,6 +36,8 @@ public class AuctionDAO {
 	private RegionMemberRepo rmRepo;
 	@Autowired
 	private RegionAuctionRepo regionAuctionRepo;
+	@Autowired
+	private ItemLikeRepo ilRepo;
 
 	@Value("${ho.img.folder}")
 	private String imgFolder;
@@ -151,7 +158,12 @@ public class AuctionDAO {
 		try {
 			Auction a = aRepo.findById(no).orElse(null);
 			req.setAttribute("product", a);
-
+			
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			
+			boolean isLike = ilRepo.existsByUserIdAndAuctionNo(m, a);
+			
+			req.setAttribute("isLike", isLike);
 			req.setAttribute("photos", apRepo.findByAuction_no(no));
 			req.setAttribute("bidList", bRepo.findByAuctionNoNoOrderByAmountDesc(no));
 
@@ -159,7 +171,32 @@ public class AuctionDAO {
 			e.printStackTrace();
 		}
 	}
-
 	
+	public void like(ItemLike il, HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			il.setUserId(m);
+			int pno = Integer.parseInt(req.getParameter("pno"));
+			Auction a = aRepo.findByNo(pno);
+			il.setAuctionNo(a);
+			il.setResaleNo(null);
+			il.setItemType("auction");
+			ilRepo.save(il);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+	}
+	public void liked(ItemLike il, HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			int pno = Integer.parseInt(req.getParameter("pno"));
+			Auction a = aRepo.findByNo(pno);
+			ItemLike existingLike = ilRepo.findByUserIdAndAuctionNo(m, a);
+			ilRepo.delete(existingLike);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 }
