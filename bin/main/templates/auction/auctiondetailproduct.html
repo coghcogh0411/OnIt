@@ -20,34 +20,66 @@
 		});
 
 		$(".bidnickname").click(function(e) {
-
-			// (1) 자신(li) 내부(또는 형제)에 있는 .bid-sub-buttons를 찾아야 함
-			let $menu = $(this).find(".bid-sub-buttons");
-
-			 
-			// (2) .show 클래스 토글
-			$menu.toggleClass("show");
 			
-			// (3) 좌표 설정 (아래 예시는 화면 전체 기준)
-			if ($menu.hasClass("show")) {
-				let offsetX = 10; // 마우스 오른쪽으로 10px
-				let offsetY = 10; // 마우스 아래로 10px
-				$menu.css({
-					display : "block",
-					position : "absolute", // 혹시 CSS에서 안 되어 있으면 여기도 명시
-					top : (e.pageY + offsetY) + "px",
-					left : (e.pageX + offsetX) + "px",
-					"z-index" : 9999
-				// 다른 요소보다 위에 오도록
+			  // 클릭된 .bidnickname 내부 .bid-sub-buttons 선택
+			  let $menu = $(this).find(".bid-sub-buttons");
+
+			  // 이미 열려있는지 상태 확인
+			  let isOpen = $menu.hasClass("show");
+
+			  // 모든 메뉴 닫기
+			  $(".bid-sub-buttons.show").removeClass("show").css("display", "none");
+
+			  // 만약 클릭된 메뉴가 이미 열려 있었다면 => 닫기만 하고 종료
+			  if (isOpen) {
+			    return; // 그대로 종료 (이미 위에서 removeClass, display none 적용)
+			  }
+
+			  // 여기까지 왔다면 => 새로 열기
+			  $menu.addClass("show").css({
+			    display: "block",
+			    position: "absolute",
+			    top: (e.pageY + 10) + "px",
+			    left: (e.pageX + 10) + "px",
+			    "z-index": 9999
+			  });
+		});
+
+		let slideCount = $('.slider > div').length;
+
+		// 2) 슬라이드가 2개 이상이면 bxSlider 적용
+		if (slideCount > 1) {
+			$('.slider').bxSlider({
+				captions : true,
+				infiniteLoop : true,
+			});
+		} else {
+		}
+
+		$(".location-button").on("click", function() {
+			$(".modal-overlay").fadeIn(200);
+		});
+
+		// (A) 이미지 클릭 -> 모달 열기
+		$('.sliderImg').on('click', function() {
+			var src = $(this).attr('src');
+			// 모달 이미지에 src 설정
+			$('#modalImage').attr('src', src);
+			// 모달 열기
+			$('.image-modal-overlay').fadeIn(200);
+		});
+
+		// (B) 닫기 버튼 or 오버레이 클릭 -> 모달 닫기
+		$('.image-close-modal, .image-modal-overlay').on(
+				'click',
+				function(e) {
+					// 단, .image-modal-content 내부 클릭 시 닫히지 않도록 처리
+					if ($(e.target).hasClass('image-modal-content')
+							|| $(e.target).hasClass('sliderImg')) {
+						return;
+					}
+					$('.image-modal-overlay').fadeOut(200);
 				});
-			} else {
-				$menu.css("display", "none");
-			}
-		});
-		
-		$('.slider').bxSlider({
-			captions : true
-		});
 
 	});
 </script>
@@ -152,5 +184,13 @@
 			</div>
 		</div>
 	</div>
+	<div class="image-modal-overlay">
+    <div class="image-modal">
+      <span class="image-close-modal">&times;</span>
+      <div class="image-modal-content">
+        <img id="modalImage" src="" alt="확대 이미지" />
+      </div>
+    </div>
+  </div>
 </body>
 </html>
