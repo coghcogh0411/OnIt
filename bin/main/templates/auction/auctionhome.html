@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>경매 홈</title>
+
+  <!-- bxSlider CSS (만약 index.html에서 이미 로드 중이면 생략 가능) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+  <!-- 전용 CSS (auctionhome.css) -->
+  <link rel="stylesheet" href="/css/auctionhome.css">
+
+  <!-- jQuery, bxSlider JS (만약 index.html에서 이미 로드 중이면 생략 가능) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+
+  <script>
+    $(function() {
+      // 인기 경매상품 슬라이더
+      $('.popular-slider').bxSlider({
+        auto: true,
+        pause: 3000,
+        speed: 500,
+        pager: false
+      });
+
+      // 팔린 상품들 슬라이더
+      $('.sold-slider').bxSlider({
+        auto: true,
+        pause: 4000,
+        speed: 600,
+        pager: false
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <!-- 상단 버튼 박스 -->
+  <div class="auction-menu">
+    <button class="auction-btn" onclick="location.href='/auction-product'">경매장 가기</button>
+    <button class="auction-btn" onclick="location.href='/pastauction-product'">역대 경매목록</button>
+  </div>
+
+  <!-- 인기 경매상품 섹션 -->
+  <h2 class="section-title">인기 경매상품이에요</h2>
+  <div class="slider-container">
+    <!-- bxSlider: .popular-slider -->
+    <ul class="popular-slider">
+      <!-- DB 연동 시: th:each="p : ${popularAuctions}" -->
+      <li th:each="p : ${popularAuctions}">
+        <!-- 표 형태 (3칸: 이미지/제목/가격) -->
+        <div class="item-table">
+          <!-- 첫 칸: 이미지 -->
+          <div class="item-cell">
+            <img th:src="${'/HoMini/Img/' + p.thumbnail}" alt="상품이미지" />
+          </div>
+          <!-- 두 번째 칸: 제목 -->
+          <div class="item-cell">
+            <span th:text="${p.title}">상품제목</span>
+          </div>
+          <!-- 세 번째 칸: 가격 -->
+          <div class="item-cell">
+            <span th:text="${p.price}">가격</span>
+          </div>
+        </div>
+      </li>
+      <!-- 예시 하드코딩(삭제 가능):
+      <li>
+        <div class="item-table">
+          <div class="item-cell"><img src="/img/sample1.jpg"></div>
+          <div class="item-cell"><span>샘플1</span></div>
+          <div class="item-cell"><span>10000원</span></div>
+        </div>
+      </li>
+      -->
+    </ul>
+  </div>
+
+  <!-- 팔린 상품들 섹션 -->
+  <h2 class="section-title">팔린 상품들이에요</h2>
+  <div class="slider-container">
+    <!-- bxSlider: .sold-slider -->
+    <ul class="sold-slider">
+      <!-- DB 연동 시: th:each="s : ${soldAuctions}" -->
+      <li th:each="s : ${soldAuctions}">
+        <div class="item-table">
+          <div class="item-cell">
+            <img th:src="${'/HoMini/Img/' + s.thumbnail}" alt="팔린상품이미지" />
+          </div>
+          <div class="item-cell">
+            <span th:text="${s.title}">제목</span>
+          </div>
+          <div class="item-cell">
+            <span th:text="${s.price}">가격</span>
+          </div>
+        </div>
+      </li>
+      <!-- 예시 하드코딩(삭제 가능):
+      <li>
+        <div class="item-table">
+          <div class="item-cell"><img src="/img/sample2.jpg"></div>
+          <div class="item-cell"><span>샘플2</span></div>
+          <div class="item-cell"><span>20000원</span></div>
+        </div>
+      </li>
+      -->
+    </ul>
+  </div>
+</body>
+</html>

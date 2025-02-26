@@ -153,6 +153,16 @@ public class AuctionDAO {
         // 3) request에 담기
         req.setAttribute("auctionList", auctions);
     }
+	public void getAuctionHome(HttpServletRequest req) {
+		
+		List<Auction> popularAuctions = aRepo.findByStatus("start");
+	    List<Auction> soldAuctions = aRepo.findByStatus("end");
+
+	    req.setAttribute("popularAuctions", popularAuctions);
+	    req.setAttribute("soldAuctions", soldAuctions);
+
+	    req.setAttribute("contentPage", "auction/auctionhome");
+	}
 
 	public void getAuctionDetail(HttpServletRequest req, int no) {
 		try {

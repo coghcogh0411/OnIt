@@ -2,7 +2,6 @@ package com.minho.ownit.auction;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,6 +28,7 @@ public class AuctionController {
 	@GetMapping("/auction-home")
 	public String auctionHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
+		aDAO.getAuctionHome(req);
 		req.setAttribute("contentPage", "auction/auctionhome");
 		return "index";
 	}
@@ -57,7 +57,7 @@ public class AuctionController {
 		return "index";
 	}
 	@GetMapping("/auction-detailproduct")
-	public String resaleDetailProduct(@RequestParam("no") int pno, HttpServletRequest req) {
+	public String auctionDetailProduct(@RequestParam("no") int pno, HttpServletRequest req) {
 		mDAO.isLogined(req);
 		aDAO.getAuctionDetail(req, pno);
         req.setAttribute("contentPage", "auction/auctiondetailproduct");
@@ -79,14 +79,22 @@ public class AuctionController {
 		return "index";
 	}
 	
-	@GetMapping("/pastauction")
-    public String pastAuctionHome(HttpServletRequest req) {
+	@GetMapping("/pastauction-product")
+    public String pastAuctionProduct(HttpServletRequest req) {
         mDAO.isLogined(req);
-        // 종료된 목록
         aDAO.getAllEndAuctionItems(req);
         req.setAttribute("contentPage", "auction/pastauctionproduct");
         return "index";
     }
+	
+	@GetMapping("/pastauction-detailproduct")
+	public String pastAuctionDetailProduct(@RequestParam("no") int pno, HttpServletRequest req) {
+		mDAO.isLogined(req);
+		aDAO.getAuctionDetail(req, pno);
+        req.setAttribute("contentPage", "auction/auctiondetailproduct");
+		return "index";
+	}
+	
 	@GetMapping("/auction-like")
 	public String auctionLike(HttpServletRequest req, Auction a, ItemLike il, @RequestParam("pno") int no) {
 		mDAO.isLogined(req);
