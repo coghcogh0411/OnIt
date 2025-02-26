@@ -15,13 +15,45 @@
     src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
   <script>
     $(function() {
-      $(".profile-image, .seller-name, .rating").click(function() {
-        $(".sub-buttons").toggleClass("show");
+    	
+    	let slideCount = $('.slider > div').length; 
+
+	    // 2) 슬라이드가 2개 이상이면 bxSlider 적용
+	    if (slideCount > 1) {
+	      $('.slider').bxSlider({
+	        captions: true,
+	        infiniteLoop: true,
+	      });
+	    } else {}
+
+		$(".location-button").on("click", function() {
+			$(".modal-overlay").fadeIn(200);
+		});
+    	
+    	$(".profile-image, .seller-name, .rating").click(function() {
+			$(".sub-buttons").toggleClass("show");
+		});
+		
+    	
+		
+   // (A) 이미지 클릭 -> 모달 열기
+      $('.sliderImg').on('click', function() {
+        var src = $(this).attr('src');
+        // 모달 이미지에 src 설정
+        $('#modalImage').attr('src', src);
+        // 모달 열기
+        $('.image-modal-overlay').fadeIn(200);
       });
-      $('.slider').bxSlider({
-        captions : true
+
+      // (B) 닫기 버튼 or 오버레이 클릭 -> 모달 닫기
+      $('.image-close-modal, .image-modal-overlay').on('click', function(e) {
+        // 단, .image-modal-content 내부 클릭 시 닫히지 않도록 처리
+        if ($(e.target).hasClass('image-modal-content') || 
+            $(e.target).hasClass('sliderImg')) {
+          return;
+        }
+        $('.image-modal-overlay').fadeOut(200);
       });
-      
     });
   </script>
 </head>
@@ -105,6 +137,14 @@
             </div>
           </form>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="image-modal-overlay">
+    <div class="image-modal">
+      <span class="image-close-modal">&times;</span>
+      <div class="image-modal-content">
+        <img id="modalImage" src="" alt="확대 이미지" />
       </div>
     </div>
   </div>
