@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.minho.ownit.member.MemberDAO;
-import com.minho.ownit.resale.ResaleDAO;
 
 import jakarta.servlet.http.HttpServletRequest;
 

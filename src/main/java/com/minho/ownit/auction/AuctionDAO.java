@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -13,8 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.minho.ownit.FileNameGenerator;
 import com.minho.ownit.ItemLike;
 import com.minho.ownit.ItemLikeRepo;
-import com.minho.ownit.community.Community;
-import com.minho.ownit.community.CommunityLike;
 import com.minho.ownit.member.Member;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionAuction;

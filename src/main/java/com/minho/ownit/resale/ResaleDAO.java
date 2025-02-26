@@ -2,9 +2,7 @@ package com.minho.ownit.resale;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.minho.ownit.FileNameGenerator;
 import com.minho.ownit.ItemLike;
 import com.minho.ownit.ItemLikeRepo;
-import com.minho.ownit.auction.Auction;
 import com.minho.ownit.member.Member;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionMember;
