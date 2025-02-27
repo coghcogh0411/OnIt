@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/memberhome.css">
+<link rel="stylesheet" href="/css/resaleproduct.css">
 </head>
 <body>
 	<div class="main-content">
@@ -16,6 +17,7 @@
 				<div><a href="/member-home" class="category-item-child">-내가 올린 상품</a></div>
 				<div><a href="/member-home" class="category-item-child">-종아요 표시한 상품</a></div>
 				<div><a href="/member-home" class="category-item">팔로우</a></div>
+				
 			</div>
 		</div>
 
@@ -41,7 +43,6 @@
 			</div>
 		</div>
 	</div>
-	
-	<div class="content" th:insert="~{${myPageContent}}"></div>
+	<div class="subpage" th:insert="~{${myPageContent}}"></div>
 </body>
 </html>

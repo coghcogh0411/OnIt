@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.FileNameGenerator;
+import com.minho.ownit.auction.AuctionRepo;
+import com.minho.ownit.resale.ResaleRepo;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -21,6 +23,12 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MemberDAO {
 	@Autowired
 	private MemberRepo Mrepo;
+	
+	@Autowired
+	private ResaleRepo rsRepo;
+	
+	@Autowired
+	private AuctionRepo aRepo;
 	
 	@Value("${ho.img.folder}")
 	private String imgFolder;
@@ -123,8 +131,12 @@ public class MemberDAO {
 			req.setAttribute("myPageContent", "member/update");
 		}else {
 			//상대닉네임으로 db조회해서 memberprofile애트리뷰트넘겨주고 상대프로필홈페이지로 보내기
-			req.setAttribute("memberprofile", Mrepo.findByNickname(nickname));
+			Member member = Mrepo.findByNickname(nickname);
+			req.setAttribute("memberprofile", member);
 			req.setAttribute("contentPage", "member/othermemberhome");
+			req.setAttribute("resaleList", rsRepo.findByUser(member));
+			req.setAttribute("auctionList", aRepo.findByUser(member));
+			req.setAttribute("myPageContent", "member/regproduct");
 		}
 	}
 	

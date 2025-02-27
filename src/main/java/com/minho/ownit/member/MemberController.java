@@ -64,7 +64,7 @@ public class MemberController {
 	@GetMapping("/member-home")
 	public String memberhome(HttpServletRequest req, @RequestParam("name") String nickname) {
 		mDAO.isLogined(req);
-		
+		mDAO.memberPage(req, nickname);
 		
 		
 		return "index";

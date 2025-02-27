@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import com.minho.ownit.member.Member;
+
 @Repository
 public interface AuctionRepo extends CrudRepository<Auction, Integer>{
 	public abstract List<Auction> findAll();
@@ -16,5 +18,7 @@ public interface AuctionRepo extends CrudRepository<Auction, Integer>{
 	public abstract List<Auction> findByEndBeforeAndStatus(Date now, String status);
 	
 	public abstract List<Auction> findByStatus(String status);
+	
+	public abstract List<Auction> findByUser(Member nickname);
 
 }
