@@ -116,6 +116,18 @@ public class MemberDAO {
 		req.getSession().setAttribute("loginMember", null);
 	}
 	
+	public void memberPage(HttpServletRequest req, String nickname) {
+		Member m = (Member)req.getSession().getAttribute("loginMember");
+		if(nickname.equals(m.getNickname())) {
+			req.setAttribute("contentPage", "member/memberhome");
+			req.setAttribute("myPageContent", "member/update");
+		}else {
+			//상대닉네임으로 db조회해서 memberprofile애트리뷰트넘겨주고 상대프로필홈페이지로 보내기
+			req.setAttribute("memberprofile", Mrepo.findByNickname(nickname));
+			req.setAttribute("contentPage", "member/othermemberhome");
+		}
+	}
+	
 	public void update(Member m, HttpServletRequest req, MultipartFile file) {
 		try {
 			Member oldmember = (Member)req.getSession().getAttribute("loginMember");
@@ -159,6 +171,5 @@ public class MemberDAO {
 			e.printStackTrace();
 			req.setAttribute("result", "수정실패");
 		}
-		
 	}
 }

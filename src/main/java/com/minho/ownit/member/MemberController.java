@@ -62,10 +62,11 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member-home")
-	public String memberhome(HttpServletRequest req) {
+	public String memberhome(HttpServletRequest req, @RequestParam("name") String nickname) {
 		mDAO.isLogined(req);
-		req.setAttribute("contentPage", "member/memberhome");
-		req.setAttribute("myPageContent", "member/update");
+		
+		
+		
 		return "index";
 	}
 	@PostMapping("/sign-up")

@@ -205,7 +205,9 @@ public class ResaleDAO {
 			e.printStackTrace();
 		}
 	}
-
+	public void getUserResaleItem(HttpServletRequest req, String name) {
+		
+	}
 	public void getResaleDetail(HttpServletRequest req, int no) {
 		try {
 			Resale r = rRepo.findById(no).orElse(null);
