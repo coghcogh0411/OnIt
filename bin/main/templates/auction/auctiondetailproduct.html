@@ -147,13 +147,13 @@
 					<div class="bidders">
 						<h3>🏆 입찰자 명단</h3>
 						<ul class="bidder-list">
-							<li class="bidnickname" th:each="b:${bidList}"><span
-								th:text="${b.user.name}"></span> <span
+							<li class="bidnickname" th:each="b:${bidList}"><span class="buyer"
+								th:text="${b.user.nickname}"></span> <span
 								th:text="${b.amount+' 원'}"></span>
 								<div class="bid-sub-buttons">
-									<a th:href="@{/member-home(name=${b.user.name})}"
+									<a th:href="@{/member-home(name=${b.user.nickname})}"
 										class="bid-sub-button">정보보기</a> <a href="#"
-										class="bid-sub-button chat-btn">1:1쪽지 보내기</a> <a href="#"
+										class="bid-sub-button buyer-chat-btn">1:1쪽지 보내기</a> <a href="#"
 										class="bid-sub-button">팔로우</a>
 								</div></li>
 						</ul>
