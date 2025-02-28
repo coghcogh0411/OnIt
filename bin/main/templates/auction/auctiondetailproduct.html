@@ -19,31 +19,33 @@
 			$(".sub-buttons").toggleClass("show");
 		});
 
-		$(".bidnickname").click(function(e) {
-			
-			  // 클릭된 .bidnickname 내부 .bid-sub-buttons 선택
-			  let $menu = $(this).find(".bid-sub-buttons");
+		$(".bidnickname").click(
+				function(e) {
 
-			  // 이미 열려있는지 상태 확인
-			  let isOpen = $menu.hasClass("show");
+					// 클릭된 .bidnickname 내부 .bid-sub-buttons 선택
+					let $menu = $(this).find(".bid-sub-buttons");
 
-			  // 모든 메뉴 닫기
-			  $(".bid-sub-buttons.show").removeClass("show").css("display", "none");
+					// 이미 열려있는지 상태 확인
+					let isOpen = $menu.hasClass("show");
 
-			  // 만약 클릭된 메뉴가 이미 열려 있었다면 => 닫기만 하고 종료
-			  if (isOpen) {
-			    return; // 그대로 종료 (이미 위에서 removeClass, display none 적용)
-			  }
+					// 모든 메뉴 닫기
+					$(".bid-sub-buttons.show").removeClass("show").css(
+							"display", "none");
 
-			  // 여기까지 왔다면 => 새로 열기
-			  $menu.addClass("show").css({
-			    display: "block",
-			    position: "absolute",
-			    top: (e.pageY + 10) + "px",
-			    left: (e.pageX + 10) + "px",
-			    "z-index": 9999
-			  });
-		});
+					// 만약 클릭된 메뉴가 이미 열려 있었다면 => 닫기만 하고 종료
+					if (isOpen) {
+						return; // 그대로 종료 (이미 위에서 removeClass, display none 적용)
+					}
+
+					// 여기까지 왔다면 => 새로 열기
+					$menu.addClass("show").css({
+						display : "block",
+						position : "absolute",
+						top : (e.pageY + 10) + "px",
+						left : (e.pageX + 10) + "px",
+						"z-index" : 9999
+					});
+				});
 
 		let slideCount = $('.slider > div').length;
 
@@ -143,6 +145,8 @@
 							가능</button>
 					</div>
 				</div>
+			</div>
+			<div style="display: flex;">
 				<div class="auction-section">
 					<div class="bidders">
 						<h3>🏆 입찰자 명단</h3>
@@ -185,12 +189,12 @@
 		</div>
 	</div>
 	<div class="image-modal-overlay">
-    <div class="image-modal">
-      <span class="image-close-modal">&times;</span>
-      <div class="image-modal-content">
-        <img id="modalImage" src="" alt="확대 이미지" />
-      </div>
-    </div>
-  </div>
+		<div class="image-modal">
+			<span class="image-close-modal">&times;</span>
+			<div class="image-modal-content">
+				<img id="modalImage" src="" alt="확대 이미지" />
+			</div>
+		</div>
+	</div>
 </body>
 </html>
