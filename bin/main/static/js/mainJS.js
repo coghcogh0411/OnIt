@@ -93,6 +93,14 @@ function chatcontroller() {
 		$("#chatModal").show();
 		loadChatHistory(chatPartner);
 	});
+	$(document).on("click", ".buyer-chat-btn", function(e) {
+		e.preventDefault();
+		// .bidnickname 안의 .buyer 요소에서 판매자 이름을 가져옴
+		var chatPartner = $(this).closest('.bidnickname').find('.buyer').text().trim();
+		$("#chatTitle").text(chatPartner);
+		$("#chatModal").show();
+		loadChatHistory(chatPartner);
+	});
 	$(document).on("click", ".chat-room", function() {
 		var chatPartner = $(this).find("strong").text().trim();
 		$("#chatTitle").text(chatPartner);
