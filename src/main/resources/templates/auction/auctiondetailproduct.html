@@ -11,8 +11,6 @@
 	src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
 <script type="text/javascript" src="/js/bid.js"></script>
-<script
-	src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
 <script>
 	$(function() {
 		$(".profile-image, .seller-name, .rating").click(function() {
@@ -45,6 +43,7 @@
 						left : (e.pageX + 10) + "px",
 						"z-index" : 9999
 					});
+
 				});
 
 		let slideCount = $('.slider > div').length;
@@ -57,10 +56,6 @@
 			});
 		} else {
 		}
-
-		$(".location-button").on("click", function() {
-			$(".modal-overlay").fadeIn(200);
-		});
 
 		// (A) 이미지 클릭 -> 모달 열기
 		$('.sliderImg').on('click', function() {
@@ -151,15 +146,18 @@
 					<div class="bidders">
 						<h3>🏆 입찰자 명단</h3>
 						<ul class="bidder-list">
-							<li class="bidnickname" th:each="b:${bidList}"><span class="buyer"
-								th:text="${b.user.nickname}"></span> <span
+							<li class="bidnickname" th:each="b:${bidList}"><span
+								class="buyer" th:text="${b.user.nickname}"></span> <span
 								th:text="${b.amount+' 원'}"></span>
 								<div class="bid-sub-buttons">
 									<a th:href="@{/member-home(name=${b.user.nickname})}"
 										class="bid-sub-button">정보보기</a> <a href="#"
-										class="bid-sub-button buyer-chat-btn">1:1쪽지 보내기</a> <a href="#"
-										class="bid-sub-button">팔로우</a>
-								</div></li>
+										class="bid-sub-button buyer-chat-btn">1:1쪽지 보내기</a> <a
+										href="#" class="bid-sub-button">팔로우</a> <a href="#"
+										th:if="${product.user.nickname == session.loginMember.nickname}"
+										class="bid-sub-button">판매</a>
+								</div>
+							</li>
 						</ul>
 					</div>
 				</div>

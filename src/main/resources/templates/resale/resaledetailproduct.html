@@ -17,95 +17,45 @@
 			$(".sub-buttons").toggleClass("show");
 		});
 
-		let slideCount = $('.slider > div').length; 
+		let slideCount = $('.slider > div').length;
 
-	    // 2) 슬라이드가 2개 이상이면 bxSlider 적용
-	    if (slideCount > 1) {
-	      $('.slider').bxSlider({
-	        captions: true,
-	        infiniteLoop: true,
-	      });
-	    } else {}
-
-		$(".location-button").on("click", function() {
-			$(".modal-overlay").fadeIn(200);
-		});
-
-		// 닫기 버튼 클릭 시 모달 닫기
-		$(".close-modal").on("click", function() {
-			$(".modal-overlay").fadeOut(200);
-		});
-		
-		$("#locationInput").keyup(function(){
-			var region = $(this).val();
-			$.getJSON("region.get?region=" + region, function(regionData){
-				$(".region-list").empty();
-				$.each(regionData.region, function(index, item){
-					$(".region-list").append("<li><a href='/region-get'>" + item.firstName + ", " + item.secondName + "</a></li>");
-				});
-			}).fail(function() {
-				$(".region-list").empty();
-				$(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
+		// 2) 슬라이드가 2개 이상이면 bxSlider 적용
+		if (slideCount > 1) {
+			$('.slider').bxSlider({
+				captions : true,
+				infiniteLoop : true,
 			});
-		});
-		
-		$(document).on("click", ".region-list li", function(e) {
-			e.preventDefault();
-			e.stopPropagation();
+		} else {
+		}
 
-			var name = $(this).text();
-			$(".location-button").text(name);
-
-			$(".modal-overlay").fadeOut(200, function() {
-	            var fromValue = "product";
-	            var productNo = $('#productNo').val();
-
-	            // DB 검색용: 쉼표 제거
-	            // "광주광역시, 서구" -> split -> ["광주광역시", "서구"]
-	            var splitted = name.split(", ");
-	            if(splitted.length >= 2){
-	                // region=광주광역시 & region2=서구
-	                location.href = "/region-get?region="
-	                  + encodeURIComponent(splitted[0])
-	                  + "&region2=" + encodeURIComponent(splitted[1])
-	                  + "&from=" + encodeURIComponent(fromValue)
-	                  + "&no=" + encodeURIComponent(productNo);
-	            } else {
-	                // 예외 처리
-	                location.href = "/region-get?region="
-	                  + encodeURIComponent(name)
-	                  + "&region2="
-	                  + "&from=" + encodeURIComponent(fromValue)
-	                  + "&no=" + encodeURIComponent(productNo);
-	            }
-	        });
-	    });
 		// (A) 이미지 클릭 -> 모달 열기
-	      $('.sliderImg').on('click', function() {
-	        var src = $(this).attr('src');
-	        // 모달 이미지에 src 설정
-	        $('#modalImage').attr('src', src);
-	        // 모달 열기
-	        $('.image-modal-overlay').fadeIn(200);
-	      });
+		$('.sliderImg').on('click', function() {
+			var src = $(this).attr('src');
+			// 모달 이미지에 src 설정
+			$('#modalImage').attr('src', src);
+			// 모달 열기
+			$('.image-modal-overlay').fadeIn(200);
+		});
 
-	      // (B) 닫기 버튼 or 오버레이 클릭 -> 모달 닫기
-	      $('.image-close-modal, .image-modal-overlay').on('click', function(e) {
-	        // 단, .image-modal-content 내부 클릭 시 닫히지 않도록 처리
-	        if ($(e.target).hasClass('image-modal-content') || 
-	            $(e.target).hasClass('sliderImg')) {
-	          return;
-	        }
-	        $('.image-modal-overlay').fadeOut(200);
-	      });
-	    });
+		// (B) 닫기 버튼 or 오버레이 클릭 -> 모달 닫기
+		$('.image-close-modal, .image-modal-overlay').on(
+				'click',
+				function(e) {
+					// 단, .image-modal-content 내부 클릭 시 닫히지 않도록 처리
+					if ($(e.target).hasClass('image-modal-content')
+							|| $(e.target).hasClass('sliderImg')) {
+						return;
+					}
+					$('.image-modal-overlay').fadeOut(200);
+				});
+	});
 </script>
 </head>
 <body>
 	<input type="hidden" id="productNo" th:value="${product.no}">
 	<div class="main-content">
 		<div class="sidebar-container">
-				<button class="location-button" th:text="${displayRegion}"></button>
+			<button class="location-button" th:text="${displayRegion}"></button>
 			<div class="sidebar">
 				<div th:each="c:${category}"
 					th:onclick="|resaleCategoryChange(${c.no})|">
@@ -134,8 +84,14 @@
 						<div class="seller-name"
 							th:text="${product != null and product.user != null ? product.user.nickname : '판매자'}"></div>
 						<div class="rating">⭐⭐⭐⭐⭐</div>
-						<button class="like-button" type="button" th:if="${isLike==false}" th:onclick="resaleLike([[${product.no}]])"><img alt="" src="img/like.png"></button>
-            			<button class="like-button" type="button" th:if="${isLike==true}" th:onclick="resaleLiked([[${product.no}]])"><img alt="" src="img/liked.png"></button>
+						<button class="like-button" type="button" th:if="${isLike==false}"
+							th:onclick="resaleLike([[${product.no}]])">
+							<img alt="" src="img/like.png">
+						</button>
+						<button class="like-button" type="button" th:if="${isLike==true}"
+							th:onclick="resaleLiked([[${product.no}]])">
+							<img alt="" src="img/liked.png">
+						</button>
 					</div>
 					<div class="sub-buttons">
 						<a href="/member-home" class="sub-button">정보보기</a> <a href="#"
@@ -167,39 +123,39 @@
 					</div>
 				</div>
 				<div class="modal-overlay">
-		<div class="modal">
-			<div class="modal-header">
-				지역 변경
-				<span class="close-modal">✕</span>
-			</div>
-			<div class="modal-content">
-				<div class="search-box">
-					<input id="locationInput" type="text" placeholder="지역이나 동네로 검색하기">
+					<div class="modal">
+						<div class="modal-header">
+							지역 변경 <span class="close-modal">✕</span>
+						</div>
+						<div class="modal-content">
+							<div class="search-box">
+								<input id="locationInput" type="text"
+									placeholder="지역이나 동네로 검색하기">
+							</div>
+							<button class="location-button">현재 내 위치 사용하기</button>
+							<div class="recommend-title">추천</div>
+							<ul class="region-list">
+								<li><a href="/region-get">서울특별시, 강남구</a></li>
+								<li><a href="/region-get">서울특별시, 송파구</a></li>
+								<li><a href="/region-get">경기도, 부천시</a></li>
+								<li><a href="/region-get">경기도, 화성시</a></li>
+								<li><a href="/region-get">서울특별시, 강서구</a></li>
+								<li><a href="/region-get">인천광역시, 서구</a></li>
+								<li><a href="/region-get">경기도, 남양주시</a></li>
+							</ul>
+						</div>
+					</div>
 				</div>
-				<button class="location-button">현재 내 위치 사용하기</button>
-				<div class="recommend-title">추천</div>
-				<ul class="region-list">
-					<li><a href="/region-get">서울특별시, 강남구</a></li>
-					<li><a href="/region-get">서울특별시, 송파구</a></li>
-					<li><a href="/region-get">경기도, 부천시</a></li>
-					<li><a href="/region-get">경기도, 화성시</a></li>
-					<li><a href="/region-get">서울특별시, 강서구</a></li>
-					<li><a href="/region-get">인천광역시, 서구</a></li>
-					<li><a href="/region-get">경기도, 남양주시</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
 			</div>
 		</div>
 	</div>
 	<div class="image-modal-overlay">
-    <div class="image-modal">
-      <span class="image-close-modal">&times;</span>
-      <div class="image-modal-content">
-        <img id="modalImage" src="" alt="확대 이미지" />
-      </div>
-    </div>
-  </div>
+		<div class="image-modal">
+			<span class="image-close-modal">&times;</span>
+			<div class="image-modal-content">
+				<img id="modalImage" src="" alt="확대 이미지" />
+			</div>
+		</div>
+	</div>
 </body>
 </html>
