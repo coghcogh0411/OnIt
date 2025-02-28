@@ -162,14 +162,12 @@
 					</div>
 
 					<div class="action-buttons">
-						<button class="action-button" th:if="${product.deal == '가능'}">댓글
-							가능</button>
-						<button class="action-button" th:if="${product.delivery == '가능'}">직거래
-							가능</button>
+						<div class="action-button" th:text="${product.deal == '1' ? '택배가능':'택배불가능' }"></div>
+						<div class="action-button" th:text="${product.delivery == '1' ? '직거래가능':'직거래불가능'}"></div>
 					</div>
 				</div>
 			</div>
-			<div style="display: flex;">
+			<div class="bid-content">
 				<div class="auction-section">
 					<div class="bidders">
 						<h3>🏆 입찰자 명단</h3>
@@ -188,7 +186,7 @@
 									<a th:href="@{/member-home(name=${b.user.nickname})}" class="seller-sub-button">정보보기</a>
 									<a href="#" class="seller-sub-button buyer-chat-btn">1:1쪽지 보내기</a>
 									<a href="#" class="seller-sub-button">팔로우</a>
-									<a href="#" class="seller-sub-button">판매</a>
+									<a th:href="@{/final-bidder(name=${b.user.nickname})}" class="seller-sub-button">판매</a>
 								</div>
 							</li>
 						</ul>
