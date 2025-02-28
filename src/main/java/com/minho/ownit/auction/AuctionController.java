@@ -91,7 +91,7 @@ public class AuctionController {
 	public String pastAuctionDetailProduct(@RequestParam("no") int pno, HttpServletRequest req) {
 		mDAO.isLogined(req);
 		aDAO.getAuctionDetail(req, pno);
-        req.setAttribute("contentPage", "auction/auctiondetailproduct");
+        req.setAttribute("contentPage", "auction/pastauctiondetailproduct");
 		return "index";
 	}
 	

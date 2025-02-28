@@ -178,12 +178,12 @@
 }
 
 .action-buttons {
-	position: absolute;
-	gap: 10px;
+	display: flex;          /* 가로로 배치 */
+  	align-items: center;    /* 수직 정렬 */
+  	gap: 10px;
 }
 
 .action-button {
-	flex: 1;
 	padding: 12px;
 	border: 1px solid #ddd;
 	border-radius: 4px;
@@ -192,8 +192,9 @@
 	cursor: pointer;
 }
 
-.action-button:hover {
-	background: #f5f5f5;
+.final-bidder {
+	margin-left:auto;
+	font-size: 24px;
 }
 
 /* sub-buttons (판매자 정보 클릭 시 표시되는 추가 버튼) */
@@ -308,13 +309,19 @@
 	transform: translateX(-5px);
 }
 
+.bid-content {
+  display: flex;                  /* 가로 배치 */
+  justify-content: space-between; /* 양쪽 끝에 붙이기 */
+  align-items: flex-start;        /* 상단 정렬 (필요 시 center 등으로 조정) */
+  width: 100%;           /* 위쪽 여백 */
+}
+
 /* 경매 섹션 */
 .auction-section {
-	display: flex;
-	gap: 30px;
-	align-items: center;
-	padding: 20px;
-	width: 100%;
+  flex: none;                 /* 너비 고정(자동 늘어남 방지) */
+  width: 300px;               /* 원하는 크기로 지정 */
+  padding: 20px;
+  background-color: #fff;     /* 필요 시 조정 */
 }
 
 .bidders {
@@ -359,8 +366,9 @@
 .auction-bid {
 	flex: 1;
 	text-align: center;
-	margin-top: 50px;
+	margin-top: 100px;
 	padding: 30px;
+	width: 600px;
 	
 }
 
@@ -368,6 +376,7 @@
 	font-size: 18px;
 	font-weight: bold;
 }
+
 
 .bid-options {
 	display: flex;

@@ -134,14 +134,14 @@
 					</div>
 
 					<div class="action-buttons">
-						<button class="action-button" th:if="${product.deal == '가능'}">댓글
-							가능</button>
-						<button class="action-button" th:if="${product.delivery == '가능'}">직거래
-							가능</button>
+						<div class="action-button" th:text="${product.deal == '1' ? '택배가능':'택배불가능' }"></div>
+						<div class="action-button" th:text="${product.delivery == '1' ? '직거래가능':'직거래불가능'}"></div>
 					</div>
+					
 				</div>
+				
 			</div>
-			<div style="display: flex;">
+			<div class="bid-content">
 				<div class="auction-section">
 					<div class="bidders">
 						<h3>🏆 입찰자 명단</h3>
