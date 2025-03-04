@@ -208,8 +208,10 @@ public class AuctionDAO {
 	public void selectBidder(HttpServletRequest req, String bidder, int no) {
 		try {
 			Auction a = aRepo.findByNo(no);
+			Date now = new Date();
 			a.setBidder(bidder);
 			a.setStatus("end");
+			a.setEnd(now);
 			aRepo.save(a);
 		} catch (Exception e) {
 			e.printStackTrace();
