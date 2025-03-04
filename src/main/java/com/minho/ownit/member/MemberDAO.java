@@ -130,6 +130,7 @@ public class MemberDAO {
 		if(nickname.equals(m.getNickname())) {
 			req.setAttribute("contentPage", "member/memberhome");
 			req.setAttribute("myPageContent", "member/update");
+			
 		}else {
 			//상대닉네임으로 db조회해서 memberprofile애트리뷰트넘겨주고 상대프로필홈페이지로 보내기
 			Member member = Mrepo.findByNickname(nickname);
@@ -138,6 +139,31 @@ public class MemberDAO {
 			req.setAttribute("resaleList", rsRepo.findByUser(member));
 			req.setAttribute("auctionList", aRepo.findByUser(member));
 			req.setAttribute("myPageContent", "member/regproduct");
+		}
+	}
+	
+	public void memberProduct(HttpServletRequest req, String nickname) {
+		try {
+			// 세션에서 로그인 회원 정보 가져오기
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			
+			// 로그인되어 있다면 내 페이지 설정
+			req.setAttribute("contentPage", "member/memberhome");
+			req.setAttribute("myPageContent", "member/regproduct");
+			
+			// 내가 등록한 중고거래/경매 목록을 가져와서 담기
+			req.setAttribute("resaleList", rsRepo.findByUser(m));
+			req.setAttribute("auctionList", aRepo.findByUser(m));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void memberLike(HttpServletRequest req, String nickname) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
 	}
 	
@@ -183,13 +209,6 @@ public class MemberDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			req.setAttribute("result", "수정실패");
-		}
-	}
-	public void memberProduct(HttpServletRequest req, String name) {
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	
