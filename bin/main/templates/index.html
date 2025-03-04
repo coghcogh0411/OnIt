@@ -34,11 +34,11 @@
 	</header>
 
 	<nav class="menu">
-		<a href="/resale-product" class="menu-item">중고거래</a> 
-		<a href="/auction-product" class="menu-item">현재경매</a> 
-		<a href="/pastauction-product"	class="menu-item">역대경매</a> 
-		<a href="/community?categoryNo=1"class="menu-item">커뮤니티</a>
-		<a href="#" class="menu-item">마이페이지</a>
+		<a href="/resale-product" class="menu-item">중고거래</a> <a
+			href="/auction-product" class="menu-item">현재경매</a> <a
+			href="/pastauction-product" class="menu-item">역대경매</a> <a
+			href="/community?categoryNo=1" class="menu-item">커뮤니티</a> <a href="#"
+			class="menu-item">마이페이지</a>
 		<div th:text="${result}"></div>
 	</nav>
 
@@ -85,7 +85,30 @@
 			<button id="modalSendBtn">전송</button>
 		</footer>
 	</div>
-
+	<div class="modal-overlay">
+		<div class="login-container">
+			<h2>로그인이 필요한 시스템입니다.</h2>
+	
+			<form method="post" action="sign-in">
+				<label for="userId">아이디</label> <input type="text" name="id" id="userId"
+					class="underline-input" placeholder="아이디" /> <label for="userPw">비밀번호</label>
+				<input type="password" id="userPw" name="pw" class="underline-input"
+					placeholder="비밀번호" />
+	
+				<button type="submit" class="login-btn">로그인</button>
+			</form>
+	
+			<div class="link-section">
+				<a href="/selectjoin">회원가입</a> <a href="#">ID/PW 찾기</a>
+			</div>
+	
+			<div class="social-login">
+				<button type="button" class="social-btn"><img src="img/kakao.png" ></button>
+				<button type="button" class="social-btn"><img src="img/naver.png"></button>
+				<button type="button" class="social-btn"><img src="img/google.png"></button>
+			</div>
+		</div>
+	</div>
 	<footer>
 		<div class="footer-info">
 			(주) 온잇<br> 대표자: 임채호, 마뇽채찍<br> 사업자등록번호: 000-00-00000<br>

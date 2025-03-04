@@ -21,7 +21,6 @@ header {
 	border-bottom: 1px solid #ccc;
 }
 
-
 .logo {
 	font-size: 24px;
 	font-weight: bold;
@@ -199,6 +198,116 @@ h2 {
 #chatModal .close-btn {
 	float: right;
 	cursor: pointer;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3); /* 어두운 배경 */
+  display: none; /* 초기에는 숨김 (JS에서 display: flex로 바꿔 모달 열기) */
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* 로그인 창(고정 위치) */
+.login-container {
+  position: fixed;
+  top: 10%;
+  left: 40%;
+  width: 350px;
+  margin: 80px auto;
+  padding: 30px 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* 상단 안내 문구 */
+.login-container h2 {
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* 레이블 */
+.login-container label {
+  display: block;
+  text-align: left;
+  margin: 10px 0 5px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* 밑줄만 있는 인풋 */
+.underline-input {
+  width: 95%;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  padding: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  outline: none;
+}
+.underline-input:focus {
+  border-color: #666;
+}
+
+/* 로그인 버튼 */
+.login-btn {
+  width: 100%;
+  padding: 12px 0;
+  margin-top: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #928cf5;
+  color: #fff;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.login-btn:hover {
+  background-color: #7b75eb;
+}
+
+/* 하단 링크 섹션 */
+.link-section {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #666;
+}
+.link-section a {
+  color: #666;
+  text-decoration: none;
+}
+.link-section a:hover {
+  text-decoration: underline;
+}
+
+/* 소셜 로그인 버튼 */
+.social-login {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+.social-login button {
+  border: none;
+  border-radius: 15px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+.social-login img{
+	max-height: 30px;
+	max-width: 30px;
+}
+.social-btn{
+	background-color: white;
 }
 /* 내 메시지 스타일 */
 .message.mine {
