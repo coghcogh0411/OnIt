@@ -99,4 +99,13 @@ public class MemberController {
 		mDAO.memberLike(req, nickname);
 		return "index";
 	}
+	@GetMapping("/member-follow")
+	public String memberfollow(HttpServletRequest req, @RequestParam("name") String nickname) {
+		mDAO.isLogined(req);
+		mDAO.memberfollow(req, nickname);
+		req.setAttribute("contentPage", "member/memberhome");
+		req.setAttribute("myPageContent", "member/follow");
+		return "index";
+	}
+	
 }

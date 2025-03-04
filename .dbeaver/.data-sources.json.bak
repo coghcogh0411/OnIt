@@ -1,16 +1,16 @@
 {
 	"folders": {},
 	"connections": {
-		"oracle_thin-194df8d3173-2d5f6d57aab4e21c": {
+		"oracle_thin-1951a72a880-59545b73278857e0": {
 			"provider": "oracle",
 			"driver": "oracle_thin",
-			"name": "192.168.0.15",
+			"name": "sd-beanmouse.duckdns.org",
 			"save-password": true,
 			"configuration": {
-				"host": "192.168.0.15",
-				"port": "1521",
+				"host": "sd-beanmouse.duckdns.org",
+				"port": "43217",
 				"database": "xe",
-				"url": "jdbc:oracle:thin:@192.168.0.15:1521:xe",
+				"url": "jdbc:oracle:thin:@sd-beanmouse.duckdns.org:43217:xe",
 				"configurationType": "MANUAL",
 				"type": "dev",
 				"closeIdleConnection": true,

@@ -212,4 +212,7 @@ public class MemberDAO {
 		}
 	}
 	
+	public void memberfollow(HttpServletRequest req, String name) {
+		
+	}
 }
