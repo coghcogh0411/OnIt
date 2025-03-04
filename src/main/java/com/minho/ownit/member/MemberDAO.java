@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minho.ownit.FileNameGenerator;
+import com.minho.ownit.auction.Auction;
 import com.minho.ownit.auction.AuctionRepo;
 import com.minho.ownit.resale.ResaleRepo;
 
@@ -184,4 +185,12 @@ public class MemberDAO {
 			req.setAttribute("result", "수정실패");
 		}
 	}
+	public void memberProduct(HttpServletRequest req, String name) {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 }

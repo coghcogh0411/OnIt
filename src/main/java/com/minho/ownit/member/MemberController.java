@@ -65,10 +65,11 @@ public class MemberController {
 	public String memberhome(HttpServletRequest req, @RequestParam("name") String nickname) {
 		mDAO.isLogined(req);
 		mDAO.memberPage(req, nickname);
-		
-		
 		return "index";
 	}
+	
+	
+	
 	@PostMapping("/sign-up")
 	public String SignUp(Member m, HttpServletRequest req, @RequestParam("photoTemp")MultipartFile file ) {
 		mDAO.memberReg(m, req, file);
@@ -83,6 +84,13 @@ public class MemberController {
 		mDAO.isLogined(req);
 		req.setAttribute("contentPage", "home");
 		return logout(req);
+	}
+	
+	@GetMapping("/member-product")
+	public String memberproduct(HttpServletRequest req, @RequestParam("name") String nickname) {
+		mDAO.isLogined(req);
+		
+		return "index";
 	}
 	
 }

@@ -38,7 +38,7 @@
 		<a href="/auction-product" class="menu-item">현재경매</a> 
 		<a href="/pastauction-product"	class="menu-item">역대경매</a> 
 		<a href="/community?categoryNo=1"class="menu-item">커뮤니티</a>
-		<a href="#" class="menu-item">마이페이지</a>
+		<a th:href="@{/member-home(name=${session.loginMember != null ? session.loginMember.nickname : ''})}" class="menu-item">마이페이지</a>
 		<div th:text="${result}"></div>
 	</nav>
 
