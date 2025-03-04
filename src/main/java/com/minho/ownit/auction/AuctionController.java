@@ -111,5 +111,13 @@ public class AuctionController {
 		req.setAttribute("contentPage", "auction/auctiondetailproduct");
 		return "index";
 	}
+	@GetMapping("/final-bidder")
+	public String finalBidder(HttpServletRequest req, @RequestParam("name") String bidder, @RequestParam("no") int pno) {
+		mDAO.isLogined(req);
+		aDAO.selectBidder(req, bidder, pno);
+		aDAO.getAuctionDetail(req, pno);
+		req.setAttribute("contentPage", "auction/pastauctiondetailproduct");
+		return "index";
+	}
 	
 }

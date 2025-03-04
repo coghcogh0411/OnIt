@@ -205,5 +205,14 @@ public class AuctionDAO {
 			e.printStackTrace();
 		}
 	}
-
+	public void selectBidder(HttpServletRequest req, String bidder, int no) {
+		try {
+			Auction a = aRepo.findByNo(no);
+			a.setBidder(bidder);
+			a.setStatus("end");
+			aRepo.save(a);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -104,7 +104,7 @@
           <div class="action-buttons">
             <div class="action-button" th:text="${product.deal == '1' ? '택배가능':'택배불가능' }"></div>
 			<div class="action-button" th:text="${product.delivery == '1' ? '직거래가능':'직거래불가능'}"></div>
-            <div class="final-bidder" th:text="${'최종낙찰자: '+product.bidder}"></div>
+            <div class="final-bidder" th:text="${product.bidder != null ? '최종낙찰자: ' + product.bidder : '최종낙찰자가 없습니다'}"></div>
           </div>
         </div>
         
