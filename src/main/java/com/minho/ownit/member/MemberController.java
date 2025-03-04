@@ -89,8 +89,14 @@ public class MemberController {
 	@GetMapping("/member-product")
 	public String memberproduct(HttpServletRequest req, @RequestParam("name") String nickname) {
 		mDAO.isLogined(req);
-		
+		mDAO.memberProduct(req, nickname);
 		return "index";
 	}
 	
+	@GetMapping("/member-like")
+	public String memberlike(HttpServletRequest req, @RequestParam("name") String nickname) {
+		mDAO.isLogined(req);
+		mDAO.memberLike(req, nickname);
+		return "index";
+	}
 }
