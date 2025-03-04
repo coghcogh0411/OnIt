@@ -5,6 +5,11 @@
 	margin-bottom: 50px;
 	padding: 50px;
 }
+.endday {
+    text-align: center;
+    font-size: 70px;
+    font-weight: bold; 
+}
 
 .sidebar-container {
 	width: 200px;

@@ -60,6 +60,7 @@
 <body>
   <div class="main-content">
     <div class="content-area">
+    <div class="endday" th:text="${#dates.format(product.end, 'yyyy-MM-dd HH:mm') + '  종료된 경매입니다.'}">종료일</div>
       <div class="product-detail">
         <div class="image-gallery">
           <div class="slider">
