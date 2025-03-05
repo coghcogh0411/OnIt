@@ -35,7 +35,15 @@
 	font-size: 0.9em;
 	margin-top: 5px;
 }
-
+#id{
+	display: flex;
+}
+#nick{
+	display: flex;
+}
+#pwconfirm{
+	display: flex;
+}
 .btn {
 	width: 100%;
 	padding: 10px;

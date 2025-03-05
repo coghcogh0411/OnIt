@@ -53,6 +53,8 @@ public class Member {
 	
 	@OneToMany(mappedBy = "writer", cascade = CascadeType.ALL)
 	private List<CommunityReply> replies;
+
+
 	
 	
 }

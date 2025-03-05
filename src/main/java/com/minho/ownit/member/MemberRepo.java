@@ -6,5 +6,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MemberRepo extends CrudRepository<Member, String>{
 	public abstract Member findByNickname(String nickname);
-	
 }

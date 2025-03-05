@@ -62,7 +62,21 @@ public class MemberDAO {
 			return null;
 		}
 	}
-
+	
+	public Members getMemberToJSON(String m) {
+		Optional<Member> members = Mrepo.findById(m);
+		List<Member> member = new ArrayList<>();
+		if(members.isPresent()) {
+			member.add(members.get());
+		}
+		return new Members(member);
+	}
+	
+	public Member getMemberNicknameToJSON(String m) {
+		Member member = Mrepo.findByNickname(m);
+		return member;
+	}
+	
 	public void memberReg(Member m, HttpServletRequest req, MultipartFile file) {
 		try {
 			// 비번 암호화

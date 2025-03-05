@@ -49,6 +49,52 @@ function joinImgInsert() {
 		fileInput.files = dataTransfer.files; // input 요소에 파일 설정
 	}
 }
+function JoinIdInputEvent() {
+	$("#username").keyup(function() {
+		var userId = $(this).val();
+		$.getJSON(`member.get?m=${userId}`, function(memberData) {
+			if (memberData.member[0] == null) {
+				$("#id").css("display", "none");
+			} else {
+				$("#id").css("display", "flex");
+			}
+		})
+	})
+	$("#nickname").keyup(function() {
+		var nickname = $(this).val();
+		$.get(`membernickname.get?m=${nickname}`, function(nicknameData) {
+			console.log(nicknameData);
+			if (nicknameData == null || !nicknameData) {
+				$("#nick").css("display", "none");
+			} else {
+				$("#nick").css("display", "flex");
+			}
+		})
+	})
+}
+
+function JoinPwInputEvent(){
+	$("#password").keyup(function(){
+		var pw = $("#password").val();
+		var pwconfirm = $("#password-confirm").val();
+		if(pw==pwconfirm){
+			$("#pwconfirm").css("display", "none");
+		}else{
+			$("#pwconfirm").css("display", "flex");
+		}
+	})
+	$("#password-confirm").keyup(function(){
+		var pw = $("#password").val();
+		var pwconfirm = $("#password-confirm").val();
+		if(pw==pwconfirm){
+			$("#pwconfirm").css("display", "none");
+		}else{
+			$("#pwconfirm").css("display", "flex");
+		}
+	})
+}
 $(function() {
 	joinImgInsert();
+	JoinIdInputEvent();
+	JoinPwInputEvent()
 });

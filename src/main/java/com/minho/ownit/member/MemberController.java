@@ -20,6 +20,17 @@ public class MemberController {
 	@Autowired
 	private MemberDAO mDAO;
 	
+	
+	@GetMapping(value = "/member.get", produces = "application/json;charset=utf-8")
+	public @ResponseBody Members memberGet(@RequestParam String m) {
+		return mDAO.getMemberToJSON(m);
+	}
+	
+	@GetMapping(value = "/membernickname.get", produces = "application/json;charset=utf-8")
+	public @ResponseBody Member memberNicknameGet(@RequestParam String m) {
+		return mDAO.getMemberNicknameToJSON(m);
+	}
+	
 	@GetMapping("Img/{name}")
 	public @ResponseBody Resource img(@PathVariable("name") String n, HttpServletRequest req) {
 		return mDAO.getImage(n);
