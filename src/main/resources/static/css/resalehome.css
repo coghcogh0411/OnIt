@@ -17,6 +17,70 @@
 	font-size: 14px;
 }
 
+.section-title {
+  text-align: center;
+  font-size: 18px;
+  margin: 40px 0 20px;
+}
+
+/* bxSlider 컨테이너 (가운데 정렬, 너비 600px) */
+.slider-container {
+  width: 600px;
+  margin: 0 auto 40px auto;
+}
+
+/* bxSlider 기본 reset */
+.slider-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.slider-container li {
+  text-align: center;
+}
+
+/* 표 형태(이미지/제목/가격) */
+.item-table {
+  display: flex;
+  /* 외곽선 제거 */
+  /* border: 1px solid #ccc; */
+  /* border-radius: 10px; */
+  overflow: hidden;
+  margin: 0 auto;
+  max-width: 550px;
+}
+
+.item-cell {
+  flex: 1;
+  padding: 15px;
+  /* 세로줄만 */
+  border-right: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 마지막 칸은 줄 제거 */
+.item-cell:last-child {
+  border-right: none;
+}
+
+
+.item-cell img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px; /* 둥글게 처리 (선택) */
+  margin-bottom: 5px;
+}
+
+.item-cell span {
+  font-size: 14px;
+  color: #333;
+}
+
+
 .grid {
   background-color: #f2f2f2;
   border-radius: 100px;

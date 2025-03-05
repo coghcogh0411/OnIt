@@ -44,13 +44,9 @@
   <!-- 인기 경매상품 섹션 -->
   <h2 class="section-title">인기 경매상품이에요</h2>
   <div class="slider-container">
-    <!-- bxSlider: .popular-slider -->
     <ul class="popular-slider">
-      <!-- DB 연동 시: th:each="p : ${popularAuctions}" -->
       <li th:each="p : ${popularAuctions}">
-        <!-- 표 형태 (3칸: 이미지/제목/가격) -->
         <div class="item-table">
-          <!-- 첫 칸: 이미지 -->
           <div class="item-cell">
             <img th:src="${'/HoMini/Img/' + p.thumbnail}" alt="상품이미지" />
           </div>
