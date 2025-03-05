@@ -200,13 +200,13 @@
 							<h3>
 								경매 시작가 <strong th:text="${product.price + ' 원'}"></strong>
 							</h3>
-							<div class="bid-options">
+							<div class="bid-options" th:if="${session.loginMember}!=null">
 								<button class="bid-option">+@ 원</button>
 								<button class="bid-option">+@ 원</button>
 								<button class="bid-option">+@ 원</button>
 								<button class="bid-option">+@ 원</button>
 							</div>
-							<div class="bid-input">
+							<div class="bid-input" th:if="${session.loginMember}!=null">
 								<input class="auction-cost" name="amount" type="text"
 									th:value="${#lists.isEmpty(bidList) ? product.price : bidList[0].amount}">
 								<button class="bid-button" type="submit">입찰하기</button>
