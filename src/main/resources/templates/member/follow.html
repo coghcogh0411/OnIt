@@ -13,7 +13,7 @@
 					<div class="category-box">
 						<div class="category-title">팔로우</div>
 						<div class="file-container">
-							<div class="file-item" th:each="following:${following.following}" th:text="${following.nickname}"></div>
+							<div class="file-item" th:each="follower:${follower}" th:text="${follower.following.nickname}"></div>
 						</div>
 					</div>
 				</td>
@@ -21,7 +21,7 @@
 					<div class="category-box">
 						<div class="category-title">팔로워</div>
 						<div class="file-container">
-							<div class="file-item" th:each="follower:${follower.follower}" th:text="${follower.nickname}"></div>
+							<div class="file-item" th:each="following:${following}" th:text="${following.follower.nickname}"></div>
 						</div>
 					</div>
 				</td>

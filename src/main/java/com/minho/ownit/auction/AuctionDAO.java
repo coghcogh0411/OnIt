@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.minho.ownit.FileNameGenerator;
 import com.minho.ownit.ItemLike;
 import com.minho.ownit.ItemLikeRepo;
+import com.minho.ownit.member.Follow;
+import com.minho.ownit.member.FollowRepo;
 import com.minho.ownit.member.Member;
+import com.minho.ownit.member.MemberRepo;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionAuction;
 import com.minho.ownit.region.RegionAuctionRepo;
@@ -35,7 +38,10 @@ public class AuctionDAO {
 	private RegionAuctionRepo regionAuctionRepo;
 	@Autowired
 	private ItemLikeRepo ilRepo;
-
+	@Autowired
+	private MemberRepo mRepo;
+	@Autowired
+	private FollowRepo fRepo;
 	@Value("${ho.img.folder}")
 	private String imgFolder;
 
@@ -214,6 +220,19 @@ public class AuctionDAO {
 			a.setEnd(now);
 			aRepo.save(a);
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void auctionFollow(HttpServletRequest req, String follower, String following) {
+		try {
+			Follow f= new Follow();
+			Member f1 = mRepo.findByNickname(follower);
+			Member f2 = mRepo.findByNickname(following);
+			f.setFollower(f1);
+			f.setFollowing(f2);
+			fRepo.save(f);
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}

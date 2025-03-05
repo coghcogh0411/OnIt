@@ -103,4 +103,13 @@ public class ResaleController {
 		req.setAttribute("contentPage", "resale/resaledetailproduct");
 		return "index";
 	}
+	@GetMapping("/followr")
+	public String follow(@RequestParam("follower") String nickname1,@RequestParam("following") String nickname2,@RequestParam("no") int pno, HttpServletRequest req) {
+		mDAO.isLogined(req);
+		rsDAO.resaleFollow(req, nickname1, nickname2);
+		rsDAO.getAllCategories(req);
+		rsDAO.getResaleDetail(req, pno);
+		req.setAttribute("contentPage", "auction/auctiondetailproduct");
+		return "index";
+	}
 }
