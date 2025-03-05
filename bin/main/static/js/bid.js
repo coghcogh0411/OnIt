@@ -42,7 +42,7 @@ $(function(){
 	             // 여기에 해당 입찰 정보를 표시하는 로직 추가
 	             
 	             // 입찰자 이름과 입찰 금액 표시
-	             var name = $("<span></span>").text(bid.user.name);
+	             var name = $("<span></span>").text(bid.user.nickname);
 	             var amount = $("<span></span>").text(bid.amount + "원");
 	             var li = $("<li></li>").append(name, " ", amount);
 	             $(".bidder-list").append(li);

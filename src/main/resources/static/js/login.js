@@ -1,3 +1,3 @@
 function openLoginModal() {
-    document.querySelector('.modal-overlay').style.display = 'flex';
+    document.querySelector('.modal-overlay2').style.display = 'flex';
   }
