@@ -4,6 +4,29 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/follow.css">
+<script type="text/javascript">
+	$(function() {
+		$(".file-item").click(function(e) {
+			let $menu = $(this).find(".sub-buttons");
+
+			let isOpen = $menu.hasClass("show");
+
+			$(".sub-buttons.show").removeClass("show").css("display", "none");
+
+			if (isOpen) {
+				return; // 그대로 종료 (이미 위에서 removeClass, display none 적용)
+			}
+
+			$menu.addClass("show").css({
+				display : "block",
+				position : "absolute",
+				top : (e.pageY + 10) + "px",
+				left : (e.pageX + 10) + "px",
+				"z-index" : 9999
+			});
+		});
+	});
+</script>
 </head>
 <body>
 	<div class="data-container">
@@ -13,7 +36,14 @@
 					<div class="category-box">
 						<div class="category-title">팔로우</div>
 						<div class="file-container">
-							<div class="file-item" th:each="follower:${follower}" th:text="${follower.following.nickname}"></div>
+							<div class="file-item" th:each="follower:${follower}">
+								<div th:text="${follower.following.nickname}"></div>
+									<div class="sub-buttons" th:if="${session.loginMember != null}">
+										<a th:href="@{/member-home(name=${follower.following.nickname})}" class="sub-button">정보보기</a>
+										<a href="#" class="sub-button chat-btn">1:1쪽지 보내기</a>
+										<a th:href="@{/followm(follower=${session.loginMember.nickname},following=${follower.following.nickname})}" class="sub-button">팔로우</a>
+									</div>
+							</div>
 						</div>
 					</div>
 				</td>
@@ -21,7 +51,14 @@
 					<div class="category-box">
 						<div class="category-title">팔로워</div>
 						<div class="file-container">
-							<div class="file-item" th:each="following:${following}" th:text="${following.follower.nickname}"></div>
+							<div class="file-item" th:each="following:${following}">
+								<div th:text="${following.follower.nickname}"></div>
+									<div class="sub-buttons" th:if="${session.loginMember != null}">
+										<a th:href="@{/member-home(name=${following.follower.nickname})}" class="sub-button">정보보기</a>
+										<a href="#" class="sub-button chat-btn">1:1쪽지 보내기</a>
+										<a th:href="@{/followm(follower=${session.loginMember.nickname},following=${following.follower.nickname})}" class="sub-button">팔로우</a>
+									</div>
+							</div>
 						</div>
 					</div>
 				</td>

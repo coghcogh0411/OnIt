@@ -8,19 +8,19 @@
 </head>
 <body>
 	<div class="filter-buttons">
-    <a th:href="@{/member-product(name=${session.loginMember.nickname}, filter='all')}"
+    <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='all')}"
            th:classappend="${(param.filter == null or #strings.equals(param.filter,'all')) ? ' active' : ''}">
            전체
         </a>
-        <a th:href="@{/member-product(name=${session.loginMember.nickname}, filter='auction')}"
+        <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='auction')}"
            th:classappend="${#strings.equals(param.filter,'auction') ? ' active' : ''}">
            현재경매
         </a>
-        <a th:href="@{/member-product(name=${session.loginMember.nickname}, filter='end')}"
+        <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='end')}"
            th:classappend="${#strings.equals(param.filter,'end') ? ' active' : ''}">
            역대경매
         </a>
-        <a th:href="@{/member-product(name=${session.loginMember.nickname}, filter='resale')}"
+        <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='resale')}"
            th:classappend="${#strings.equals(param.filter,'resale') ? ' active' : ''}">
            중고
         </a>

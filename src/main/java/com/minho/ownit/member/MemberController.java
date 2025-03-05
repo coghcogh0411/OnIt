@@ -96,10 +96,10 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member-like")
-	public String memberlike(HttpServletRequest req,
+	public String memberlike(HttpServletRequest req, @RequestParam("name") String nickname,
 	                         @RequestParam(value="filter", required=false) String f) {
 	    mDAO.isLogined(req);
-	    mDAO.memberLike(req, f);
+	    mDAO.memberLike(req, nickname, f);
 	    return "index";
 	}
 

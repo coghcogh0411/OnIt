@@ -57,3 +57,44 @@
 	cursor: pointer;
 	border-color: #bbb;
 }
+
+.sub-buttons {
+	display: none;
+	flex-direction: column;
+	width: 15%;
+	height: 20%;
+	border-radius: 15px;
+	background-color: #9aa2ec;
+	padding: 0;
+	position: absolute; 
+	top: 100%;
+	left: 0; 
+	z-index: 10; 
+}
+
+.sub-buttons.show {
+	display: flex;
+}
+
+.sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sub-button:last-child {
+	border-bottom: none;
+}
+
+.sub-button:hover {
+	transform: translateX(-5px);
+}

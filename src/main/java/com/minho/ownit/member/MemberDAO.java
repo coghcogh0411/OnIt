@@ -139,6 +139,7 @@ public class MemberDAO {
 	public void memberPage(HttpServletRequest req, String nickname) {
 		Member m = (Member) req.getSession().getAttribute("loginMember");
 		if (nickname.equals(m.getNickname())) {
+			req.setAttribute("memberprofile", m);
 			req.setAttribute("contentPage", "member/memberhome");
 			req.setAttribute("myPageContent", "member/update");
 
@@ -146,7 +147,7 @@ public class MemberDAO {
 			// 상대닉네임으로 db조회해서 memberprofile애트리뷰트넘겨주고 상대프로필홈페이지로 보내기
 			Member member = Mrepo.findByNickname(nickname);
 			req.setAttribute("memberprofile", member);
-			req.setAttribute("contentPage", "member/othermemberhome");
+			req.setAttribute("contentPage", "member/memberhome");
 			req.setAttribute("resaleList", rsRepo.findByUser(member));
 			req.setAttribute("auctionList", aRepo.findByUser(member));
 			req.setAttribute("myPageContent", "member/regproduct");
@@ -155,9 +156,8 @@ public class MemberDAO {
 
 	public void memberProduct(HttpServletRequest req, String nickname, String f) {
 		try {
-			// 세션에서 로그인 회원 정보 가져오기
-			Member m = (Member) req.getSession().getAttribute("loginMember");
-
+			Member m = Mrepo.findByNickname(nickname);
+			req.setAttribute("memberprofile", m);
 			// 로그인되어 있다면 내 페이지 설정
 			req.setAttribute("contentPage", "member/memberhome");
 			req.setAttribute("myPageContent", "member/regproduct");
@@ -204,10 +204,11 @@ public class MemberDAO {
 		}
 	}
 
-	public void memberLike(HttpServletRequest req, String f) {
+	public void memberLike(HttpServletRequest req,String nickname, String f) {
 		try {
 			// 1) 세션에서 로그인한 사용자 가져오기
-			Member loginMember = (Member) req.getSession().getAttribute("loginMember");
+			Member m = Mrepo.findByNickname(nickname);
+			req.setAttribute("memberprofile", m);
 
 			// 3) "내가 좋아요한 상품"을 담을 리스트
 			List<Auction> likedAuctions = new ArrayList<>();
@@ -216,7 +217,7 @@ public class MemberDAO {
 			// (A) 모든 경매 상품 조회 후, 좋아요 여부 체크
 			List<Auction> allAuctions = aRepo.findAll();
 			for (Auction a : allAuctions) {
-				boolean liked = ilRepo.existsByUserIdAndAuctionNo(loginMember, a);
+				boolean liked = ilRepo.existsByUserIdAndAuctionNo(m, a);
 				if (liked) {
 					likedAuctions.add(a);
 				}
@@ -225,7 +226,7 @@ public class MemberDAO {
 			// (B) 모든 중고거래 상품 조회 후, 좋아요 여부 체크
 			List<Resale> allResales = rsRepo.findAll();
 			for (Resale r : allResales) {
-				boolean liked = ilRepo.existsByUserIdAndResaleNo(loginMember, r);
+				boolean liked = ilRepo.existsByUserIdAndResaleNo(m, r);
 				if (liked) {
 					likedResales.add(r);
 				}
@@ -317,6 +318,7 @@ public class MemberDAO {
 	
 	public void memberfollow(HttpServletRequest req, String nickname) {
 		Member member = Mrepo.findByNickname(nickname);
+		req.setAttribute("memberprofile", member);
 		req.setAttribute("follower", fRepo.findByFollower(member)); 
 		req.setAttribute("following", fRepo.findByFollowing(member)); 
 	}
