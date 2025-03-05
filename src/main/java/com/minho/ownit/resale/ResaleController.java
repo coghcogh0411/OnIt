@@ -28,6 +28,7 @@ public class ResaleController {
 	@GetMapping("/resale-home")
 	public String resaleHome(HttpServletRequest req) {
 		mDAO.isLogined(req);
+		rsDAO.getAllResaleItems(req);
 		req.setAttribute("contentPage", "resale/resalehome");
 		return "index";
 	}
