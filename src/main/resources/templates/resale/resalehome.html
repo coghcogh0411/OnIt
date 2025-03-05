@@ -38,12 +38,12 @@
 	<div class="grid">
         <!-- 1) 카테고리 헤더 표시 -->
         <div class="category-header"
-             th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 상품'}">
+             th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 카테고리'}">
             <!-- 기본적으로 '모든 상품' -->
         </div>
 
         <!-- 2) 카테고리 동그라미들 -->
-		<div class="circle-container">
+		<div class="circle-container first-row">
 		    <div th:each="c, iterStat : ${category}">
 		        <div th:if="${iterStat.index < 7}" class="circle"
 		        th:onclick="|resaleCategoryChange(${c.no})|" 
@@ -53,7 +53,7 @@
 		</div>
 		
 		<!-- 두 번째 줄: 인덱스 7~12 -->
-		<div class="circle-container">
+		<div class="circle-container second-row">
 		    <div th:each="c, iterStat : ${category}">
 		        <div th:if="${iterStat.index >= 7}" class="circle"
 		        th:onclick="|resaleCategoryChange(${c.no})|" 
