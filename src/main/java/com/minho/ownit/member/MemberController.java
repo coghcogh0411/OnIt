@@ -87,18 +87,23 @@ public class MemberController {
 	}
 	
 	@GetMapping("/member-product")
-	public String memberproduct(HttpServletRequest req, @RequestParam("name") String nickname) {
-		mDAO.isLogined(req);
-		mDAO.memberProduct(req, nickname);
-		return "index";
+	public String memberProduct(HttpServletRequest req,
+	                            @RequestParam("name") String nickname,
+	                            @RequestParam(value = "filter", required = false) String f) {
+	    mDAO.isLogined(req);
+	    mDAO.memberProduct(req, nickname, f);
+	    return "index";
 	}
 	
 	@GetMapping("/member-like")
-	public String memberlike(HttpServletRequest req, @RequestParam("name") String nickname) {
-		mDAO.isLogined(req);
-		mDAO.memberLike(req, nickname);
-		return "index";
+	public String memberlike(HttpServletRequest req,
+	                         @RequestParam(value="filter", required=false) String f) {
+	    mDAO.isLogined(req);
+	    mDAO.memberLike(req, f);
+	    return "index";
 	}
+
+	
 	@GetMapping("/member-follow")
 	public String memberfollow(HttpServletRequest req, @RequestParam("name") String nickname) {
 		mDAO.isLogined(req);
@@ -107,5 +112,7 @@ public class MemberController {
 		req.setAttribute("myPageContent", "member/follow");
 		return "index";
 	}
+	
+	
 	
 }
