@@ -38,18 +38,20 @@
 		<a href="/resale-product" class="menu-item">중고거래</a> <a
 			href="/auction-product" class="menu-item">현재경매</a> <a
 			href="/pastauction-product" class="menu-item">역대경매</a> <a
-			href="/community?categoryNo=1" class="menu-item">커뮤니티</a>
-			<a th:if="${session.loginMember != null}" th:href="@{/member-home(name=${session.loginMember.nickname})}"
+			href="/community?categoryNo=1" class="menu-item">커뮤니티</a> <a
+			th:if="${session.loginMember != null}"
+			th:href="@{/member-home(name=${session.loginMember.nickname})}"
 			class="menu-item"> 마이페이지 </a>
 
 		<!-- 로그인 안됨: 모달 열기 -->
-		<a th:if="${session.loginMember == null}" onclick="openLoginModal()"> 마이페이지 </a>
+		<a th:if="${session.loginMember == null}" onclick="openLoginModal()">
+			마이페이지 </a>
 		<div th:text="${result}"></div>
 	</nav>
 
 	<div class="content" th:insert="~{${contentPage}}"></div>
 
-	<div class="subcontent">
+	<div class="subcontent" th:if="${session.loginMember != null}">
 		<div class="toggle-sidebar">
 			<div>&lt;</div>
 		</div>
@@ -58,8 +60,6 @@
 			<section class="chat-box">
 				<hr>
 				<h2>채팅방</h2>
-
-
 			</section>
 		</aside>
 	</div>
@@ -79,6 +79,7 @@
 	</div>
 	<div class="modal-overlay2">
 		<div class="login-container">
+			<div class="close-btn" onclick="closeLoginModal()">X</div>
 			<h2>로그인이 필요한 시스템입니다.</h2>
 
 			<form method="post" action="sign-in">

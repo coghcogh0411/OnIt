@@ -27,13 +27,40 @@ header {
 }
 
 .search-bar {
-	display: flex;
-	align-items: center;
+  display: flex;           /* 가로로 나열 */
+  align-items: center;     /* 세로 가운데 정렬 */
+  gap: 8px;                /* 요소 간 간격 */
+  padding: 10px 12px;
+  max-width: 400px;        /* 폼 최대 너비 (원하는 대로 조절) */
+  margin: 0 auto;          /* 가운데 정렬 (필요 시) */
 }
 
-.search-bar select, .search-bar input {
-	padding: 5px;
-	margin-right: 5px;
+.search-bar select,
+.search-bar input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.search-bar select:focus,
+.search-bar input:focus {
+  border-color: #888;
+}
+
+.search-bar button {
+  background-color: #928cf5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.search-bar button:hover {
+  background-color: #7b75eb;
 }
 
 .menu {
@@ -214,9 +241,7 @@ h2 {
 
 /* 로그인 창(고정 위치) */
 .login-container {
-  position: fixed;
-  top: 10%;
-  left: 40%;
+  position: relative; /* 자식인 close-btn을 절대 위치시키기 위해 */
   width: 350px;
   margin: 80px auto;
   padding: 30px 20px;
@@ -224,6 +249,20 @@ h2 {
   border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+}
+
+/* X 버튼 (닫기) */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  color: #888;
+}
+.close-btn:hover {
+  color: #333;
 }
 
 /* 상단 안내 문구 */

@@ -173,7 +173,7 @@
 	transition: all 0.3s ease;
 	pointer-events: none;
 	width: 200px;
-	min-height: 100px; /* height를 min-height로 변경 */
+	min-height: 50px; /* height를 min-height로 변경 */
 	height: auto; /* height: auto 추가 */
 	border-radius: 15px;
 	background-color: #9AA2EC;

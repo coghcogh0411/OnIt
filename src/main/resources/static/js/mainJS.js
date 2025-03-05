@@ -30,6 +30,10 @@ function chatcontroller() {
 			socket.emit("joinRoom", userId); // 서버로 본인 아이디를 보내 룸에 join하도록 요청
 		});
 	}
+	function scrollToBottom() {
+	  const chatContent = document.getElementById("chatContent");
+	  chatContent.scrollTop = chatContent.scrollHeight;
+	}
 	// 채팅 기록 불러오기
 	function loadChatHistory(chatPartner) {
 		$.get(`http://sd-beanmouse.duckdns.org:43218/chat/history?userId=${userId}&partner=${chatPartner}`, function(data) {
@@ -40,6 +44,7 @@ function chatcontroller() {
 				$("#chatContent").append(`<div class="message ${msgClass}"><p>${msg.message}</p></div>`);
 			});
 		});
+		scrollToBottom()
 	}
 	// 채팅방 목록 업데이트 함수
 	function updateChatRooms(roomInfo) {
@@ -84,6 +89,7 @@ function chatcontroller() {
 		      $existingRoom.find(".new-message").remove();
 		    }
 		  }
+		  scrollToBottom()
 	}
 	$(document).on("click", ".chat-btn", function(e) {
 		e.preventDefault();
@@ -147,12 +153,13 @@ function chatcontroller() {
 			$("#modalMessageInput").val("");
 			updateChatRooms(chatPartner);
 		}
+		scrollToBottom()
 	}
 	socket.on("receiveMessage", function(data) {
 		console.log("수신된 메시지:", data);
 		if (data.receiver === userId) {
-			updateChatRooms(data.sender);
 			$("#chatContent").append(`<div class="message other"><p>${data.message}</p></div>`);
+			updateChatRooms(data.sender);
 		}
 	});
 	$(".toggle-sidebar").click(function() {
