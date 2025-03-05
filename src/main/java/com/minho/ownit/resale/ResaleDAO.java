@@ -2,7 +2,9 @@ package com.minho.ownit.resale;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -304,5 +306,33 @@ public class ResaleDAO {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	public void getPopularResaleItems(HttpServletRequest req, int topN) {
+	    try {
+	        // 모든 중고 상품을 가져옴 (혹은 지역 필터를 적용할 수도 있음)
+	        List<Resale> allItems = (List<Resale>) rRepo.findAll();
+
+	        // 각 상품별 좋아요 개수를 맵에 저장
+	        // (ilRepo.countByResaleNo(r) 같은 메서드가 필요)
+	        // 예시로 countByResaleNo(Resale r)가 있다고 가정
+	        Map<Resale, Integer> likeCountMap = new HashMap<>();
+	        for (Resale r : allItems) {
+	            int likeCount = ilRepo.countByResaleNo(r);
+	            likeCountMap.put(r, likeCount);
+	        }
+
+	        // likeCount 기준으로 내림차순 정렬
+	        List<Resale> sorted = new ArrayList<>(allItems);
+	        sorted.sort((r1, r2) -> likeCountMap.get(r2).compareTo(likeCountMap.get(r1)));
+
+	        // 상위 topN개만 추출
+	        List<Resale> popularList = sorted.subList(0, Math.min(topN, sorted.size()));
+
+	        // request에 저장 -> Thymeleaf에서 사용
+	        req.setAttribute("popularResale", popularList);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 }

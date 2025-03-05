@@ -17,4 +17,6 @@ public interface ItemLikeRepo extends CrudRepository<ItemLike, Integer>{
 
     // 2) "사용자 + 중고거래글" 좋아요 여부 확인
     public abstract boolean existsByUserIdAndResaleNo(Member userId, Resale resaleNo);
+    
+    public abstract int countByResaleNo(Resale resaleNo);
 }

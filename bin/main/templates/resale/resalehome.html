@@ -15,6 +15,12 @@
 				captions: true,
 		      });
 		    });
+		$(function(){
+		    $('.popular-slider').bxSlider({
+		      // 옵션
+		      captions: true
+		    });
+		  });
 	</script>
 </head>
 
@@ -26,14 +32,30 @@
 			<div><a href="#"><img id="sliderImg" src="img/backpack.jpg"></a></div>
 		</div>
 	</div>
-	<div class="center-text">이런 상품 어때요?</div>
-	<div class="main-banner">
-		<div class="slider">
-			<div><a href="#"><img id="sliderImg" src="img/back4.jpg"></a></div>
-			<div><a href="#"><img id="sliderImg" src="img/back3.jpg"></a></div>
-			<div><a href="#"><img id="sliderImg" src="img/backpack.jpg"></a></div>
-		</div>
-	</div>
+	<h2>인기 중고 상품</h2>
+<div class="slider-container">
+    <ul class="popular-slider">
+        <!-- 인기 상품 반복 -->
+        <li th:each="p : ${popularResale}">
+            <div class="item-table">
+                <!-- 이미지 -->
+                <div class="item-cell">
+                    <a th:href="@{/resale-detailproduct(no=${p.no})}">
+                        <img th:src="${'/HoMini/Img/' + p.thumbnail}" alt="상품이미지"/>
+                    </a>
+                </div>
+                <!-- 제목 -->
+                <div class="item-cell">
+                    <span th:text="${p.title}">상품제목</span>
+                </div>
+                <!-- 가격 -->
+                <div class="item-cell">
+                    <span th:text="${p.price}">가격</span>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
 
 	<div class="grid">
         <!-- 1) 카테고리 헤더 표시 -->
