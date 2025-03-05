@@ -93,7 +93,7 @@
 							<img alt="" src="img/liked.png">
 						</button>
 					</div>
-					<div class="sub-buttons">
+					<div class="sub-buttons" th:if="${session.loginMember}!=null">
 						<a th:href="@{/member-home(name=${product.user.nickname})}" class="sub-button">정보보기</a>
 						<a href="#" class="sub-button chat-btn">1:1쪽지 보내기</a>
 						<a th:href="@{/followr(follower=${session.loginMember.nickname},following=${product.user.nickname},no=${product.no})}" class="sub-button">팔로우</a>
