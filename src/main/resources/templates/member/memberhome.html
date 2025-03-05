@@ -11,7 +11,7 @@
 		<div class="sidebar-container">
 			<div class="sidebar">
 				<div class="category-item">개인정보</div>
-				<div><a href="/member-home" class="category-item-child">-개인정보 수정</a></div>
+				<div><a th:href="@{/member-home(name=${session.user.nickname})}" class="category-item-child">-개인정보 수정</a></div>
 				<div><a href="/member-home" class="category-item-child">-회원탈퇴</a></div>
 				<div class="category-item">내 상품</div>
 				<div><a th:href="@{/member-product(name=${session.loginMember.nickname})}" class="category-item-child">-내가 올린 상품</a></div>
