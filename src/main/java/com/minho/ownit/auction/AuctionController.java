@@ -119,5 +119,13 @@ public class AuctionController {
 		req.setAttribute("contentPage", "auction/pastauctiondetailproduct");
 		return "index";
 	}
+	@GetMapping("/followa")
+	public String follow(@RequestParam("follower") String nickname1,@RequestParam("following") String nickname2,@RequestParam("no") int pno, HttpServletRequest req) {
+		mDAO.isLogined(req);
+		aDAO.auctionFollow(req, nickname1, nickname2);
+		aDAO.getAuctionDetail(req, pno);
+		req.setAttribute("contentPage", "auction/auctiondetailproduct");
+		return "index";
+	}
 	
 }

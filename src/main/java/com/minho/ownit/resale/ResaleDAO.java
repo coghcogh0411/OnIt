@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.minho.ownit.FileNameGenerator;
 import com.minho.ownit.ItemLike;
 import com.minho.ownit.ItemLikeRepo;
+import com.minho.ownit.member.Follow;
+import com.minho.ownit.member.FollowRepo;
 import com.minho.ownit.member.Member;
+import com.minho.ownit.member.MemberRepo;
 import com.minho.ownit.region.Region;
 import com.minho.ownit.region.RegionMember;
 import com.minho.ownit.region.RegionMemberRepo;
@@ -41,6 +44,12 @@ public class ResaleDAO {
 	@Autowired
 	private ItemLikeRepo ilRepo;
 
+	@Autowired
+	private MemberRepo mRepo;
+	
+	@Autowired
+	private FollowRepo fRepo;
+	
 	@Value("${ho.img.folder}")
 	private String imgFolder;
 
@@ -280,6 +289,19 @@ public class ResaleDAO {
 			ItemLike existingLike = ilRepo.findByUserIdAndResaleNo(m, r);
 			ilRepo.delete(existingLike);
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public void resaleFollow(HttpServletRequest req, String follower, String following) {
+		try {
+			Follow f= new Follow();
+			Member f1 = mRepo.findByNickname(follower);
+			Member f2 = mRepo.findByNickname(following);
+			f.setFollower(f1);
+			f.setFollowing(f2);
+			fRepo.save(f);
+		} catch (Exception e) {
+			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
