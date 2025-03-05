@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html>
-
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 	<meta charset="UTF-8">
 	<title>Insert title here</title>
 	<link rel="stylesheet" href="/css/resalehome.css">
+	
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+	<script type="text/javascript" src="/js/move.js"></script>
 	<script>
 		$(function () {
 			$('.slider').bxSlider({
@@ -35,14 +36,33 @@
 	</div>
 
 	<div class="grid">
-		<a href="/resale"><div class="circle"></div></a>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-		<div class="circle"></div>
-	</div>
+        <!-- 1) 카테고리 헤더 표시 -->
+        <div class="category-header"
+             th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 상품'}">
+            <!-- 기본적으로 '모든 상품' -->
+        </div>
+
+        <!-- 2) 카테고리 동그라미들 -->
+		<div class="circle-container">
+		    <div th:each="c, iterStat : ${category}">
+		        <div th:if="${iterStat.index < 7}" class="circle"
+		        th:onclick="|resaleCategoryChange(${c.no})|" 
+		            th:text="${c.name}">
+		        </div>
+		    </div>
+		</div>
+		
+		<!-- 두 번째 줄: 인덱스 7~12 -->
+		<div class="circle-container">
+		    <div th:each="c, iterStat : ${category}">
+		        <div th:if="${iterStat.index >= 7}" class="circle"
+		        th:onclick="|resaleCategoryChange(${c.no})|" 
+		            th:text="${c.name}">
+		        </div>
+		    </div>
+		</div>
+
+    </div>
 </body>
 
 </html>
