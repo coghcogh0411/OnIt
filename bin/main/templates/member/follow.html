@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -13,7 +13,7 @@
 					<div class="category-box">
 						<div class="category-title">팔로우</div>
 						<div class="file-container">
-							<div class="file-item" ></div>
+							<div class="file-item" th:each="following:${following.following}" th:text="${following.nickname}"></div>
 						</div>
 					</div>
 				</td>
@@ -21,7 +21,7 @@
 					<div class="category-box">
 						<div class="category-title">팔로워</div>
 						<div class="file-container">
-							<div class="file-item" ></div>
+							<div class="file-item" th:each="follower:${follower.follower}" th:text="${follower.nickname}"></div>
 						</div>
 					</div>
 				</td>

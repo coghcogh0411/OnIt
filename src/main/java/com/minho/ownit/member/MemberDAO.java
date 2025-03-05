@@ -31,6 +31,9 @@ public class MemberDAO {
 	@Autowired
 	private AuctionRepo aRepo;
 	
+	@Autowired
+	private FollowRepo fRepo;
+	
 	@Value("${ho.img.folder}")
 	private String imgFolder;
 	
@@ -212,7 +215,9 @@ public class MemberDAO {
 		}
 	}
 	
-	public void memberfollow(HttpServletRequest req, String name) {
-		
+	public void memberfollow(HttpServletRequest req, String nickname) {
+		Member member = Mrepo.findByNickname(nickname);
+		req.setAttribute("follower", fRepo.findByFollower(member)); 
+		req.setAttribute("following", fRepo.findByFollowing(member)); 
 	}
 }
