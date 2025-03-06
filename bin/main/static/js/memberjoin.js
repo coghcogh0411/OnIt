@@ -167,14 +167,14 @@ function JoinValidCheck() {
 		}
 
 		// 8) 프로필 사진(필요시)
-		// if (!isEmpty(profileImg)) {
-		//   // 특정 확장자만 허용
-		//   if ( isNotType(profileImg, "png") && isNotType(profileImg, "jpg") ) {
-		//     alert("이미지는 png 또는 jpg만 가능합니다");
-		//     e.preventDefault();
-		//     return;
-		//   }
-		// }
+		if (!isEmpty(profileImg)) {
+		   // 특정 확장자만 허용
+		   if ( isNotType(profileImg, "png") && isNotType(profileImg, "jpg") ) {
+		     alert("이미지는 png 또는 jpg만 가능합니다");
+		     e.preventDefault();
+		     return;
+		   }
+		}
 
 		// 모든 검사 통과 → submit 진행
 	});
