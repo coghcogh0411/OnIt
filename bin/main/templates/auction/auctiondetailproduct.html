@@ -138,7 +138,7 @@
 							<img alt="" src="img/liked.png">
 						</button>
 					</div>
-					<div class="sub-buttons" th:if="${session.loginMember}!=null">
+					<div class="sub-buttons" th:if="${session.loginMember!=null && session.loginMember.nickname != product.user.nickname}">
 						<a th:href="@{/member-home(name=${product.user.nickname})}"
 							class="sub-button">정보보기</a> <a href="#"
 							class="sub-button chat-btn">1:1쪽지 보내기</a>
@@ -175,14 +175,14 @@
 							<li class="bidnickname" th:each="b:${bidList}"><span
 								class="buyer" th:text="${b.user.nickname}"></span> <span
 								th:text="${b.amount+' 원'}"></span>
-								<div class="bid-sub-buttons" th:if="${session.loginMember}!=null">
+								<div class="bid-sub-buttons" th:if="${session.loginMember!=null && session.loginMember.nickname != b.user.nickname}">
 									<a th:href="@{/member-home(name=${b.user.nickname})}"
 										class="bid-sub-button">정보보기</a>
 									<a href="#"
 										class="bid-sub-button buyer-chat-btn">1:1쪽지 보내기</a>
 									<a th:href="@{/followa(follower=${session.loginMember.nickname},following=${b.user.nickname},no=${product.no})}" class="bid-sub-button">팔로우</a>
 								</div>
-								<div class="seller-sub-buttons" th:if="${session.loginMember}!=null">
+								<div class="seller-sub-buttons" th:if="${session.loginMember!=null && session.loginMember.nickname != b.user.nickname}">
 									<a th:href="@{/member-home(name=${b.user.nickname})}" class="seller-sub-button">정보보기</a>
 									<a href="#" class="seller-sub-button buyer-chat-btn">1:1쪽지 보내기</a>
 									<a th:href="@{/followa(follower=${session.loginMember.nickname},following=${b.user.nickname},pno=${product.no})}" class="seller-sub-button">팔로우</a>
