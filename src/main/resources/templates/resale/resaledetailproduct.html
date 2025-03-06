@@ -118,10 +118,8 @@
 					</div>
 
 					<div class="action-buttons">
-						<button class="action-button" th:if="${product.deal == '가능'}">댓글
-							가능</button>
-						<button class="action-button" th:if="${product.delivery == '가능'}">직거래
-							가능</button>
+						<div class="action-button" th:text="${product.deal == '1' ? '택배가능':'택배불가능' }"></div>
+						<div class="action-button" th:text="${product.delivery == '1' ? '직거래가능':'직거래불가능'}"></div>
 					</div>
 				</div>
 				<div class="modal-overlay">
@@ -134,7 +132,7 @@
 								<input id="locationInput" type="text"
 									placeholder="지역이나 동네로 검색하기">
 							</div>
-							<button class="location-button">현재 내 위치 사용하기</button>
+							<button class="location-button" id="location-btn">현재 내 위치 사용하기</button>
 							<div class="recommend-title">추천</div>
 							<ul class="region-list">
 								<li><a href="/region-get">서울특별시, 강남구</a></li>

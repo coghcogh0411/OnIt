@@ -2,7 +2,7 @@ $(function() {
 	$(".location-button").on("click", function() {
 		$(".modal-overlay").fadeIn(200);
 	});
-
+	//현재내위치누르면 지역조회
 	$("#location-btn").on("click", function() {
 		navigator.geolocation.getCurrentPosition(function(loc) {
 			var lat = loc.coords.latitude;
@@ -16,7 +16,7 @@ $(function() {
 				},
 				success: function(locData) {
 					var region = locData.documents[0].address.region_2depth_name;
-					
+
 					$.getJSON("region.get?region=" + region, function(regionData) {
 						$(".region-list").empty();
 						$.each(regionData.region, function(index, item) {
@@ -36,6 +36,34 @@ $(function() {
 		$(".modal-overlay").fadeOut(200);
 	});
 
+	$("#location-btn").on("click", function() {
+		navigator.geolocation.getCurrentPosition(function(loc) {
+			var lat = loc.coords.latitude;
+			var lng = loc.coords.longitude;
+			console.log("x" + lng + "y" + lat);
+			$.ajax({
+				url: "https://dapi.kakao.com/v2/local/geo/coord2address.json",
+				data: { "x": lng, "y": lat },
+				beforeSend: function(req) {
+					req.setRequestHeader("Authorization", "KakaoAK 3a68a92db5091200e91fdb8d1750a15b");
+				},
+				success: function(locData) {
+					var region = locData.documents[0].address.region_2depth_name;
+
+					$.getJSON("region.get?region=" + region, function(regionData) {
+						$(".region-list").empty();
+						$.each(regionData.region, function(index, item) {
+							$(".region-list").append("<li><a href='/region-get'>" + item.firstName + ", " + item.secondName + "</a></li>");
+						})
+					}).fail(function() {
+						$(".region-list").empty();
+						$(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
+					});
+				}
+			});
+		});
+	})
+	//input에 키누를떄마다 db조회해서 보여주기
 	$("#locationInput").keyup(function() {
 		var region = $(this).val();
 		$.getJSON("region.get?region=" + region, function(regionData) {

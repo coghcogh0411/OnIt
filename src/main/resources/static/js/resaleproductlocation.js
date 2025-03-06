@@ -2,7 +2,7 @@ $(function() {
 	$(".location-button").on("click", function() {
 		$(".modal-overlay").fadeIn(200);
 	});
-
+	//현재내위치누르면 지역조회
 	$("#location-btn").on("click", function() {
 		navigator.geolocation.getCurrentPosition(function(loc) {
 			var lat = loc.coords.latitude;
@@ -35,7 +35,7 @@ $(function() {
 	$(".close-modal").on("click", function() {
 		$(".modal-overlay").fadeOut(200);
 	});
-
+	//input에 키누를떄마다 db조회해서 보여주기
 	$("#locationInput").keyup(function() {
 		var region = $(this).val();
 		$.getJSON("region.get?region=" + region, function(regionData) {
