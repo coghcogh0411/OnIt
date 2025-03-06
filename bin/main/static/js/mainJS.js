@@ -30,9 +30,10 @@ function chatcontroller() {
 			socket.emit("joinRoom", userId); // 서버로 본인 아이디를 보내 룸에 join하도록 요청
 		});
 	}
+	//맨아래로 내리기
 	function scrollToBottom() {
-	  const chatContent = document.getElementById("chatContent");
-	  chatContent.scrollTop = chatContent.scrollHeight;
+		const chatContent = document.getElementById("chatContent");
+		chatContent.scrollTop = chatContent.scrollHeight;
 	}
 	// 채팅 기록 불러오기
 	function loadChatHistory(chatPartner) {
@@ -52,44 +53,48 @@ function chatcontroller() {
 		if (typeof roomInfo === "string") {
 			// 만약 서버가 단순히 문자열 배열을 반환한다면
 			chatPartner = roomInfo;
-			unreadCount = 1; // 임의로 1 표시
+			unreadCount = 0; // 임의로 1 표시
+			console.log('flag1');
 		} else {
 			// 서버가 객체를 반환한다고 가정: { partner: "...", unreadCount: ... }
 			chatPartner = roomInfo.partner;
 			unreadCount = roomInfo.unreadCount;
+			console.log('flag2');
 		}
-
+		console.log('roomInfo::', roomInfo);
+		console.log('unreadCount ::: ' + unreadCount);
 		// 이미 해당 파트너의 채팅방이 있는지 확인
-		  const $existingRoom = $(`.chat-room[data-partner="${chatPartner}"]`);
-		  if ($existingRoom.length === 0) {
-		    // 새 채팅방 생성
-		    // unreadCount > 0인 경우에만 <span class="new-message">를 생성
-		    const newMessageHtml = (unreadCount > 0)
-		      ? `<span class="new-message">${unreadCount}</span>`
-		      : "";
+		const $existingRoom = $(`.chat-room[data-partner="${chatPartner}"]`);
+		if ($existingRoom.length === 0) {
+			// 새 채팅방 생성
+			// unreadCount > 0인 경우에만 <span class="new-message">를 생성
+			const newMessageHtml = (unreadCount > 0)
+				? `<span class="new-message">${unreadCount}</span>`
+				: "";
 
-		    $(".chat-box").append(`
+			$(".chat-box").append(`
 		      <div class="chat-room" data-partner="${chatPartner}">
 		        <img src="default_profile.png" />
 		        <p><strong>${chatPartner}</strong></p>
 		        ${newMessageHtml}
 		      </div>
 		    `);
-		  } else {
-		    // 기존 채팅방이 있을 경우, unreadCount 갱신
-		    if (unreadCount > 0) {
-		      // 알림 배지가 없으면 생성, 있으면 수만 갱신
-		      if ($existingRoom.find(".new-message").length === 0) {
-		        $existingRoom.append(`<span class="new-message">${unreadCount}</span>`);
-		      } else {
-		        $existingRoom.find(".new-message").text(unreadCount);
-		      }
-		    } else {
-		      // unreadCount = 0이면 알림 배지 제거
-		      $existingRoom.find(".new-message").remove();
-		    }
-		  }
-		  scrollToBottom()
+		} else {
+
+			// 기존 채팅방이 있을 경우, unreadCount 갱신
+			if (unreadCount > 0) {
+				// 알림 배지가 없으면 생성, 있으면 수만 갱신
+				if ($existingRoom.find(".new-message").length === 0) {
+					$existingRoom.append(`<span class="new-message">${unreadCount}</span>`);
+				} else {
+					$existingRoom.find(".new-message").text(unreadCount);
+				}
+			} else {
+				// unreadCount = 0이면 알림 배지 제거
+				$existingRoom.find(".new-message").remove();
+			}
+		}
+
 	}
 	$(document).on("click", ".chat-btn", function(e) {
 		e.preventDefault();
@@ -98,6 +103,7 @@ function chatcontroller() {
 		$("#chatTitle").text(chatPartner);
 		$("#chatModal").show();
 		loadChatHistory(chatPartner);
+		scrollToBottom()
 	});
 	$(document).on("click", ".buyer-chat-btn", function(e) {
 		e.preventDefault();
@@ -106,12 +112,14 @@ function chatcontroller() {
 		$("#chatTitle").text(chatPartner);
 		$("#chatModal").show();
 		loadChatHistory(chatPartner);
+		scrollToBottom()
 	});
 	$(document).on("click", ".chat-room", function() {
 		var chatPartner = $(this).find("strong").text().trim();
 		$("#chatTitle").text(chatPartner);
 		$("#chatModal").show();
 		loadChatHistory(chatPartner);
+		scrollToBottom()
 
 		// --- 읽음 처리 API 호출 ---
 		$.ajax({
@@ -160,6 +168,11 @@ function chatcontroller() {
 		if (data.receiver === userId) {
 			$("#chatContent").append(`<div class="message other"><p>${data.message}</p></div>`);
 			updateChatRooms(data.sender);
+			$.get("http://sd-beanmouse.duckdns.org:43218/chat/rooms?userId=" + userId, function(chatRooms) {
+				chatRooms.forEach(updateChatRooms);
+			}).fail(function(err) {
+				console.error("GET /chat/rooms 실패:", err);
+			});
 		}
 	});
 	$(".toggle-sidebar").click(function() {

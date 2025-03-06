@@ -215,6 +215,10 @@ h2 {
 	padding: 10px;
 	background: #f1f1f1;
 }
+#chatModal footer {
+	margin-left: 10px;
+	width: 90%;
+}
 
 #chatModal .chat-content {
 	padding: 10px;
@@ -350,6 +354,8 @@ h2 {
 }
 /* 내 메시지 스타일 */
 .message.mine {
+	margin-top:10px;
+	margin-bottom:10px;
 	background: #9aa2ec;
 	color: white;
 	text-align: right;
@@ -361,6 +367,8 @@ h2 {
 
 /* 상대방 메시지 스타일 */
 .message.other {
+	margin-top:10px;
+	margin-bottom:10px;
 	background: #f1f1f1;
 	text-align: left;
 	max-width: 70%;
