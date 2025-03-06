@@ -60,7 +60,7 @@
 					<tr th:each="p:${post}" th:onclick="communityDetail([[${p.no}]])">
 						<td th:text="${p.no}"></td>
 						<td th:text="${p.title}"></td>
-						<td th:text="${p.writer.id}"></td>
+						<td th:text="${p.writer.nickname}"></td>
 						<td th:text="${p.date}"></td>
 						<td th:text="${p.view}"></td>
 						<td th:text="${likecount[p.no]}"></td>

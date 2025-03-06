@@ -48,7 +48,7 @@
 				<div class="comment-author">
 					<img  alt="프로필 사진"
 						class="author-profile-pic" th:src="@{|member/${r.writer.photo}|}"> <span class="author-name"
-						th:text="${r.writer.id}">작성자 이름</span>
+						th:text="${r.writer.nickname}">작성자 이름</span>
 				</div>
 				<!-- 댓글 내용 표시 -->
 				<div class="comment-content" th:text="${r.reply}">댓글 내용</div>
