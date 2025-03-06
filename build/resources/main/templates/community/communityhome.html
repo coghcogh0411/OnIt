@@ -32,8 +32,6 @@
 			<div class="sidebar">
 			<div th:each="c:${category}" th:onclick="categorychange([[${c.categoryNo}]])">
 				<div class="category-item" th:text="${c.name}"></div>
-				<div class="category-item-child">-30좋아요 글</div>
-				<div class="category-item-child">-10좋아요 글</div>
 			</div>
 				
 			</div>
@@ -43,11 +41,7 @@
 			<div class="category-header">
 				<div id="title" th:text="${categorytitle.name}"></div>
 			</div>
-			<div class="filters">
-                <button class="filter-btn active">최신글</button>
-                <button class="filter-btn">30 좋아요 글 ❤️</button>
-                <button class="filter-btn">10 좋아요 글 ❤️</button>
-            </div>
+			
 			<table id="postsTable">
 				<thead>
 					<tr>
@@ -87,9 +81,8 @@
 	<div class="floating-button">
 		<span class="icon">+</span>
 		<div class="sub-buttons">
-			<a href="/community-reg" class="sub-button">게시글 등록</a> <a
-				class="sub-button">경매 등록</a> <a class="sub-button">경매 등2록</a> <a
-				class="sub-button">경매 등1록</a>
+			<a th:if="${session.loginMember != null}" href="/community-reg" class="sub-button">게시글 등록</a>
+			<a th:if="${session.loginMember == null}" onclick="openLoginModal()" class="sub-button">게시글 등록</a>
 		</div>
 	</div>
 </body>

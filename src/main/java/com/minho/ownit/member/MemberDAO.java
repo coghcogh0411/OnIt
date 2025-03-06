@@ -336,4 +336,14 @@ public class MemberDAO {
 		req.setAttribute("follower", fRepo.findByFollower(member)); 
 		req.setAttribute("following", fRepo.findByFollowing(member)); 
 	}
+	public void memberDelete(HttpServletRequest req) {
+		try {
+			Member m = (Member) req.getSession().getAttribute("loginMember");
+			Mrepo.delete(m);
+			req.setAttribute("result", "탈퇴완료");
+		} catch (Exception e) {
+			// TODO: handle exception
+			req.setAttribute("result", "탈퇴실패");
+		}
+	}
 }

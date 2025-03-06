@@ -223,7 +223,7 @@
 }
 
 /* 모달 오버레이 (화면 전체를 덮는 어두운 배경) */
-.modal-overlay {
+.image-modal-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100%;
@@ -236,7 +236,7 @@
 }
 
 /* 모달 박스 (흰색 배경 박스) */
-.modal {
+.image-modal {
   background-color: #fff;
   width: 400px;         /* 원하는 너비 */
   border-radius: 8px;
@@ -250,7 +250,7 @@
 }
 
 /* 모달 헤더 영역 */
-.modal-header {
+.image-modal-header {
   padding: 16px;
   border-bottom: 1px solid #ccc;
   font-size: 18px;
@@ -260,7 +260,7 @@
 }
 
 /* 닫기 버튼 (모달 우측 상단) */
-.close-modal {
+.image-close-modal {
   position: absolute;
   top: 16px;
   right: 16px;
@@ -270,8 +270,150 @@
 }
 
 /* 모달 본문 */
-.modal-content {
+.image-modal-content {
   padding: 16px;
   color: #333;
   text-align: center; /* 이미지 중앙 정렬 */
+}
+/* 여기부터 위치테이블 */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3); /* 투명도 0.3 */
+	display: none; /* 초기에는 숨김 */
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+/* 모달 박스 (흰색 테마) */
+.modal {
+	background-color: #fff; /* 흰색 배경 */
+	width: 400px;
+	border-radius: 8px;
+	overflow: hidden;
+	color: #333; /* 텍스트는 어두운 색 */
+	font-family: sans-serif;
+	position: relative;
+	margin: auto;
+	margin-top: 100px;
+}
+
+/* 헤더 영역 */
+.modal-header {
+	padding: 16px;
+	border-bottom: 1px solid #ccc;
+	font-size: 18px;
+	font-weight: bold;
+	position: relative;
+	color: #333;
+}
+
+/* 닫기 버튼 (모달 우측 상단) */
+.close-modal {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	cursor: pointer;
+	font-size: 18px;
+	color: #999;
+}
+
+/* 본문 영역 */
+.modal-content {
+	padding: 16px;
+	color: #333;
+	
+}
+
+/* 검색 영역 */
+.search-box {
+	position: relative;
+	margin-bottom: 16px;
+}
+
+.search-box input {
+	width: 85%;
+	padding: 12px 40px 12px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	color: #333;
+	outline: none;
+}
+
+.search-box input::placeholder {
+	color: #999;
+}
+
+.search-box::before {
+	content: "🔍";
+	position: absolute;
+	right: 12px;
+	top: 10px;
+	font-size: 15px;
+	color: #999;
+}
+
+/* 모달 내부 위치 버튼 */
+.modal-location-button {
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	color: #333;
+	padding: 10px 14px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 16px;
+}
+
+.modal-location-button:hover {
+	background-color: #f0f0f0;
+}
+
+/* 추천 리스트 */
+.recommend-title {
+	font-size: 16px;
+	margin-bottom: 8px;
+	color: #333;
+}
+
+.region-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	max-height: 400px;
+	overflow: auto;
+}
+.region-list::-webkit-scrollbar {
+  height: 8px;               /* 가로 스크롤바의 두께 */
+  max-width: 5px;           
+}
+
+.region-list::-webkit-scrollbar-track {
+  background: #eee;          /* 스크롤바 트랙 색상 */
+  border-radius: 4px;
+}
+
+.region-list::-webkit-scrollbar-thumb {
+  background-color: #9AA2EC; /* 스크롤바 '손잡이' 색상 */
+  border-radius: 4px;
+}
+
+.region-list li {
+	padding: 12px 0;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+	color: #333;
+}
+
+.region-list li:last-child {
+	border-bottom: none;
+}
+
+.region-list li:hover {
+	background-color: #f5f5f5;
 }

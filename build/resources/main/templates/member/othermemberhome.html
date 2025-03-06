@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/memberhome.css">
+<link rel="stylesheet" href="/css/resaleproduct.css">
+</head>
+<body>
+	<div class="main-content">
+		<div class="sidebar-container">
+			<div class="sidebar">
+				<div><a href="/member-home" class="category-item-child" th:text="'-'+${memberprofile.nickname}+'님이 올린 상품'"></a></div>
+				<div><a href="/member-home" class="category-item">팔로우</a></div>
+			</div>
+		</div>
+
+		<div class="profile-card">
+			<div class="profile-header">
+				<div class="profile-name">
+					<div class="username" th:text="${memberprofile.nickname}"></div>
+				</div>
+
+				<div class="profile-content">
+					<textarea class="description"></textarea>
+				</div>
+				<div class="badge">
+					
+				</div>
+				<div></div>
+			</div>
+			
+			<div class="profile-image">
+				<img  th:src="|/HoMini/Img/${memberprofile.photo}|" alt="프로필 이미지">
+			</div>
+		</div>
+	</div>
+	
+	<div class="subpage" th:insert="~{${myPageContent}}"></div>
+</body>
+</html>

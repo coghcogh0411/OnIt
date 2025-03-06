@@ -5,6 +5,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="/css/memberhome.css">
 <link rel="stylesheet" href="/css/resaleproduct.css">
+<script type="text/javascript" src="/js/move.js"></script>
 </head>
 <body>
 	<div class="main-content">
@@ -12,7 +13,7 @@
 			<div class="sidebar">
 				<div th:if="${session.loginMember.id == memberprofile.id}" class="category-item">개인정보</div>
 				<div th:if="${session.loginMember.id == memberprofile.id}"><a th:href="@{/member-home(name=${memberprofile.nickname})}" class="category-item-child">-개인정보 수정</a></div>
-				<div th:if="${session.loginMember.id == memberprofile.id}"><a href="/member-home" class="category-item-child">-회원탈퇴</a></div>
+				<div th:if="${session.loginMember.id == memberprofile.id}"><a class="category-item-child" onclick="byeDo()">-회원탈퇴</a></div>
 				<div th:if="${session.loginMember.id == memberprofile.id}" class="category-item">내 상품</div>
 				<div th:if="${session.loginMember.id == memberprofile.id}"><a th:href="@{/member-product(name=${memberprofile.nickname})}" class="category-item-child" th:text="'-'+${memberprofile.nickname}+'님이 올린 상품'"></a></div>
 				<div th:if="${session.loginMember.id != memberprofile.id}"><a th:href="@{/member-product(name=${memberprofile.nickname})}" class="category-item" th:text="${memberprofile.nickname}+'님이 올린 상품'"></a></div>

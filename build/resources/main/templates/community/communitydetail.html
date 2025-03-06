@@ -28,7 +28,7 @@
 		<hr>
 		<h1 th:text="${postdetail.title}"></h1>
 		<hr>
-		<div class="content" th:text="${postdetail.content}"></div>
+		<div class="content" th:utext="${postdetail.content}"></div>
 
 		<div class="like">
 			<button class="like-button" id="likeButton" type="button" th:if="${isLike==false}" th:onclick="communityLike([[${postdetail.no}]])">

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.minho.ownit.HomeController;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 
@@ -19,6 +21,8 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MemberController {
 	@Autowired
 	private MemberDAO mDAO;
+	@Autowired
+	private HomeController hCon;
 	
 	
 	@GetMapping(value = "/member.get", produces = "application/json;charset=utf-8")
@@ -124,6 +128,15 @@ public class MemberController {
 		return "index";
 	}
 	
+	@GetMapping("/member-delete")
+	public String memberDelete(HttpServletRequest req) {
+		mDAO.memberDelete(req);
+		logout(req);
+		mDAO.isLogined(req);
+		
+		req.setAttribute("contentPage", "home");
+		return "index";
+	}
 	
 	
 }

@@ -1,91 +1,100 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>상품 상세 페이지</title>
+<title>Insert title here</title>
 <link rel="stylesheet" href="/css/resaleproduct.css">
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
-<script
-	src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+<script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/move.js"></script>
-<script>
+<script type="text/javascript" src="/js/resaleproductlocation.js"></script>
+<script type="text/javascript">
 	$(function() {
-		$(".seller-info").click(function() {
-			$(".sub-buttons").toggleClass("show");
-		});
+		var isRotate = false;
+		$(".floating-button").mouseup(function(e) {
+			isRotate = !isRotate;
+			if (isRotate) {
+				$(".icon").css({
+					"transform" : "rotate(-45deg)"
+				});
+				$(".sub-buttons").addClass("show");
+			} else {
+				$(".icon").css({
+					"transform" : "rotate(0deg)"
+				});
+				$(".sub-buttons").removeClass("show");
+			}
+		})
 
-		$('.slider').bxSlider({
-			captions : true
-		});
-	});
+		
+	    });
 </script>
 </head>
 <body>
 	<div class="main-content">
 		<div class="sidebar-container">
-			<button class="location-button">📍 동호구</button>
+			<button class="location-button" th:text="${displayRegion}"></button>
 			<div class="sidebar">
-				<div th:each="c:${category}"
+				<div th:each="c : ${category}"
 					th:onclick="|resaleCategoryChange(${c.no})|">
 					<div class="category-item" th:text="${c.name}"></div>
 				</div>
 			</div>
 		</div>
 
-		<div class="content-area">
-			<div class="product-detail">
-				<div class="image-gallery">
-					<!-- bxSlider 컨테이너 -->
-					<div class="slider">
-						<!-- 각 이미지를 담을 div (슬라이드 하나) -->
-						<div th:each="p : ${photos}">
-							<img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지"
-								class="sliderImg" />
+		<div id="infoDiv">
+			<div class="category-header"
+				th:text="${categorytitle != null ? categorytitle.name + ' 카테고리' : '모든 상품'}">
+			</div>
+			<div class="product-grid">
+				<a th:each="product : ${resaleList}"
+					th:href="@{/resale-detailproduct(no=${product.no})}">
+					<div class="product-card">
+						<div class="product-image">
+							<img
+								th:src="${product.thumbnail != null ? '/HoMini/Img/' + product.thumbnail : '/img/no-image.png'}"
+								alt="이미지" />
 						</div>
+						<div class="product-info" th:text="${product.title}">제품 이름</div>
+						<div class="product-price" th:text="${product.price + ' 원'}">가격</div>
 					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- 여기부터 등록관련 버튼 -->
+	<div class="floating-button">
+		<span class="icon">+</span>
+		<div class="sub-buttons">
+			<a th:if="${session.loginMember != null}" href="/resale-go-reg" class="sub-button">중고거래 등록</a>
+			<a th:if="${session.loginMember != null}" href="/auction-go-reg" class="sub-button">경매 등록</a>
+
+			<a th:if="${session.loginMember == null}" onclick="openLoginModal()" class="sub-button"> 중고거래 등록 </a>
+			<a th:if="${session.loginMember == null}" onclick="openLoginModal()" class="sub-button"> 경매 등록 </a>
+		</div>
+	</div>
+	<!-- 위치테이블 -->
+	<div class="modal-overlay">
+		<div class="modal">
+			<div class="modal-header">
+				지역 변경
+				<span class="close-modal">✕</span>
+			</div>
+			<div class="modal-content">
+				<div class="search-box">
+					<input id="locationInput" type="text" placeholder="지역이나 동네로 검색하기">
 				</div>
-
-				<div class="seller-info">
-					<div class="seller-profile">
-						<img src="/placeholder.svg?height=40&width=40" alt="프로필"
-							class="profile-image">
-						<div class="seller-name"
-							th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
-						<div class="rating">⭐⭐⭐⭐⭐</div>
-						<button class="like-button">♡</button>
-					</div>
-					<div class="sub-buttons">
-						<a href="/member-home" class="sub-button">정보보기</a> <a href="#"
-							class="sub-button">1:1쪽지 보내기</a> <a href="#" class="sub-button">팔로우</a>
-					</div>
-				</div>
-
-				<div class="product-info">
-					<h1 class="product-title" th:text="${product.title}">제목</h1>
-
-					<div class="meta-info">
-						<span class="category" th:text="${product.category.name}">카테고리</span>
-						<span class="date-divider">•</span> <span class="date"
-							th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
-					</div>
-
-					<div class="price" th:text="${product.price + ' 원'}"></div>
-
-					<div class="description-box">
-						<textarea class="description-textarea" readonly
-							th:text="${product.description}"></textarea>
-					</div>
-
-					<div class="action-buttons">
-						<button class="action-button" th:if="${product.deal == '가능'}">댓글
-							가능</button>
-						<button class="action-button" th:if="${product.delivery == '가능'}">직거래
-							가능</button>
-					</div>
-				</div>
+				<button class="location-button" id="location-btn">현재 내 위치 사용하기</button>
+				<div class="recommend-title">추천</div>
+				<ul class="region-list">
+					<li><a href="/region-get">서울특별시, 강남구</a></li>
+					<li><a href="/region-get">서울특별시, 송파구</a></li>
+					<li><a href="/region-get">경기도, 부천시</a></li>
+					<li><a href="/region-get">경기도, 화성시</a></li>
+					<li><a href="/region-get">서울특별시, 강서구</a></li>
+					<li><a href="/region-get">인천광역시, 서구</a></li>
+					<li><a href="/region-get">경기도, 남양주시</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

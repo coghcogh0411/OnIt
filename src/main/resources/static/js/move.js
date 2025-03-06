@@ -30,3 +30,8 @@ function resaleLike(no){
 function resaleLiked(no){
 	location.href="resale-liked?pno="+no
 }
+function byeDo(){
+	if (prompt("탈퇴하려면 \"탈퇴한다\" 입력하세요") == "탈퇴한다") {
+			location.href="member-delete";
+		}
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>상품 상세 페이지</title>
+  <link rel="stylesheet" href="/css/resaledetailproduct.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bxslider@4.2.17/dist/jquery.bxslider.min.js"></script>
+  <script type="text/javascript" src="/js/move.js"></script>
+  <script type="text/javascript" src="/js/bid.js"></script>
+  <script
+    src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
+  <script>
+    $(function() {
+    	
+    	let slideCount = $('.slider > div').length; 
+
+	    // 2) 슬라이드가 2개 이상이면 bxSlider 적용
+	    if (slideCount > 1) {
+	      $('.slider').bxSlider({
+	        captions: true,
+	        infiniteLoop: true,
+	      });
+	    } else {}
+
+		$(".location-button").on("click", function() {
+			$(".modal-overlay").fadeIn(200);
+		});
+    	
+    	$(".profile-image, .seller-name, .rating").click(function() {
+			$(".sub-buttons").toggleClass("show");
+		});
+		
+    	
+		
+   // (A) 이미지 클릭 -> 모달 열기
+      $('.sliderImg').on('click', function() {
+        var src = $(this).attr('src');
+        // 모달 이미지에 src 설정
+        $('#modalImage').attr('src', src);
+        // 모달 열기
+        $('.image-modal-overlay').fadeIn(200);
+      });
+
+      // (B) 닫기 버튼 or 오버레이 클릭 -> 모달 닫기
+      $('.image-close-modal, .image-modal-overlay').on('click', function(e) {
+        // 단, .image-modal-content 내부 클릭 시 닫히지 않도록 처리
+        if ($(e.target).hasClass('image-modal-content') || 
+            $(e.target).hasClass('sliderImg')) {
+          return;
+        }
+        $('.image-modal-overlay').fadeOut(200);
+      });
+    });
+  </script>
+</head>
+<body>
+  <div class="main-content">
+    <div class="content-area">
+    <div class="endday" th:text="${#dates.format(product.end, 'yyyy-MM-dd HH:mm') + '  종료된 경매입니다.'}">종료일</div>
+      <div class="product-detail">
+        <div class="image-gallery">
+          <div class="slider">
+            <div th:each="p : ${photos}">
+              <img th:src="|/HoMini/Img/${p.url}|" alt="상품 이미지"
+                   class="sliderImg" />
+            </div>
+          </div>
+        </div>
+
+        <div class="seller-info">
+          <div class="seller-profile">
+            <img src="/placeholder.svg?height=40&width=40" alt="프로필"
+                 class="profile-image">
+            <div class="seller-name"
+                 th:text="${product.user != null ? product.user.nickname : '판매자'}"></div>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <button class="like-button" type="button" th:if="${isLike==false}" th:onclick="auctionLike([[${product.no}]])"><img alt="" src="img/like.png"></button>
+            <button class="like-button" type="button" th:if="${isLike==true}" th:onclick="auctionLiked([[${product.no}]])"><img alt="" src="img/liked.png"></button>
+          </div>
+          <div class="sub-buttons">
+            <a th:href="@{/member-home(name=${product.user.nickname})}" class="sub-button">정보보기</a>
+            <a href="#" class="sub-button chat-btn">1:1쪽지 보내기</a>
+            <a href="#" class="sub-button">팔로우</a>
+          </div>
+        </div>
+
+        <div class="product-info">
+          <h1 class="product-title" th:text="${product.title}">제목</h1>
+          <div class="meta-info">
+            <span class="date"
+                  th:text="${#dates.format(product.date, 'yyyy-MM-dd HH:mm')}"></span>
+          </div>
+
+          <div class="price" th:text="${#lists.isEmpty(bidList) ? product.price : bidList[0].amount} + ' 원'"></div>
+
+          <div class="description-box">
+            <textarea class="description-textarea" readonly
+                      th:utext="${product.description}"></textarea>
+          </div>
+
+          <div class="action-buttons">
+            <div class="action-button" th:text="${product.deal == '1' ? '택배가능':'택배불가능' }"></div>
+			<div class="action-button" th:text="${product.delivery == '1' ? '직거래가능':'직거래불가능'}"></div>
+            <div class="final-bidder" th:text="${product.bidder != null ? '최종낙찰자: ' + product.bidder : '최종낙찰자가 없습니다'}"></div>
+          </div>
+        </div>
+        
+        
+      </div>
+      <div class="bid-content">
+				<div class="auction-section">
+					<div class="bidders">
+						<h3>🏆 입찰자 명단</h3>
+						<ul class="bidder-list">
+							<li class="bidnickname" th:each="b:${bidList}"><span class="buyer"
+								th:text="${b.user.nickname}"></span> <span
+								th:text="${b.amount+' 원'}"></span>
+								<div class="bid-sub-buttons">
+									<a th:href="@{/member-home(name=${b.user.nickname})}"
+										class="bid-sub-button">정보보기</a> <a href="#"
+										class="bid-sub-button buyer-chat-btn">1:1쪽지 보내기</a> <a href="#"
+										class="bid-sub-button">팔로우</a>
+								</div></li>
+						</ul>
+					</div>
+				</div>
+				<div>
+					<form action="/auction-bid">
+						<input class="auctionNo" name="auctionNo" type="hidden"
+							th:value="${product.no}">
+						<div class="auction-bid">
+							<h3>
+								경매 시작가 <strong th:text="${product.price + ' 원'}"></strong>
+							</h3>
+							
+						</div>
+					</form>
+				</div>
+			</div>
+    </div>
+  </div>
+  <div class="image-modal-overlay">
+    <div class="image-modal">
+      <span class="image-close-modal">&times;</span>
+      <div class="image-modal-content">
+        <img id="modalImage" src="" alt="확대 이미지" />
+      </div>
+    </div>
+  </div>
+</body>
+</html>

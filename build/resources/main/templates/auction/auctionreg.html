@@ -4,14 +4,202 @@
 <meta charset="UTF-8">
 <title>상품 등록</title>
 <link rel="stylesheet" href="/css/resalereg.css">
+<script>
+//(1) 업로드 영역 클릭 시 → 숨겨진 <input> 생성 + click()
+let imageCounter = 0;
+
+    // (1) 업로드 영역 클릭 시 → 숨겨진 <input> 생성 + click()
+    function handleUploadAreaClick() {
+      // 새 숨김 input 생성
+      const newInput = document.createElement('input');
+      newInput.type = 'file';
+      newInput.name = 'files';
+      newInput.accept = 'image/*';
+      newInput.multiple = true;
+      newInput.style.display = 'none'; // 화면에 보이지 않게
+
+      // onchange → 미리보기 실행
+      newInput.addEventListener('change', function() {
+        previewFiles(newInput.files);
+      });
+
+      // 폼에 추가
+      document.getElementById('fileInputs').appendChild(newInput);
+
+      // 파일 선택 창 띄우기
+      newInput.click();
+    }
+
+    // (2) 드래그&드롭 이벤트 처리
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    function handleDrop(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const files = e.dataTransfer.files; // 드롭된 파일들
+      if (files && files.length > 0) {
+        // 새 숨김 input 생성
+        const newInput = document.createElement('input');
+        newInput.type = 'file';
+        newInput.name = 'files';
+        newInput.accept = 'image/*';
+        newInput.multiple = true;
+        newInput.style.display = 'none';
+
+        // DataTransfer 활용하여 파일 세팅
+        const dt = new DataTransfer();
+        for (let i = 0; i < files.length; i++) {
+          dt.items.add(files[i]);
+        }
+        newInput.files = dt.files;
+
+        // 미리보기 실행
+        previewFiles(newInput.files);
+
+        // 폼에 추가
+        document.getElementById('fileInputs').appendChild(newInput);
+      }
+    }
+
+    // (3) 파일 미리보기 처리
+    function previewFiles(fileList) {
+      const previewContainer = document.getElementById('previewContainer');
+      if (!fileList || fileList.length === 0) {
+        return;
+      }
+
+      Array.from(fileList).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+          imageCounter++;
+
+          const imageWrapper = document.createElement('div');
+          imageWrapper.classList.add('preview-wrapper');
+
+          const numberLabel = document.createElement('div');
+          numberLabel.classList.add('image-number');
+          numberLabel.textContent = imageCounter;
+
+          const img = document.createElement('img');
+          img.src = e.target.result;
+          img.classList.add('preview-image');
+
+          // 미리보기 이미지 클릭 시 이미지 모달 열기
+          img.addEventListener('click', () => {
+            openImageModal(img.src);
+          });
+
+          imageWrapper.appendChild(numberLabel);
+          imageWrapper.appendChild(img);
+          previewContainer.appendChild(imageWrapper);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // (4) 이미지 미리보기 모달 관련 함수 (클래스 이름 통일)
+    function openImageModal(src) {
+      $('#modalImage').attr('src', src);
+      $('.image-modal-overlay').fadeIn(200);
+    }
+    function closeImageModal() {
+      $('.image-modal-overlay').fadeOut(200);
+    }
+
+    // (5) DOM Ready: 이벤트 핸들러 등록 (모든 이벤트를 하나의 ready 블록에 통합)
+    $(document).ready(function() {
+      // 이미지 미리보기 모달 닫기
+      $('.image-modal-overlay .image-close-modal').on('click', function() {
+        closeImageModal();
+      });
+      $('.image-modal-overlay').on('click', function(e) {
+        if ($(e.target).hasClass('image-modal-overlay')) {
+          closeImageModal();
+        }
+      });
+
+      // 업로드 영역의 드래그&드롭 이벤트 등록
+      const uploadArea = document.querySelector('.upload-area');
+      uploadArea.addEventListener('dragover', handleDragOver);
+      uploadArea.addEventListener('drop', handleDrop);
+      uploadArea.addEventListener('click', function(e) {
+        handleUploadAreaClick();
+      });
+
+      // 위치 관련 이벤트
+      $("#locationInput").keyup(function(){
+        var region = $(this).val();
+        $.getJSON("region.get?region=" + region, function(regionData){
+          $(".region-list").empty();
+          $.each(regionData.region, function(index, item){
+            $(".region-list").append("<li><a href='/region-get'>" + item.firstName + ", " + item.secondName + "</a></li>");
+          });
+        }).fail(function() {
+          $(".region-list").empty();
+          $(".region-list").append("<li>지역 정보를 불러오는 데 실패했습니다.</li>");
+        });
+      });
+      $(document).on("click", ".region-list li", function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // 예: "광주광역시, 서구"
+          var name = $(this).text();
+          // 버튼에 전체 문자열 표시
+          $(".location-button").text(name);
+
+          $(".modal-overlay").fadeOut(200, function() {
+            // 상품 등록 페이지이므로, from=resalereg
+            var fromValue = "auctionreg";
+
+            // 쉼표 제거
+            var splitted = name.split(", ");
+            if(splitted.length >= 2){
+              location.href = "/region-get?region="
+                + encodeURIComponent(splitted[0])
+                + "&region2=" + encodeURIComponent(splitted[1])
+                + "&from=" + encodeURIComponent(fromValue);
+            } else {
+              location.href = "/region-get?region="
+                + encodeURIComponent(name)
+                + "&region2="
+                + "&from=" + encodeURIComponent(fromValue);
+            }
+          });
+        });
+
+      // 플로팅 버튼 및 기타 위치 모달 이벤트
+      var isRotate = false;
+      $(".floating-button").mouseup(function(e) {
+        isRotate = !isRotate;
+        if (isRotate) {
+          $(".icon").css({ "transform" : "rotate(-45deg)" });
+          $(".sub-buttons").addClass("show");
+        } else {
+          $(".icon").css({ "transform" : "rotate(0deg)" });
+          $(".sub-buttons").removeClass("show");
+        }
+      });
+
+      $(".location-button").on("click", function() {
+        $(".modal-overlay").fadeIn(200);
+      });
+
+      $(".close-modal").on("click", function() {
+        $(".modal-overlay").fadeOut(200);
+      });
+    });
+</script>
 </head>
 <body>
 
     <div class="container">
         <div class="top-content">
-            <button class="location-button">
-                <span class="location-icon">📍</span> 종로구
-            </button>
+				<button class="location-button" th:text="${displayRegion}">지역 없음</button>
             <div class="title-banner">상품 등록</div>
         </div>
 
@@ -31,29 +219,75 @@
                             <option value="1">가능</option>
                             <option value="0">불가능</option>
                         </select>
+                        <select class="dropdown" name="dday">
+                            <option>경매 일수</option>
+                            <option value="1">1일</option>
+                            <option value="2">2일</option>
+                            <option value="3">3일</option>
+                            <option value="4">4일</option>
+                            <option value="5">5일</option>
+                            <option value="6">6일</option>
+                            <option value="7">7일</option>
+                        </select>                        
                     </div>
                 </div>
 
                 <div class="image-section">
-                    <div class="upload-area">
-                        <span>이미지를 올려주세요</span>
-                        <input type="file" name="files" accept="image/*" multiple>
-                    </div>
-                    <div class="preview-carousel">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 1">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 2">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 3">
-                        <img src="/placeholder.svg" class="preview-image" alt="Preview 4">
-                    </div>
-                    
-                    <div class="price-section">
-						<input class="price-input" name="price"
+					<!-- 드래그&드롭 + 클릭 영역 -->
+					<div class="upload-area">
+						<span>이미지를 올려주세요 (드롭 가능)</span>
+					</div>
+
+					<!-- 숨겨진 <input>들을 담을 영역 -->
+					<div id="fileInputs" style="margin-top: 10px;"></div>
+
+					<!-- 미리보기 영역 -->
+					<div class="preview-carousel" id="previewContainer"></div>
+
+					<div class="price-section">
+						<input type="text" class="price-input" name="price"
 							placeholder="가격 입력">
 						<button type="submit" class="submit-button">등록</button>
 					</div>
-                </div>
-            </form>
-        </div>
-    </div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- 이미지 미리보기 모달 -->
+	<div class="image-modal-overlay">
+		<div class="image-modal">
+			<div class="image-modal-header">
+				이미지 미리보기 <span class="image-close-modal">&times;</span>
+			</div>
+			<div class="image-modal-content">
+				<img id="modalImage" src="" alt="미리보기 이미지" style="width: 100%;">
+			</div>
+		</div>
+	</div>
+	<div class="modal-overlay">
+		<div class="modal">
+			<div class="modal-header">
+				지역 변경
+				<span class="close-modal">✕</span>
+			</div>
+			<div class="modal-content">
+				<div class="search-box">
+					<input id="locationInput" type="text" placeholder="지역이나 동네로 검색하기">
+				</div>
+				<button class="location-button">현재 내 위치 사용하기</button>
+				<div class="recommend-title">추천</div>
+				<ul class="region-list">
+					<li><a href="/region-get">서울특별시, 강남구</a></li>
+					<li><a href="/region-get">서울특별시, 송파구</a></li>
+					<li><a href="/region-get">경기도, 부천시</a></li>
+					<li><a href="/region-get">경기도, 화성시</a></li>
+					<li><a href="/region-get">서울특별시, 강서구</a></li>
+					<li><a href="/region-get">인천광역시, 서구</a></li>
+					<li><a href="/region-get">경기도, 남양주시</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

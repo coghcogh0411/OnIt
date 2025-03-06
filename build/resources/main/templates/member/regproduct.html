@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/mypagecontent.css">
+
+</head>
+<body>
+	<div class="filter-buttons">
+    <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='all')}"
+           th:classappend="${(param.filter == null or #strings.equals(param.filter,'all')) ? ' active' : ''}">
+           전체
+        </a>
+        <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='auction')}"
+           th:classappend="${#strings.equals(param.filter,'auction') ? ' active' : ''}">
+           현재경매
+        </a>
+        <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='end')}"
+           th:classappend="${#strings.equals(param.filter,'end') ? ' active' : ''}">
+           역대경매
+        </a>
+        <a th:href="@{/member-product(name=${memberprofile.nickname}, filter='resale')}"
+           th:classappend="${#strings.equals(param.filter,'resale') ? ' active' : ''}">
+           중고
+        </a>
+    </div>
+    <h2 th:text="${#strings.equals(param.filter,'resale') ? '중고거래' :
+        		(#strings.equals(param.filter,'end') ? '역대경매' :
+         		(#strings.equals(param.filter,'auction') ? '현재경매' :
+          		(#strings.equals(param.filter,'start') ? '현재경매' : '전체')))}">
+    </h2>
+	<div class="product-grid">
+		<a th:each="rproduct : ${resaleList}"
+			th:href="@{/resale-detailproduct(no=${rproduct.no})}">
+			<div class="product-card">
+				<div class="product-image">
+					<img
+						th:src="${rproduct.thumbnail != null ? '/HoMini/Img/' + rproduct.thumbnail : '/img/no-image.png'}"
+						alt="이미지" />
+				</div>
+				<div class="product-info" th:text="${rproduct.title}">제품 이름</div>
+				<div class="product-price" th:text="${rproduct.price + ' 원'}">가격</div>
+			</div>
+		</a>
+		<a th:each="aproduct : ${auctionList}"
+			th:href="@{/auction-detailproduct(no=${aproduct.no})}">
+			<div class="product-card">
+				<div class="product-image">
+					<img
+						th:src="${aproduct.thumbnail != null ? '/HoMini/Img/' + aproduct.thumbnail : '/img/no-image.png'}"
+						alt="이미지" />
+				</div>
+				<div class="product-info" th:text="${aproduct.title}">제품 이름</div>
+				<div class="product-price" th:text="${aproduct.price + ' 원'}">가격</div>
+			</div>
+		</a>
+	</div>
+</body>
+</html>

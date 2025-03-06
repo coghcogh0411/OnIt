@@ -2,43 +2,106 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>OwnIt - 중고거래 플랫폼</title>
+<title>OnIt - 중고거래 플랫폼</title>
+<link rel="website icon" type="png" href="img/logo_NoneText.png">
 <link rel="stylesheet" href="/css/index.css">
 <script
 	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script type="text/javascript" src="/js/jQuery.js"></script>
 <script type="text/javascript" src="/js/kwonValidChecker_v1.0.js"></script>
-<script type="text/javascript" src="/js/check.js"></script>
+<script
+	src="http://sd-beanmouse.duckdns.org:43218/socket.io/socket.io.js"></script>
 <script type="text/javascript" src="/js/mainJS.js"></script>
+<script type="text/javascript" src="/js/login.js"></script>
+<script type="text/javascript"
+	src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=cef21212887d1dabba8c0cd586de532c"></script>
 </head>
 <body>
 	<header>
-		<a class="logo" href="/">OwnIt</a>
+		<a class="logo" href="/">OnIt</a>
 		<form action="/search">
 			<div class="search-bar">
-				<select name="searchType">
-					<option value="resale">중고거래</option>
-					<option value="auction">경매거래</option>
-					<option value="community">커뮤니티</option>
-				</select> <input name="keyword" type="text" placeholder="검색어를 입력해주세요">
-				<button>검색</button>
+				
 			</div>
 		</form>
-		<div th:insert="~{${loginPage}}"></div>
+		<div id="memeber" th:insert="~{${loginPage}}"></div>
 
 	</header>
 
 	<nav class="menu">
-		<a href="/resale" class="menu-item">중고거래</a> <a href="/auction"
-			class="menu-item">경매</a> <a href="#" class="menu-item">랭킹</a> <a
-			href="/community?categoryNo=1" class="menu-item">커뮤니티</a> <a href="#"
-			class="menu-item">마이페이지</a>
+		<a href="/resale-product" class="menu-item">중고거래</a> <a
+			href="/auction-product" class="menu-item">현재경매</a> <a
+			href="/pastauction-product" class="menu-item">역대경매</a> <a
+			href="/community?categoryNo=1" class="menu-item">커뮤니티</a> <a
+			th:if="${session.loginMember != null}"
+			th:href="@{/member-home(name=${session.loginMember.nickname})}"
+			class="menu-item"> 마이페이지 </a>
+
+		<!-- 로그인 안됨: 모달 열기 -->
+		<a th:if="${session.loginMember == null}" onclick="openLoginModal()">
+			마이페이지 </a>
 		<div th:text="${result}"></div>
 	</nav>
 
 	<div class="content" th:insert="~{${contentPage}}"></div>
 
+	<div class="subcontent" th:if="${session.loginMember != null}">
+		<div class="toggle-sidebar">
+			<div>&lt;</div>
+		</div>
+		<aside>
+			<!-- 채팅방 -->
+			<section class="chat-box">
+				<hr>
+				<h2>채팅방</h2>
+			</section>
+		</aside>
+	</div>
 
+	<div id="chatModal">
+		<header>
+			<span id="chatTitle">채팅방</span> <span class="close-btn">X</span>
+		</header>
+		<div class="chat-content" id="chatContent">
+			<!-- 대화내용이 채워짐 -->
+		</div>
+		<footer>
+			<input type="text" id="modalMessageInput" placeholder="메시지 입력..."
+				style="width: 80%">
+			<button id="modalSendBtn">전송</button>
+		</footer>
+	</div>
+	<div class="modal-overlay2">
+		<div class="login-container">
+			<div class="close-btn" onclick="closeLoginModal()">X</div>
+			<h2>로그인이 필요한 시스템입니다.</h2>
+
+			<form method="post" action="sign-in">
+				<label for="userId">아이디</label> <input type="text" name="id"
+					id="userId" class="underline-input" placeholder="아이디" /> <label
+					for="userPw">비밀번호</label> <input type="password" id="userPw"
+					name="pw" class="underline-input" placeholder="비밀번호" />
+
+				<button type="submit" class="login-btn">로그인</button>
+			</form>
+
+			<div class="link-section">
+				<a href="/selectjoin">회원가입</a> <a href="#">ID/PW 찾기</a>
+			</div>
+
+			<div class="social-login">
+				<button type="button" class="social-btn">
+					<img src="img/kakao.png">
+				</button>
+				<button type="button" class="social-btn">
+					<img src="img/naver.png">
+				</button>
+				<button type="button" class="social-btn">
+					<img src="img/google.png">
+				</button>
+			</div>
+		</div>
+	</div>
 	<footer>
 		<div class="footer-info">
 			(주) 온잇<br> 대표자: 임채호, 마뇽채찍<br> 사업자등록번호: 000-00-00000<br>

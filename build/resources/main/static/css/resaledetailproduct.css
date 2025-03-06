@@ -1,0 +1,625 @@
+.main-content {
+	display: flex;
+	max-width: 1200px;
+	margin: 0 auto;
+	margin-bottom: 50px;
+	padding: 50px;
+}
+.endday {
+    text-align: center;
+    font-size: 70px;
+    font-weight: bold; 
+}
+
+.sidebar-container {
+	width: 200px;
+	margin-right: 20px;
+}
+
+.location-button {
+	display: block;
+	width: 100%;
+	margin-bottom: 10px;
+	padding: 8px 16px;
+	border: 2px solid #9aa2ec;
+	border-radius: 20px;
+	background: white;
+	cursor: pointer;
+}
+
+.sidebar {
+	border: 1px solid #ddd;
+	padding: 10px;
+	width: 20%;
+	min-width: 200px;
+	margin-right: 20px;
+	flex-shrink: 0;
+}
+
+.category-item {
+	padding: 8px;
+	cursor: pointer;
+}
+
+.content-area {
+	padding: 20px;
+	flex-grow: 1;
+}
+
+.product-detail {
+	display: grid;
+	grid-template-areas: "image info" "seller info";
+	gap: 20px;
+	grid-template-columns: 400px 1fr;
+}
+
+/* 
+ * (수정) 이미지 갤러리를 bxSlider용으로 변경 
+ * - .image-placeholder, .gallery-nav 제거
+ * - 대신 .slider, .slider > div, .sliderImg 추가 
+ */
+.image-gallery {
+	position: relative;
+	width: 400px;
+	max-height: 350px;
+	flex-shrink: 0;
+	grid-area: image;
+	/* (원한다면) border: 1px solid #ddd; border-radius: 8px; 등 추가 가능 */
+}
+
+/* bxSlider가 <div>를 슬라이드로 인식할 때 */
+.slider {
+	width: 100%;
+	height: 100%;
+	max-height: 350px;
+	/* 슬라이드 영역 크기 고정 (400x400) */
+	/* bxSlider에서 slideWidth 등 옵션으로도 제어 가능 */
+}
+
+.slider > div {
+	width: 100%;
+	height: 100%;
+	/* 각 슬라이드 하나하나에 대한 스타일 */
+	/* 필요하다면 display: flex; align-items: center; justify-content: center; 등 */
+}
+
+.sliderImg {
+	width: 100%;
+	height: 100%;
+	object-fit: fill;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+}
+
+/* product-info */
+.product-info {
+	flex: 1;
+	grid-area: info;
+}
+
+.product-title {
+	font-size: 24px;
+	color: #333;
+	margin-bottom: 10px;
+}
+
+.meta-info {
+	color: #666;
+	margin-bottom: 15px;
+}
+
+.date-divider {
+	margin: 0 8px;
+}
+
+.price {
+	font-size: 28px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.description-box {
+	background: white;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	padding: 10px;
+	margin-bottom: 20px;
+}
+
+.description-textarea {
+	width: 100%;
+	min-height: 300px;
+	border: none;
+	resize: none;
+	background: transparent;
+	font-size: 14px;
+	line-height: 1.6;
+	color: #333;
+	outline: none;
+	cursor: default;
+}
+
+/* seller-info */
+.seller-info {
+	grid-area: seller;
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	margin-bottom: 20px;
+	cursor: pointer;
+	position: relative;
+}
+
+.seller-profile {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	width: 100%;
+}
+
+.profile-image {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+}
+
+.seller-name {
+	font-weight: bold;
+}
+
+.like-button {
+	background: none;
+	margin-left: auto;
+	border: none;
+	font-size: 24px;
+	cursor: pointer;
+	color: #666;
+}
+
+.like-button img{
+	max-height: 20px;
+	max-width: 20px;
+}
+
+.action-buttons {
+	display: flex;          /* 가로로 배치 */
+  	align-items: center;    /* 수직 정렬 */
+  	gap: 10px;
+}
+
+.action-button {
+	padding: 12px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: white;
+	color: #666;
+	cursor: pointer;
+}
+
+.final-bidder {
+	margin-left:auto;
+	font-size: 24px;
+}
+
+/* sub-buttons (판매자 정보 클릭 시 표시되는 추가 버튼) */
+.sub-buttons {
+	display: none;
+	flex-direction: column;
+	width: 100%;
+	border-radius: 15px;
+	background-color: #9aa2ec;
+	padding: 0;
+	overflow: hidden;
+	position: absolute; 
+	top: 100%;
+	left: 0; 
+	z-index: 10; 
+}
+
+.sub-buttons.show {
+	display: flex;
+}
+
+.sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.sub-button:last-child {
+	border-bottom: none;
+}
+
+.sub-button:hover {
+	transform: translateX(-5px);
+}
+.bid-sub-buttons {
+  position: absolute; 
+  display: none;      /* 기본 숨김 */
+  background-color: #9aa2ec;
+  border-radius: 15px;
+  z-index: 9999;      /* 위로 오게 */
+  /* top, left는 JS에서 동적으로 설정 */
+}
+
+.bid-sub-buttons.show {
+  display: block;      /* show 클래스가 붙으면 표시 */
+}
+
+.bid-sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.bid-sub-button:last-child {
+	border-bottom: none;
+}
+
+.bid-sub-button:hover {
+	transform: translateX(-5px);
+}
+.seller-sub-buttons {
+  position: absolute; 
+  display: none;      /* 기본 숨김 */
+  background-color: #9aa2ec;
+  border-radius: 15px;
+  z-index: 9999;      /* 위로 오게 */
+  /* top, left는 JS에서 동적으로 설정 */
+}
+
+.seller-sub-buttons.show {
+  display: block;      /* show 클래스가 붙으면 표시 */
+}
+
+.seller-sub-button {
+	padding: 15px 20px;
+	color: white;
+	border: none;
+	cursor: pointer;
+	white-space: nowrap;
+	font-size: 14px;
+	transition: transform 0.2s ease, background-color 0.2s ease;
+	text-decoration: none;
+	display: block;
+	background-color: transparent;
+	flex: 1;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.seller-sub-button:last-child {
+	border-bottom: none;
+}
+
+.seller-sub-button:hover {
+	transform: translateX(-5px);
+}
+
+.bid-content {
+  display: flex;                  /* 가로 배치 */
+  justify-content: space-between; /* 양쪽 끝에 붙이기 */
+  align-items: flex-start;        /* 상단 정렬 (필요 시 center 등으로 조정) */
+  width: 100%;           /* 위쪽 여백 */
+}
+
+/* 경매 섹션 */
+.auction-section {
+  flex: none;                 /* 너비 고정(자동 늘어남 방지) */
+  width: 300px;               /* 원하는 크기로 지정 */
+  padding: 20px;
+  background-color: #fff;     /* 필요 시 조정 */
+}
+
+.bidders {
+	flex: 1;
+}
+
+.bidder-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.bidder-list li {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 18px;
+	padding: 5px 0;
+	cursor: pointer;
+}
+
+.rank {
+	margin-right: 10px;
+}
+
+.gold {
+	color: gold;
+}
+
+.silver {
+	color: silver;
+}
+
+.bronze {
+	color: #cd7f32;
+}
+
+.amount {
+	font-weight: bold;
+}
+
+.auction-bid {
+	flex: 1;
+	text-align: center;
+	margin-top: 100px;
+	padding: 30px;
+	width: 600px;
+	
+}
+
+.auction-bid h3 {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
+.bid-options {
+	display: flex;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.bid-option {
+	padding: 8px 15px;
+	border: 1px solid #aaa;
+	background: white;
+	cursor: pointer;
+	border-radius: 5px;
+	width: 20%;
+}
+
+.bid-input {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
+	height: 100px;
+}
+
+.bid-input input {
+	width: 40%;
+	height: 50%;
+	padding: 8px;
+	border: 1px solid #aaa;
+	text-align: center;
+}
+
+.bid-button {
+	width:40%;
+	height:65%;
+	padding: 8px 20px;
+	background: #9aa2ec;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.bid-button:hover {
+	background: #7f89d7;
+}
+/* 여기부터 위치테이블 */
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.3); /* 투명도 0.3 */
+	display: none; /* 초기에는 숨김 */
+	justify-content: center;
+	align-items: center;
+	z-index: 9999;
+}
+
+/* 모달 박스 (흰색 테마) */
+.modal {
+	background-color: #fff; /* 흰색 배경 */
+	width: 400px;
+	border-radius: 8px;
+	overflow: hidden;
+	color: #333; /* 텍스트는 어두운 색 */
+	font-family: sans-serif;
+	position: relative;
+	margin: auto;
+	margin-top: 100px;
+}
+
+/* 헤더 영역 */
+.modal-header {
+	padding: 16px;
+	border-bottom: 1px solid #ccc;
+	font-size: 18px;
+	font-weight: bold;
+	position: relative;
+	color: #333;
+}
+
+/* 닫기 버튼 (모달 우측 상단) */
+.close-modal {
+	position: absolute;
+	top: 16px;
+	right: 16px;
+	cursor: pointer;
+	font-size: 18px;
+	color: #999;
+}
+
+/* 본문 영역 */
+.modal-content {
+	padding: 16px;
+	color: #333;
+	
+}
+
+/* 검색 영역 */
+.search-box {
+	position: relative;
+	margin-bottom: 16px;
+}
+
+.search-box input {
+	width: 85%;
+	padding: 12px 40px 12px 12px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #f8f8f8;
+	color: #333;
+	outline: none;
+}
+
+.search-box input::placeholder {
+	color: #999;
+}
+
+.search-box::before {
+	content: "🔍";
+	position: absolute;
+	right: 12px;
+	top: 10px;
+	font-size: 15px;
+	color: #999;
+}
+
+/* 모달 내부 위치 버튼 */
+.modal-location-button {
+	display: inline-block;
+	background-color: #fff;
+	border: 1px solid #ccc;
+	color: #333;
+	padding: 10px 14px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-bottom: 16px;
+}
+
+.modal-location-button:hover {
+	background-color: #f0f0f0;
+}
+
+/* 추천 리스트 */
+.recommend-title {
+	font-size: 16px;
+	margin-bottom: 8px;
+	color: #333;
+}
+
+.region-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	max-height: 400px;
+	overflow: auto;
+}
+.region-list::-webkit-scrollbar {
+  height: 8px;               /* 가로 스크롤바의 두께 */
+  max-width: 5px;           
+}
+
+.region-list::-webkit-scrollbar-track {
+  background: #eee;          /* 스크롤바 트랙 색상 */
+  border-radius: 4px;
+}
+
+.region-list::-webkit-scrollbar-thumb {
+  background-color: #9AA2EC; /* 스크롤바 '손잡이' 색상 */
+  border-radius: 4px;
+}
+
+.region-list li {
+	padding: 12px 0;
+	border-bottom: 1px solid #eee;
+	cursor: pointer;
+	color: #333;
+}
+
+.region-list li:last-child {
+	border-bottom: none;
+}
+
+.region-list li:hover {
+	background-color: #f5f5f5;
+}
+
+
+/* 모달 오버레이 (화면 전체 덮는 반투명 배경) */
+.image-modal-overlay {
+  display: none;             /* 기본적으로 숨김 */
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 9999;             /* 가장 앞에 표시 */
+}
+
+/* 모달 박스 */
+.image-modal {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 80%;
+  max-height: 80%;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+  position: relative; /* 닫기버튼 위치 설정용 */
+}
+
+/* 닫기 버튼 */
+.image-close-modal {
+  position: absolute;
+  top: 10px; 
+  right: 15px;
+  font-size: 24px;
+  color: #666;
+  cursor: pointer;
+  z-index: 10000;
+}
+
+/* 모달 내부 컨텐츠 (이미지) */
+.image-modal-content {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* 확대 이미지 스타일 */
+#modalImage {
+  width: 600px;
+  height: 600px;
+  object-fit: cover;
+  border-radius: 8px; /* 선택 */
+}
+
+

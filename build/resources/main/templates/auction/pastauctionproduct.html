@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="/css/resaleproduct.css">
+<script type="text/javascript" src="/js/jQuery.js"></script>
+<script type="text/javascript" src="/js/move.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var isRotate = false;
+		$(".floating-button").mouseup(function(e) {
+			isRotate = !isRotate;
+			if (isRotate) {
+				$(".icon").css({
+					"transform" : "rotate(-45deg)"
+				});
+				$(".sub-buttons").addClass("show");
+			} else {
+				$(".icon").css({
+					"transform" : "rotate(0deg)"
+				});
+				$(".sub-buttons").removeClass("show");
+			}
+		})
+	});
+</script>
+</head>
+<body>
+	<div class="main-content">
+
+		<div id="infoDiv">
+			
+			<div class="product-grid">
+				<a th:each="product : ${auctionList}"
+					th:href="@{/pastauction-detailproduct(no=${product.no})}">
+					<div class="product-card">
+						<div class="product-image">
+							<img
+								th:src="${product.thumbnail != null ? '/HoMini/Img/' + product.thumbnail : '/img/no-image.png'}"
+								alt="이미지" />
+						</div>
+						<div class="product-info" th:text="${product.title}">제품 이름</div>
+						<div class="product-price" th:text="${product.price + ' 원'}">가격</div>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+	<!-- 여기부터 등록관련 버튼 -->
+	<div class="floating-button">
+		<span class="icon">+</span>
+		<div class="sub-buttons">
+			<a th:if="${session.loginMember != null}" href="/resale-go-reg" class="sub-button">중고거래 등록</a>
+			<a th:if="${session.loginMember != null}" href="/auction-go-reg" class="sub-button">경매 등록</a>
+
+			<a th:if="${session.loginMember == null}" onclick="openLoginModal()" class="sub-button"> 중고거래 등록 </a>
+			<a th:if="${session.loginMember == null}" onclick="openLoginModal()" class="sub-button"> 경매 등록 </a>
+		</div>
+	</div>
+</body>
+</html>
