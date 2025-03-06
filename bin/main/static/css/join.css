@@ -36,13 +36,13 @@
 	margin-top: 5px;
 }
 #id{
-	display: flex;
+	display: none;
 }
 #nick{
-	display: flex;
+	display: none;
 }
 #pwconfirm{
-	display: flex;
+	display: none;
 }
 .btn {
 	width: 100%;
