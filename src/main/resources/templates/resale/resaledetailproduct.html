@@ -118,8 +118,8 @@
 					</div>
 
 					<div class="action-buttons">
-						<div class="action-button" th:text="${product.deal == '1' ? '택배가능':'택배불가능' }"></div>
-						<div class="action-button" th:text="${product.delivery == '1' ? '직거래가능':'직거래불가능'}"></div>
+						<div class="action-button" th:text="${product.deal == 'Y' ? '택배가능':'택배불가능' }"></div>
+						<div class="action-button" th:text="${product.delivery == 'Y' ? '직거래가능':'직거래불가능'}"></div>
 					</div>
 				</div>
 				<div class="modal-overlay">
